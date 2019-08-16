@@ -25,8 +25,5 @@ public class PlayerInputs : MonoBehaviour {
         if (Input.GetAxisRaw("Fire1") > 0) {
             animator.SetTrigger("die");
         }
-
-
-        this.transform.position += Vector3.right;
     }
 }
