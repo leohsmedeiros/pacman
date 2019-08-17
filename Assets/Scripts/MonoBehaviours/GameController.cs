@@ -6,6 +6,9 @@ public class GameController : MonoBehaviour {
     public static readonly string PlayerTag = "Player";
 
     private static int _currentLevel = 0;
+    private static int _score = 0;
+
+
     public List<Dot> _dots;
 
     private void Awake() {
@@ -15,6 +18,7 @@ public class GameController : MonoBehaviour {
     public void RegisterDot(Dot dot) {
         dot.SubscribeOnCaught(() => {
             _dots.Remove(dot);
+
 
             if (_dots.Count == 0) {
                 Debug.Log("Next Level");
