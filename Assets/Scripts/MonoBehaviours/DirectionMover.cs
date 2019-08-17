@@ -2,13 +2,13 @@
 using UnityEngine;
 
 public class DirectionMover : MonoBehaviour {
-    public interface DirectionMoverObserver {
+    public interface IDirectionMoverObserver {
         void OnDirectionChange(Direction currentDirection);
     }
 
     public enum Direction { RIGHT, LEFT, UP, DOWN };
 
-    private List<DirectionMoverObserver> observers;
+    private List<IDirectionMoverObserver> observers;
 
     public float speed;
 
@@ -20,20 +20,20 @@ public class DirectionMover : MonoBehaviour {
 
 
     private void Awake() {
-        observers = new List<DirectionMoverObserver>();
+        observers = new List<IDirectionMoverObserver>();
     }
 
-    public void Subscribe(DirectionMoverObserver observer) {
+    public void Subscribe(IDirectionMoverObserver observer) {
         observers.Add(observer);
     }
 
-    public void Unsubscribe(DirectionMoverObserver observer) {
+    public void Unsubscribe(IDirectionMoverObserver observer) {
         observers.Remove(observer);
     }
 
     public void NotifyObservers() {
         if (_currentDirection.HasValue) {
-            foreach (DirectionMoverObserver observer in observers) {
+            foreach (IDirectionMoverObserver observer in observers) {
                 observer.OnDirectionChange(_currentDirection.Value);
             }
         }
@@ -54,26 +54,25 @@ public class DirectionMover : MonoBehaviour {
 
     // rule #1: you just can go to another node if you are on some node
     // exception: you can interrupt coming back to previous node
-    public bool ChangeDirection(Direction direction) {
+    public void ChangeDirection(Direction direction) {
         Node currentNode = GameController.GetInstance().currentPlayerNode;
 
         if (currentNode != null) {
-            _currentDirection = direction;
-            NotifyObservers();
+            if(UpdateDestinyNode(GetNextNodeFromDirection(currentNode, direction))) {
+                _currentDirection = direction;
+                NotifyObservers();
+            }
 
-            return UpdateDestinyNode(GetNextNodeFromDirection(currentNode, direction));
+        } else if (IsOpositeDirection(direction) && _destinyNode != null) {
+            if (UpdateDestinyNode(GetNextNodeFromDirection(_destinyNode, direction))) {
+                _currentDirection = direction;
+                NotifyObservers();
+            }
 
-        }else if (IsOpositeDirection(direction) && _destinyNode != null) {
-            _currentDirection = direction;
-            NotifyObservers();
-
-            return UpdateDestinyNode(GetNextNodeFromDirection(_destinyNode, direction));
-
-        }else {
+        } else {
             _bufferedDirectionToNextNode = direction;
         }
 
-        return false;
     }
 
     private bool UpdateDestinyNode (Node nextNode) {
