@@ -5,29 +5,29 @@ public class DirectionMover : MonoBehaviour {
 
     public float speed;
 
-    private Vector3 directionVector { get; set; } = Vector3.zero;
+    private Vector3 _directionVector { get; set; } = Vector3.zero;
 
     public void ChangeDirection(Direction direction) {
         switch (direction) {
             case Direction.RIGHT:
-                directionVector = Vector3.right;
+                _directionVector = Vector3.right;
                 break;
 
             case Direction.LEFT:
-                directionVector = Vector3.left;
+                _directionVector = Vector3.left;
                 break;
 
             case Direction.UP:
-                directionVector = Vector3.up;
+                _directionVector = Vector3.up;
                 break;
 
             case Direction.DOWN:
-                directionVector = Vector3.down;
+                _directionVector = Vector3.down;
                 break;
         }
     }
 
     private void Update() {
-        this.transform.position += (directionVector * speed * Time.deltaTime);
+        this.transform.position += (_directionVector * speed * Time.deltaTime);
     }
 }

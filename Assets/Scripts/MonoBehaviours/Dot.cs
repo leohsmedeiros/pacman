@@ -1,18 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Threading;
 using UnityEngine;
 
-public class Dot : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+public class Dot : MonoBehaviour {
+    private ThreadStart onCaught = null;
+
+    void Start() {
+        GameObject
+            .FindWithTag(GameController.GameControllerTag)
+            .GetComponent<GameController>()
+            .RegisterDot(this);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void SubscribeOnCaught (ThreadStart threadStart) {
+        this.onCaught = threadStart;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.tag.Equals(GameController.PlayerTag)) {
+            if (onCaught != null) {
+                new Thread(onCaught).Start();
+                this.gameObject.SetActive(false);
+            }
+        }
     }
 }

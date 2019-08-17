@@ -1,58 +1,32 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(PacmanAnimatorController))]
 [RequireComponent(typeof(DirectionMover))]
 public class Pacman : MonoBehaviour {
-    private Animator animator;
-    private DirectionMover move;
+    private PacmanAnimatorController _pacmanAnimator;
+    private DirectionMover _directionMover;
 
     private void Start() {
-        animator = this.GetComponent<Animator>();
-        move = this.GetComponent<DirectionMover>();
-        animator.SetTrigger("right");
+        _pacmanAnimator = this.GetComponent<PacmanAnimatorController>();
+        _directionMover = this.GetComponent<DirectionMover>();
     }
 
-    //
     void Update() {
         float HorizontalAxis = Input.GetAxisRaw("Horizontal");
         float VerticalAxis = Input.GetAxisRaw("Vertical");
 
         if (HorizontalAxis > 0) {
-            animator.SetTrigger("right");
-            move.ChangeDirection(DirectionMover.Direction.RIGHT);
+            _pacmanAnimator.SetAnimation(PacmanAnimatorController.PacmanAnimation.MOVE_RIGHT);
+            _directionMover.ChangeDirection(DirectionMover.Direction.RIGHT);
         } else if (HorizontalAxis < 0) {
-            animator.SetTrigger("left");
-            move.ChangeDirection(DirectionMover.Direction.LEFT);
+            _pacmanAnimator.SetAnimation(PacmanAnimatorController.PacmanAnimation.MOVE_LEFT);
+            _directionMover.ChangeDirection(DirectionMover.Direction.LEFT);
         } else if (VerticalAxis > 0) {
-            animator.SetTrigger("up");
-            move.ChangeDirection(DirectionMover.Direction.UP);
+            _pacmanAnimator.SetAnimation(PacmanAnimatorController.PacmanAnimation.MOVE_UP);
+            _directionMover.ChangeDirection(DirectionMover.Direction.UP);
         } else if (VerticalAxis < 0) {
-            animator.SetTrigger("down");
-            move.ChangeDirection(DirectionMover.Direction.DOWN);
+            _pacmanAnimator.SetAnimation(PacmanAnimatorController.PacmanAnimation.MOVE_DOWN);
+            _directionMover.ChangeDirection(DirectionMover.Direction.DOWN);
         }
     }
-
-    //public void ChangeDirection (PacmanDirection direction) {
-    //    switch(direction) {
-    //        case PacmanDirection.RIGHT:
-    //            this.transform.eulerAngles = new Vector3(0, 0, 0);
-    //            move.direction = Vector3.right;
-    //            break;
-
-    //        case PacmanDirection.LEFT:
-    //            this.transform.eulerAngles = new Vector3(0, 0, 180);
-    //            move.direction = Vector3.left;
-    //            break;
-
-    //        case PacmanDirection.UP:
-    //            this.transform.eulerAngles = new Vector3(0, 0, 90);
-    //            move.direction = Vector3.up;
-    //            break;
-
-    //        case PacmanDirection.DOWN:
-    //            this.transform.eulerAngles = new Vector3(0, 0, 270);
-    //            move.direction = Vector3.down;
-    //            break;
-    //    }
-    //}
 }
