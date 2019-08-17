@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(CircleCollider2D))]
 public class Portal : MonoBehaviour {
 
-    public Vector3 futurePoint;
+    public Node destinyNode;
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.tag.Equals(GameController.PlayerTag)) {
-            collision.transform.position = futurePoint;
+            collision.transform.position = destinyNode.GetPosition2D();
         }
     }
 }

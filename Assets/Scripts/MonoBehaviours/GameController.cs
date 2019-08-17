@@ -23,10 +23,16 @@ public class GameController : MonoBehaviour {
     public List<Node> _nodes;
 
     public Node currentPlayerNode { private set; get; } = null;
+    public Node previousPlayerNode { private set; get; } = null;
 
     private void Awake() {
         _dots = new List<Dot>();
         _nodes = new List<Node>();
+    }
+
+
+    public void RegisterNode(Node node) {
+        _nodes.Add(node);
     }
 
     public void RegisterDot(Dot dot) {
@@ -44,6 +50,12 @@ public class GameController : MonoBehaviour {
     }
 
     public void UpdateCurrentPlayerNode (Node node) {
+        if (currentPlayerNode != null)
+            previousPlayerNode = currentPlayerNode;
+
+        if (previousPlayerNode == null)
+            Debug.LogWarning("previousPlayerNode is null");
+
         this.currentPlayerNode = node;
     }
 }

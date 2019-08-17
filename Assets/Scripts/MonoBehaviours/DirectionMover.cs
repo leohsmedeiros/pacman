@@ -1,42 +1,133 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class DirectionMover : MonoBehaviour {
+    public interface DirectionMoverObserver {
+        void OnDirectionChange(Direction currentDirection);
+    }
+
     public enum Direction { RIGHT, LEFT, UP, DOWN };
+
+    private List<DirectionMoverObserver> observers;
 
     public float speed;
 
-    private Direction? currentDirection = null;
+    private Direction? _currentDirection  = null;
 
-    public void ChangeDirection(Direction direction) {
-        Node currentNode = GameController.GetInstance().currentPlayerNode;
+    private Node _destinyNode = null;
 
-        if (currentNode != null) {
-            switch (direction) {
-                case Direction.RIGHT:
-                    if (currentNode.rightNode != null)
-                        this.transform.position = currentNode.rightNode.transform.position;
+    private Direction? _bufferedDirectionToNextNode = null;
 
-                    break;
 
-                case Direction.LEFT:
-                    if (currentNode.leftNode != null)
-                        this.transform.position = currentNode.leftNode.transform.position;
+    private void Awake() {
+        observers = new List<DirectionMoverObserver>();
+    }
 
-                    break;
+    public void Subscribe(DirectionMoverObserver observer) {
+        observers.Add(observer);
+    }
 
-                case Direction.UP:
-                    if (currentNode.upNode != null)
-                        this.transform.position = currentNode.upNode.transform.position;
+    public void Unsubscribe(DirectionMoverObserver observer) {
+        observers.Remove(observer);
+    }
 
-                    break;
-
-                case Direction.DOWN:
-                    if (currentNode.downNode != null)
-                        this.transform.position = currentNode.downNode.transform.position;
-
-                    break;
+    public void NotifyObservers() {
+        if (_currentDirection.HasValue) {
+            foreach (DirectionMoverObserver observer in observers) {
+                observer.OnDirectionChange(_currentDirection.Value);
             }
         }
     }
 
+    private bool IsOpositeDirection(Direction desiredDirection) {
+        if (_currentDirection == null)
+            return false;
+
+        switch (_currentDirection) {
+            case Direction.RIGHT: return desiredDirection.Equals(Direction.LEFT);
+            case Direction.LEFT: return desiredDirection.Equals(Direction.RIGHT);
+            case Direction.UP: return desiredDirection.Equals(Direction.DOWN);
+            case Direction.DOWN: return desiredDirection.Equals(Direction.UP);
+            default: return false;
+        }
+    }
+
+    // rule #1: you just can go to another node if you are on some node
+    // exception: you can interrupt coming back to previous node
+    public bool ChangeDirection(Direction direction) {
+        Node currentNode = GameController.GetInstance().currentPlayerNode;
+
+        if (currentNode != null) {
+            _currentDirection = direction;
+            NotifyObservers();
+
+            return UpdateDestinyNode(GetNextNodeFromDirection(currentNode, direction));
+
+        }else if (IsOpositeDirection(direction) && _destinyNode != null) {
+            _currentDirection = direction;
+            NotifyObservers();
+
+            return UpdateDestinyNode(GetNextNodeFromDirection(_destinyNode, direction));
+
+        }else {
+            _bufferedDirectionToNextNode = direction;
+        }
+
+        return false;
+    }
+
+    private bool UpdateDestinyNode (Node nextNode) {
+        if (nextNode != null) {
+            _destinyNode = nextNode;
+            return true;
+        }
+
+        return false;
+    }
+
+    private Node GetNextNodeFromDirection(Node node, Direction direction) {
+        if (node != null) {
+
+            if (direction.Equals(Direction.RIGHT) && node.rightNode != null)
+                return node.rightNode;
+
+            else if (direction.Equals(Direction.LEFT) && node.leftNode != null)
+                return node.leftNode;
+
+            else if (direction.Equals(Direction.UP) && node.upNode != null)
+                return node.upNode;
+
+            else if (direction.Equals(Direction.DOWN) && node.downNode != null)
+                return node.downNode;
+
+        }
+
+        return null;
+    }
+
+    public void Update() {
+
+        if (_destinyNode != null)
+            this.transform.position = Vector2.MoveTowards(transform.position, _destinyNode.GetPosition2D(), speed * Time.deltaTime);
+
+
+        Node currentNode = GameController.GetInstance().currentPlayerNode;
+
+        if (currentNode != null) {
+            if (_bufferedDirectionToNextNode != null) {
+
+                if (UpdateDestinyNode(GetNextNodeFromDirection(currentNode, _bufferedDirectionToNextNode.Value))) {
+                    _currentDirection = _bufferedDirectionToNextNode.Value;
+                    NotifyObservers();
+                }
+
+                _bufferedDirectionToNextNode = null;
+
+            }else if (_currentDirection != null) {
+
+                UpdateDestinyNode(GetNextNodeFromDirection(currentNode, _currentDirection.Value));
+            }
+        }
+
+    }
 }
