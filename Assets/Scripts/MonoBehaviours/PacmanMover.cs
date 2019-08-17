@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class DirectionMover : MonoBehaviour, IReactiveProperty<DirectionMover.Direction> {
-    public enum Direction { RIGHT, LEFT, UP, DOWN };
-
+public class PacmanMover : MonoBehaviour, IReactiveProperty<Direction> {
     private List<IObserverProperty<Direction>> observers;
 
     public float speed;
 
-    private Direction? _currentDirection  = null;
+    private Direction _currentDirection = Direction.RIGHT;
 
     private Node _destinyNode = null;
 
@@ -19,7 +17,9 @@ public class DirectionMover : MonoBehaviour, IReactiveProperty<DirectionMover.Di
         observers = new List<IObserverProperty<Direction>>();
     }
 
-
+    public Direction GetCurrentDirection() {
+        return _currentDirection;
+    }
 
     void IReactiveProperty<Direction>.Subscribe(IObserverProperty<Direction> observer) {
         observers.Add(observer);
@@ -30,19 +30,14 @@ public class DirectionMover : MonoBehaviour, IReactiveProperty<DirectionMover.Di
     }
 
     void IReactiveProperty<Direction>.NotifyObservers() {
-        if (_currentDirection.HasValue) {
-            foreach (IObserverProperty<Direction> observer in observers) {
-                observer.OnUpdateProperty(_currentDirection.Value);
-            }
+        foreach (IObserverProperty<Direction> observer in observers) {
+            observer.OnUpdateProperty(_currentDirection);
         }
     }
 
 
 
     private bool IsOpositeDirection(Direction desiredDirection) {
-        if (_currentDirection == null)
-            return false;
-
         switch (_currentDirection) {
             case Direction.RIGHT: return desiredDirection.Equals(Direction.LEFT);
             case Direction.LEFT: return desiredDirection.Equals(Direction.RIGHT);
@@ -75,7 +70,7 @@ public class DirectionMover : MonoBehaviour, IReactiveProperty<DirectionMover.Di
 
     }
 
-    private bool UpdateDestinyNode (Node nextNode) {
+    public bool UpdateDestinyNode (Node nextNode) {
         if (nextNode != null) {
             _destinyNode = nextNode;
             return true;
@@ -123,9 +118,9 @@ public class DirectionMover : MonoBehaviour, IReactiveProperty<DirectionMover.Di
 
                 _bufferedDirectionToNextNode = null;
 
-            }else if (_currentDirection != null) {
+            }else {
 
-                UpdateDestinyNode(GetNextNodeFromDirection(currentNode, _currentDirection.Value));
+                UpdateDestinyNode(GetNextNodeFromDirection(currentNode, _currentDirection));
             }
         }
 

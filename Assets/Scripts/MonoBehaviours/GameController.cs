@@ -41,7 +41,7 @@ public class GameController : MonoBehaviour {
         dot.SubscribeOnCaught(() => {
             _dots.Remove(dot);
             _score += DotScore;
-            Debug.Log("score: " + _score);
+            //Debug.Log("score: " + _score);
 
             if (_dots.Count == 0)
                 Debug.Log("Next Level");

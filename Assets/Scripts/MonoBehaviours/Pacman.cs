@@ -1,48 +1,48 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(PacmanAnimatorController))]
-[RequireComponent(typeof(DirectionMover))]
-public class Pacman : MonoBehaviour, IObserverProperty<DirectionMover.Direction> {
+[RequireComponent(typeof(PacmanMover))]
+public class Pacman : MonoBehaviour, IObserverProperty<Direction> {
     private PacmanAnimatorController _pacmanAnimator;
-    private DirectionMover _directionMover;
+    private PacmanMover _directionMover;
 
     private void Start() {
         _pacmanAnimator = this.GetComponent<PacmanAnimatorController>();
-        _directionMover = this.GetComponent<DirectionMover>();
+        _directionMover = this.GetComponent<PacmanMover>();
 
-        ((IReactiveProperty<DirectionMover.Direction>) _directionMover).Subscribe(this);
+        ((IReactiveProperty<Direction>) _directionMover).Subscribe(this);
     }
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.RightArrow))
-            _directionMover.ChangeDirection(DirectionMover.Direction.RIGHT);
+            _directionMover.ChangeDirection(Direction.RIGHT);
 
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
-            _directionMover.ChangeDirection(DirectionMover.Direction.LEFT);
+            _directionMover.ChangeDirection(Direction.LEFT);
 
         else if (Input.GetKeyDown(KeyCode.UpArrow))
-            _directionMover.ChangeDirection(DirectionMover.Direction.UP);
+            _directionMover.ChangeDirection(Direction.UP);
 
         else if (Input.GetKeyDown(KeyCode.DownArrow))
-            _directionMover.ChangeDirection(DirectionMover.Direction.DOWN);
+            _directionMover.ChangeDirection(Direction.DOWN);
     }
 
     // pacman will react to direction changes updating the current animation
-    public void OnUpdateProperty(DirectionMover.Direction currentDirection) {
+    public void OnUpdateProperty(Direction currentDirection) {
         switch(currentDirection) {
-            case DirectionMover.Direction.RIGHT:
+            case Direction.RIGHT:
                 _pacmanAnimator.SetAnimation(PacmanAnimatorController.PacmanAnimation.MOVE_RIGHT);
                 break;
 
-            case DirectionMover.Direction.LEFT:
+            case Direction.LEFT:
                 _pacmanAnimator.SetAnimation(PacmanAnimatorController.PacmanAnimation.MOVE_LEFT);
                 break;
 
-            case DirectionMover.Direction.UP:
+            case Direction.UP:
                 _pacmanAnimator.SetAnimation(PacmanAnimatorController.PacmanAnimation.MOVE_UP);
                 break;
 
-            case DirectionMover.Direction.DOWN:
+            case Direction.DOWN:
                 _pacmanAnimator.SetAnimation(PacmanAnimatorController.PacmanAnimation.MOVE_DOWN);
                 break;
         }
