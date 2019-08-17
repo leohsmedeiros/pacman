@@ -5,29 +5,38 @@ public class DirectionMover : MonoBehaviour {
 
     public float speed;
 
-    private Vector3 _directionVector { get; set; } = Vector3.zero;
+    private Direction? currentDirection = null;
 
     public void ChangeDirection(Direction direction) {
-        switch (direction) {
-            case Direction.RIGHT:
-                _directionVector = Vector3.right;
-                break;
+        Node currentNode = GameController.GetInstance().currentPlayerNode;
 
-            case Direction.LEFT:
-                _directionVector = Vector3.left;
-                break;
+        if (currentNode != null) {
+            switch (direction) {
+                case Direction.RIGHT:
+                    if (currentNode.rightNode != null)
+                        this.transform.position = currentNode.rightNode.transform.position;
 
-            case Direction.UP:
-                _directionVector = Vector3.up;
-                break;
+                    break;
 
-            case Direction.DOWN:
-                _directionVector = Vector3.down;
-                break;
+                case Direction.LEFT:
+                    if (currentNode.leftNode != null)
+                        this.transform.position = currentNode.leftNode.transform.position;
+
+                    break;
+
+                case Direction.UP:
+                    if (currentNode.upNode != null)
+                        this.transform.position = currentNode.upNode.transform.position;
+
+                    break;
+
+                case Direction.DOWN:
+                    if (currentNode.downNode != null)
+                        this.transform.position = currentNode.downNode.transform.position;
+
+                    break;
+            }
         }
     }
 
-    private void Update() {
-        this.transform.position += (_directionVector * speed * Time.deltaTime);
-    }
 }

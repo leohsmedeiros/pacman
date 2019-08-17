@@ -12,19 +12,19 @@ public class Pacman : MonoBehaviour {
     }
 
     void Update() {
-        float HorizontalAxis = Input.GetAxisRaw("Horizontal");
-        float VerticalAxis = Input.GetAxisRaw("Vertical");
+        //float HorizontalAxis = Input.GetAxisRaw("Horizontal");
+        //float VerticalAxis = Input.GetAxisRaw("Vertical");
 
-        if (HorizontalAxis > 0) {
+        if (Input.GetKeyDown(KeyCode.RightArrow)) {
             _pacmanAnimator.SetAnimation(PacmanAnimatorController.PacmanAnimation.MOVE_RIGHT);
             _directionMover.ChangeDirection(DirectionMover.Direction.RIGHT);
-        } else if (HorizontalAxis < 0) {
+        } else if (Input.GetKeyDown(KeyCode.LeftArrow)) {
             _pacmanAnimator.SetAnimation(PacmanAnimatorController.PacmanAnimation.MOVE_LEFT);
             _directionMover.ChangeDirection(DirectionMover.Direction.LEFT);
-        } else if (VerticalAxis > 0) {
+        } else if (Input.GetKeyDown(KeyCode.UpArrow)) {
             _pacmanAnimator.SetAnimation(PacmanAnimatorController.PacmanAnimation.MOVE_UP);
             _directionMover.ChangeDirection(DirectionMover.Direction.UP);
-        } else if (VerticalAxis < 0) {
+        } else if (Input.GetKeyDown(KeyCode.DownArrow)) {
             _pacmanAnimator.SetAnimation(PacmanAnimatorController.PacmanAnimation.MOVE_DOWN);
             _directionMover.ChangeDirection(DirectionMover.Direction.DOWN);
         }

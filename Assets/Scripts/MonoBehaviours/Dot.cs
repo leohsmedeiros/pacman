@@ -6,8 +6,8 @@ public class Dot : MonoBehaviour {
     private ThreadStart onCaught = null;
 
     void Start() {
-        GameObject
-            .FindWithTag(GameController.GameControllerTag)
+        GameController
+            .GetInstance()
             .GetComponent<GameController>()
             .RegisterDot(this);
     }
