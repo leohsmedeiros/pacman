@@ -2,7 +2,7 @@
 
 [RequireComponent(typeof(PacmanAnimatorController))]
 [RequireComponent(typeof(DirectionMover))]
-public class Pacman : MonoBehaviour, DirectionMover.IDirectionMoverObserver {
+public class Pacman : MonoBehaviour, IObserverProperty<DirectionMover.Direction> {
     private PacmanAnimatorController _pacmanAnimator;
     private DirectionMover _directionMover;
 
@@ -10,7 +10,7 @@ public class Pacman : MonoBehaviour, DirectionMover.IDirectionMoverObserver {
         _pacmanAnimator = this.GetComponent<PacmanAnimatorController>();
         _directionMover = this.GetComponent<DirectionMover>();
 
-        _directionMover.Subscribe(this);
+        ((IReactiveProperty<DirectionMover.Direction>) _directionMover).Subscribe(this);
     }
 
     void Update() {
@@ -28,7 +28,7 @@ public class Pacman : MonoBehaviour, DirectionMover.IDirectionMoverObserver {
     }
 
     // pacman will react to direction changes updating the current animation
-    public void OnDirectionChange(DirectionMover.Direction currentDirection) {
+    public void OnUpdateProperty(DirectionMover.Direction currentDirection) {
         switch(currentDirection) {
             case DirectionMover.Direction.RIGHT:
                 _pacmanAnimator.SetAnimation(PacmanAnimatorController.PacmanAnimation.MOVE_RIGHT);

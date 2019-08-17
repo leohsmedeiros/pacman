@@ -1,14 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class DirectionMover : MonoBehaviour {
-    public interface IDirectionMoverObserver {
-        void OnDirectionChange(Direction currentDirection);
-    }
-
+public class DirectionMover : MonoBehaviour, IReactiveProperty<DirectionMover.Direction> {
     public enum Direction { RIGHT, LEFT, UP, DOWN };
 
-    private List<IDirectionMoverObserver> observers;
+    private List<IObserverProperty<Direction>> observers;
 
     public float speed;
 
@@ -20,24 +16,28 @@ public class DirectionMover : MonoBehaviour {
 
 
     private void Awake() {
-        observers = new List<IDirectionMoverObserver>();
+        observers = new List<IObserverProperty<Direction>>();
     }
 
-    public void Subscribe(IDirectionMoverObserver observer) {
+
+
+    void IReactiveProperty<Direction>.Subscribe(IObserverProperty<Direction> observer) {
         observers.Add(observer);
     }
 
-    public void Unsubscribe(IDirectionMoverObserver observer) {
+    void IReactiveProperty<Direction>.Unsubscribe(IObserverProperty<Direction> observer) {
         observers.Remove(observer);
     }
 
-    public void NotifyObservers() {
+    void IReactiveProperty<Direction>.NotifyObservers() {
         if (_currentDirection.HasValue) {
-            foreach (IDirectionMoverObserver observer in observers) {
-                observer.OnDirectionChange(_currentDirection.Value);
+            foreach (IObserverProperty<Direction> observer in observers) {
+                observer.OnUpdateProperty(_currentDirection.Value);
             }
         }
     }
+
+
 
     private bool IsOpositeDirection(Direction desiredDirection) {
         if (_currentDirection == null)
@@ -60,13 +60,13 @@ public class DirectionMover : MonoBehaviour {
         if (currentNode != null) {
             if(UpdateDestinyNode(GetNextNodeFromDirection(currentNode, direction))) {
                 _currentDirection = direction;
-                NotifyObservers();
+                ((IReactiveProperty<Direction>) this).NotifyObservers();
             }
 
         } else if (IsOpositeDirection(direction) && _destinyNode != null) {
             if (UpdateDestinyNode(GetNextNodeFromDirection(_destinyNode, direction))) {
                 _currentDirection = direction;
-                NotifyObservers();
+                ((IReactiveProperty<Direction>)this).NotifyObservers();
             }
 
         } else {
@@ -117,7 +117,8 @@ public class DirectionMover : MonoBehaviour {
 
                 if (UpdateDestinyNode(GetNextNodeFromDirection(currentNode, _bufferedDirectionToNextNode.Value))) {
                     _currentDirection = _bufferedDirectionToNextNode.Value;
-                    NotifyObservers();
+                    ((IReactiveProperty<Direction>)this).NotifyObservers();
+
                 }
 
                 _bufferedDirectionToNextNode = null;

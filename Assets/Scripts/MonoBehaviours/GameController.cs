@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
     public static readonly string PlayerTag = "Player";
+    private static readonly int DotScore = 10;
+
 
     private static GameController _instance;
 
@@ -16,6 +18,7 @@ public class GameController : MonoBehaviour {
         return _instance;
     }
 
+
     private static int _currentLevel = 0;
     private static int _score = 0;
 
@@ -23,7 +26,6 @@ public class GameController : MonoBehaviour {
     public List<Node> _nodes;
 
     public Node currentPlayerNode { private set; get; } = null;
-    public Node previousPlayerNode { private set; get; } = null;
 
     private void Awake() {
         _dots = new List<Dot>();
@@ -38,24 +40,18 @@ public class GameController : MonoBehaviour {
     public void RegisterDot(Dot dot) {
         dot.SubscribeOnCaught(() => {
             _dots.Remove(dot);
+            _score += DotScore;
+            Debug.Log("score: " + _score);
 
-
-            if (_dots.Count == 0) {
+            if (_dots.Count == 0)
                 Debug.Log("Next Level");
-            }
-
         });
 
         _dots.Add(dot);
     }
 
     public void UpdateCurrentPlayerNode (Node node) {
-        if (currentPlayerNode != null)
-            previousPlayerNode = currentPlayerNode;
-
-        if (previousPlayerNode == null)
-            Debug.LogWarning("previousPlayerNode is null");
-
         this.currentPlayerNode = node;
     }
+
 }
