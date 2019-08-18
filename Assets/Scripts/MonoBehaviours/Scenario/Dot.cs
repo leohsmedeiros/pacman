@@ -7,7 +7,7 @@ public class Dot : MonoBehaviour {
 
     void Start() {
         GameController
-            .GetInstance()
+            .Instance
             .GetComponent<GameController>()
             .RegisterDot(this);
     }

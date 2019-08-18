@@ -50,7 +50,7 @@ public class PacmanMover : MonoBehaviour, IReactiveProperty<Direction> {
     // rule #1: you just can go to another node if you are on some node
     // exception: you can interrupt coming back to previous node
     public void ChangeDirection(Direction direction) {
-        Node currentNode = GameController.GetInstance().currentPlayerNode;
+        Node currentNode = GameController.Instance.currentPlayerNode;
 
         if (currentNode != null) {
             if(UpdateDestinyNode(GetNextNodeFromDirection(currentNode, direction))) {
@@ -105,7 +105,7 @@ public class PacmanMover : MonoBehaviour, IReactiveProperty<Direction> {
             this.transform.position = Vector2.MoveTowards(transform.position, _destinyNode.GetPosition2D(), speed * Time.deltaTime);
 
 
-        Node currentNode = GameController.GetInstance().currentPlayerNode;
+        Node currentNode = GameController.Instance.currentPlayerNode;
 
         if (currentNode != null) {
             if (_bufferedDirectionToNextNode != null) {

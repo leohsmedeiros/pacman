@@ -29,13 +29,13 @@ public class Node : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.tag.Equals(GameController.PlayerTag)) {
-            GameController.GetInstance().UpdateCurrentPlayerNode(this);
+            GameController.Instance.UpdateCurrentPlayerNode(this);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
         if (collision.tag.Equals(GameController.PlayerTag)) {
-            GameController.GetInstance().UpdateCurrentPlayerNode(null);
+            GameController.Instance.UpdateCurrentPlayerNode(null);
         }
     }
 }

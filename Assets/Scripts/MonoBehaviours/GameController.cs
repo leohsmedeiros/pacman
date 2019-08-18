@@ -7,17 +7,7 @@ public class GameController : MonoBehaviour {
     private static readonly int DotScore = 10;
 
 
-    private static GameController _instance;
-
-    public static GameController GetInstance () {
-        if (_instance == null) {
-            _instance = GameObject
-                .FindWithTag("GameController")
-                .GetComponent<GameController>();
-        }
-
-        return _instance;
-    }
+    public static GameController Instance { private set; get; }
 
 
     private static int _currentLevel = 0;
@@ -29,6 +19,7 @@ public class GameController : MonoBehaviour {
     public Node currentPlayerNode { private set; get; } = null;
 
     private void Awake() {
+        Instance = this;
         _dots = new List<Dot>();
         _nodes = new List<Node>();
     }

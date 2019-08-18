@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class GhostMover : MonoBehaviour, IReactiveProperty<Direction> {
+public abstract class GhostAi : MonoBehaviour, IReactiveProperty<Direction> {
     private List<IObserverProperty<Direction>> observers;
 
     public float speed;
 
-    private Pacman _pacman;
+    protected Pacman _pacman;
 
-    private Direction _currentDirection = Direction.RIGHT;
-    private Node _currentNode, _targetNode, _previousNode;
-
+    protected Direction _currentDirection = Direction.RIGHT;
+    protected Node _currentNode, _targetNode, _previousNode;
+    public Node scatterModeTarget;
 
 
     private void Awake() {
@@ -27,14 +27,13 @@ public class GhostMover : MonoBehaviour, IReactiveProperty<Direction> {
             this.transform.position = Vector2.MoveTowards(transform.position, _targetNode.GetPosition2D(), 4.5f * Time.deltaTime);
     }
 
-    Node ChooseNextNode() {
-        Vector2 pacmanPosition = _pacman.transform.position;
+    private Node ChooseNextNodeOnScatterMode() {
         List<Node> neighborNodes = _currentNode.GetNeighbors();
         float distanceMin = float.MaxValue;
         Node selectedNode = neighborNodes[0];
 
         foreach (Node neighbor in neighborNodes) {
-            float distance = Vector2.Distance(neighbor.GetPosition2D(), pacmanPosition);
+            float distance = Vector2.Distance(neighbor.GetPosition2D(), scatterModeTarget.GetPosition2D());
 
             if (distance < distanceMin && neighbor != _previousNode) {
                 distanceMin = distance;
@@ -45,11 +44,23 @@ public class GhostMover : MonoBehaviour, IReactiveProperty<Direction> {
         return selectedNode;
     }
 
+
+    protected abstract Node ChooseNextNode();
+
+
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.GetComponent<Node>() != null) {
             _previousNode = _currentNode;
             _currentNode = collision.GetComponent<Node>();
-            _targetNode = ChooseNextNode();
+
+            if (GameModeController.Instance.GetCurrentGameMode()
+                    .Equals(GameModeController.GameMode.SCATTER))
+                _targetNode = ChooseNextNodeOnScatterMode();
+
+            else if (GameModeController.Instance.GetCurrentGameMode()
+                         .Equals(GameModeController.GameMode.CHASE))
+                _targetNode = ChooseNextNode();
+
         }
     }
 

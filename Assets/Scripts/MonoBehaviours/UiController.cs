@@ -20,7 +20,7 @@ public class UiController : MonoBehaviour /*, IObserverProperty<int>*/ {
 
         StartCoroutine(HideReadyWithSeconds(5));
 
-        GameController controller = GameController.GetInstance();
+        GameController controller = GameController.Instance;
 
         //((IReactiveProperty<int>)controller).Subscribe(this);
     }
