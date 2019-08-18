@@ -18598,7 +18598,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &944388852
 Animator:
   serializedVersion: 3
@@ -26484,7 +26484,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &1327859030
 Animator:
   serializedVersion: 3
@@ -26576,15 +26576,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1327859029}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00914d0061c714e46b6155213b2eb60e, type: 3}
+  m_Script: {fileID: 11500000, guid: ffa6fe8651de94e30abf8143f7f97201, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
-  _pacman: {fileID: 0}
-  _currentDirection: 0
-  _currentNode: {fileID: 0}
-  _targetNode: {fileID: 0}
-  _previousNode: {fileID: 0}
+  speed: 4.5
+  scatterModeTarget: {fileID: 1355586490}
 --- !u!58 &1327859034
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -36244,7 +36240,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &1834045222
 Animator:
   serializedVersion: 3
@@ -36321,7 +36317,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1834045221}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.5, y: -15.67, z: 0}
+  m_LocalPosition: {x: -2.05, y: 2.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -36334,7 +36330,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1834045221}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53d48d5527d004ddda4360a84c30f5c9, type: 3}
   m_Name: 
@@ -36383,7 +36379,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1834045221}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9460a079c620b42aeac595a6240524da, type: 3}
   m_Name: 
