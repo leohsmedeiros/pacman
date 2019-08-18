@@ -55,4 +55,8 @@ public class GameController : MonoBehaviour {
         this.currentPlayerNode = node;
     }
 
+    public void NotifyGhostCaughtPacman() {
+        Debug.Log("-1 life");
+    }
+
 }
