@@ -5777,11 +5777,11 @@ GameObject:
   - component: {fileID: 294559949}
   m_Layer: 0
   m_Name: pinky
-  m_TagString: Untagged
+  m_TagString: Ghost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &294559945
 Animator:
   serializedVersion: 3
@@ -5876,7 +5876,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca9f480aa4032436a8b548572b14b9d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
+  speed: 4.5
   scatterModeTarget: {fileID: 598779808}
 --- !u!58 &294559949
 CircleCollider2D:
@@ -18594,11 +18594,11 @@ GameObject:
   - component: {fileID: 944388855}
   m_Layer: 0
   m_Name: inky
-  m_TagString: Untagged
+  m_TagString: Ghost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &944388852
 Animator:
   serializedVersion: 3
@@ -18690,15 +18690,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 944388851}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00914d0061c714e46b6155213b2eb60e, type: 3}
+  m_Script: {fileID: 11500000, guid: 391101ee58a14451b832d1374154be54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
-  _pacman: {fileID: 0}
-  _currentDirection: 0
-  _currentNode: {fileID: 0}
-  _targetNode: {fileID: 0}
-  _previousNode: {fileID: 0}
+  speed: 4.5
+  scatterModeTarget: {fileID: 1248565311}
+  Blincky: {fileID: 1834045224}
 --- !u!58 &944388856
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -26483,7 +26480,7 @@ GameObject:
   - component: {fileID: 1327859033}
   m_Layer: 0
   m_Name: clyde
-  m_TagString: Untagged
+  m_TagString: Ghost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36247,7 +36244,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &1834045222
 Animator:
   serializedVersion: 3
@@ -36324,7 +36321,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1834045221}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.05, y: 2.95, z: 0}
+  m_LocalPosition: {x: 12.5, y: -15.67, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -36337,7 +36334,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1834045221}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53d48d5527d004ddda4360a84c30f5c9, type: 3}
   m_Name: 
@@ -36386,13 +36383,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1834045221}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9460a079c620b42aeac595a6240524da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4.5
-  scatterModeTarget: {fileID: 1248565311}
+  scatterModeTarget: {fileID: 1338382451}
 --- !u!1 &1849841033
 GameObject:
   m_ObjectHideFlags: 0

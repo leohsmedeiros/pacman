@@ -44,8 +44,24 @@ public abstract class GhostAi : MonoBehaviour, IReactiveProperty<Direction> {
         return selectedNode;
     }
 
+    protected abstract Vector2 EstimateTargetPoint();
 
-    protected abstract Node ChooseNextNode();
+    private Node ChooseNextNode(Vector2 estimatedTargetPoint) {
+        List<Node> neighborNodes = _currentNode.GetNeighbors();
+        float distanceMin = float.MaxValue;
+        Node selectedNode = neighborNodes[0];
+
+        foreach (Node neighbor in neighborNodes) {
+            float distance = Vector2.Distance(neighbor.GetPosition2D(), estimatedTargetPoint);
+
+            if (distance < distanceMin && neighbor != _previousNode) {
+                distanceMin = distance;
+                selectedNode = neighbor;
+            }
+        }
+
+        return selectedNode;
+    }
 
 
     private void OnTriggerEnter2D(Collider2D collision) {
@@ -54,12 +70,17 @@ public abstract class GhostAi : MonoBehaviour, IReactiveProperty<Direction> {
             _currentNode = collision.GetComponent<Node>();
 
             if (GameModeController.Instance.GetCurrentGameMode()
-                    .Equals(GameModeController.GameMode.SCATTER))
+                    .Equals(GameModeController.GameMode.SCATTER)) {
+
                 _targetNode = ChooseNextNodeOnScatterMode();
 
-            else if (GameModeController.Instance.GetCurrentGameMode()
-                         .Equals(GameModeController.GameMode.CHASE))
-                _targetNode = ChooseNextNode();
+            } else if (GameModeController.Instance.GetCurrentGameMode()
+                          .Equals(GameModeController.GameMode.CHASE)) {
+
+                Vector2 estimatedTargetPoint = EstimateTargetPoint();
+                Debug.Log(estimatedTargetPoint);
+                _targetNode = ChooseNextNode(estimatedTargetPoint);
+            }
 
         }
     }
