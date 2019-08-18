@@ -49,7 +49,7 @@ public abstract class GhostAi : MonoBehaviour, IReactiveProperty<Direction> {
 
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.GetComponent<Node>() != null) {
+        if (collision.tag.Equals(GameController.NodeTag)) {
             _previousNode = _currentNode;
             _currentNode = collision.GetComponent<Node>();
 

@@ -48,4 +48,20 @@ public class Pacman : MonoBehaviour, IObserverProperty<Direction> {
         }
     }
 
+    public Direction GetDirection() {
+        return _directionMover.GetCurrentDirection();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.tag.Equals(GameController.NodeTag)) {
+            GameController.Instance.UpdateCurrentPlayerNode(collision.GetComponent<Node>());
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision) {
+        if (collision.tag.Equals(GameController.NodeTag)) {
+            GameController.Instance.UpdateCurrentPlayerNode(null);
+        }
+    }
+
 }

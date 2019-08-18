@@ -4,6 +4,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
     public static readonly string PlayerTag = "Player";
     public static readonly string GhostTag = "Ghost";
+    public static readonly string NodeTag = "Node";
     private static readonly int DotScore = 10;
 
 
@@ -16,7 +17,9 @@ public class GameController : MonoBehaviour {
     public List<Dot> _dots;
     public List<Node> _nodes;
 
-    public Node currentPlayerNode { private set; get; } = null;
+    public Node CurrentPlayerNode { private set; get; } = null;
+    public Direction CurrentPlayerDirection { private set; get; } = Direction.RIGHT;
+
 
     private void Awake() {
         Instance = this;
@@ -42,8 +45,9 @@ public class GameController : MonoBehaviour {
         _dots.Add(dot);
     }
 
-    public void UpdateCurrentPlayerNode (Node node) {
-        this.currentPlayerNode = node;
+
+    public void UpdateCurrentPlayerNode(Node node) {
+        this.CurrentPlayerNode = node;
     }
 
     public void NotifyGhostCaughtPacman() {

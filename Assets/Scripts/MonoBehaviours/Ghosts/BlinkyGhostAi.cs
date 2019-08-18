@@ -2,8 +2,6 @@
 using UnityEngine;
 
 public class BlinkyGhostAi : GhostAi {
-
-
     protected override Node ChooseNextNode() {
         Vector2 pacmanPosition = _pacman.transform.position;
         List<Node> neighborNodes = _currentNode.GetNeighbors();
@@ -21,6 +19,4 @@ public class BlinkyGhostAi : GhostAi {
 
         return selectedNode;
     }
-
-
 }
