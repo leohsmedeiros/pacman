@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class GhostMover : MonoBehaviour, IReactiveProperty<Direction> {
@@ -60,11 +59,11 @@ public class GhostMover : MonoBehaviour, IReactiveProperty<Direction> {
         observers.Add(observer);
     }
 
-    void IReactiveProperty<Direction>.Unsubscribe(IObserverProperty<Direction> observer) {
+    public void Unsubscribe(IObserverProperty<Direction> observer) {
         observers.Remove(observer);
     }
 
-    void IReactiveProperty<Direction>.NotifyObservers() {
+    public void NotifyObservers() {
         foreach (IObserverProperty<Direction> observer in observers) {
             observer.OnUpdateProperty(_currentDirection);
         }
