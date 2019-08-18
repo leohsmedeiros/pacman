@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
     public static readonly string PlayerTag = "Player";
+    public static readonly string GhostTag = "Ghost";
     private static readonly int DotScore = 10;
 
 

@@ -35720,7 +35720,7 @@ GameObject:
   - component: {fileID: 1834045226}
   m_Layer: 0
   m_Name: blinky
-  m_TagString: Untagged
+  m_TagString: Ghost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35801,7 +35801,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1834045221}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.04, y: -9.61, z: 0}
+  m_LocalPosition: {x: -5.32, y: -9.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -35819,7 +35819,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53d48d5527d004ddda4360a84c30f5c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartNode: {fileID: 0}
 --- !u!58 &1834045226
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -35830,7 +35829,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

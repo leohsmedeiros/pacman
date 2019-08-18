@@ -8,25 +8,66 @@ public class Node : MonoBehaviour {
     public Node downNode;
 
 
+    public List<Node> GetNeighbors () {
+        List<Node> neighbors = new List<Node>();
+
+        if (upNode != null)
+            neighbors.Add(upNode);
+        if (leftNode != null)
+            neighbors.Add(leftNode);
+        if (rightNode != null)
+            neighbors.Add(rightNode);
+        if (downNode != null)
+            neighbors.Add(downNode);
+
+        return neighbors;
+    }
+
+
+    public List<Direction> GetValidDirections() {
+        List<Direction> neighborsDirections = new List<Direction>();
+
+        if (upNode != null)
+            neighborsDirections.Add(Direction.UP);
+        if (leftNode != null)
+            neighborsDirections.Add(Direction.LEFT);
+        if (rightNode != null)
+            neighborsDirections.Add(Direction.RIGHT);
+        if (downNode != null)
+            neighborsDirections.Add(Direction.DOWN);
+
+        return neighborsDirections;
+    }
+
+
+
     public Dictionary<Direction, Node> GetNeighborsButNoOpposite(Direction direction) {
         Dictionary<Direction, Node> dictionary = new Dictionary<Direction, Node>();
 
         if (direction.Equals(Direction.RIGHT)) {
-            dictionary.Add(Direction.UP, upNode);
-            dictionary.Add(Direction.RIGHT, rightNode);
-            dictionary.Add(Direction.DOWN, downNode);
+
+            if (upNode != null) dictionary.Add(Direction.UP, upNode);
+            if (rightNode != null) dictionary.Add(Direction.RIGHT, rightNode);
+            if (downNode != null) dictionary.Add(Direction.DOWN, downNode);
+
         } else if (direction.Equals(Direction.LEFT)) {
-            dictionary.Add(Direction.UP, upNode);
-            dictionary.Add(Direction.LEFT, leftNode);
-            dictionary.Add(Direction.DOWN, downNode);
+
+            if (upNode != null) dictionary.Add(Direction.UP, upNode);
+            if (leftNode != null) dictionary.Add(Direction.LEFT, leftNode);
+            if (downNode != null) dictionary.Add(Direction.DOWN, downNode);
+        
         } else if (direction.Equals(Direction.UP)) {
-            dictionary.Add(Direction.UP, upNode);
-            dictionary.Add(Direction.RIGHT, rightNode);
-            dictionary.Add(Direction.LEFT, leftNode);
+        
+            if (upNode != null) dictionary.Add(Direction.UP, upNode);
+            if (rightNode != null) dictionary.Add(Direction.RIGHT, rightNode);
+            if (leftNode != null) dictionary.Add(Direction.LEFT, leftNode);
+        
         } else {
-            dictionary.Add(Direction.LEFT, leftNode);
-            dictionary.Add(Direction.RIGHT, rightNode);
-            dictionary.Add(Direction.DOWN, downNode);
+
+            if (leftNode != null) dictionary.Add(Direction.LEFT, leftNode);
+            if (rightNode != null) dictionary.Add(Direction.RIGHT, rightNode);
+            if (downNode != null) dictionary.Add(Direction.DOWN, downNode);
+
         }
 
         return dictionary;
