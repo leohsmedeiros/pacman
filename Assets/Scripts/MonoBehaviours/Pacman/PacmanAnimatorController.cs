@@ -15,24 +15,7 @@ public class PacmanAnimatorController : MonoBehaviour {
         if (pacmanAnimation.Equals(_currentPacmanAnimation))
             return;
 
-        switch (pacmanAnimation) {
-            case PacmanAnimation.MOVE_RIGHT:
-                _animator.SetTrigger("right");
-                break;
-            case PacmanAnimation.MOVE_LEFT:
-                _animator.SetTrigger("left");
-                break;
-            case PacmanAnimation.MOVE_UP:
-                _animator.SetTrigger("up");
-                break;
-            case PacmanAnimation.MOVE_DOWN:
-                _animator.SetTrigger("down");
-                break;
-            case PacmanAnimation.DIE:
-                _animator.SetTrigger("die");
-                break;
-        }
-
+        _animator.SetTrigger(pacmanAnimation.ToString());
         _currentPacmanAnimation = pacmanAnimation;
     }
 

@@ -1,16 +1,44 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 [RequireComponent(typeof(PacmanAnimatorController))]
 [RequireComponent(typeof(PacmanMover))]
-public class Pacman : MonoBehaviour, IObserverProperty<Direction> {
+public class Pacman : MonoBehaviour {
     private PacmanAnimatorController _pacmanAnimator;
     private PacmanMover _directionMover;
 
+    private List<Action<Node>> actionsOnChangeNode;
+    private List<Action> actionsOnGetCaughtByGhosts;
+
     private void Start() {
+        actionsOnChangeNode = new List<Action<Node>>();
+        actionsOnGetCaughtByGhosts = new List<Action>();
+
         _pacmanAnimator = this.GetComponent<PacmanAnimatorController>();
         _directionMover = this.GetComponent<PacmanMover>();
 
-        ((IReactiveProperty<Direction>) _directionMover).Subscribe(this);
+        _directionMover.SubscribeForDirectionsChange(direction => {
+            switch (direction) {
+                case Direction.RIGHT:
+                    _pacmanAnimator.SetAnimation(PacmanAnimatorController.PacmanAnimation.MOVE_RIGHT);
+                    break;
+
+                case Direction.LEFT:
+                    _pacmanAnimator.SetAnimation(PacmanAnimatorController.PacmanAnimation.MOVE_LEFT);
+                    break;
+
+                case Direction.UP:
+                    _pacmanAnimator.SetAnimation(PacmanAnimatorController.PacmanAnimation.MOVE_UP);
+                    break;
+
+                case Direction.DOWN:
+                    _pacmanAnimator.SetAnimation(PacmanAnimatorController.PacmanAnimation.MOVE_DOWN);
+                    break;
+            }
+        });
+
+        GameController.Instance.RegisterPlayer(this);
     }
 
     void Update() {
@@ -27,40 +55,43 @@ public class Pacman : MonoBehaviour, IObserverProperty<Direction> {
             _directionMover.ChangeDirection(Direction.DOWN);
     }
 
-    // pacman will react to direction changes updating the current animation
-    public void OnUpdateProperty(Direction currentDirection) {
-        switch(currentDirection) {
-            case Direction.RIGHT:
-                _pacmanAnimator.SetAnimation(PacmanAnimatorController.PacmanAnimation.MOVE_RIGHT);
-                break;
-
-            case Direction.LEFT:
-                _pacmanAnimator.SetAnimation(PacmanAnimatorController.PacmanAnimation.MOVE_LEFT);
-                break;
-
-            case Direction.UP:
-                _pacmanAnimator.SetAnimation(PacmanAnimatorController.PacmanAnimation.MOVE_UP);
-                break;
-
-            case Direction.DOWN:
-                _pacmanAnimator.SetAnimation(PacmanAnimatorController.PacmanAnimation.MOVE_DOWN);
-                break;
-        }
-    }
 
     public Direction GetDirection() {
         return _directionMover.GetCurrentDirection();
     }
 
+
+
+    public void SubscribeOnChangeNode(Action<Node> observer) {
+        actionsOnChangeNode.Add(observer);
+    }
+
+    public void SubscribeOnGetCaughtByGhosts(Action observer) {
+        actionsOnGetCaughtByGhosts.Add(observer);
+    }
+
+
+
+
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.tag.Equals(GameController.NodeTag)) {
-            GameController.Instance.UpdateCurrentPlayerNode(collision.GetComponent<Node>());
+ 
+           foreach (Action<Node> action in actionsOnChangeNode)
+                action.Invoke(collision.GetComponent<Node>());
+
+        } else if (collision.tag.Equals(GameController.GhostTag)) {
+
+            foreach (Action action in actionsOnGetCaughtByGhosts)
+                action.Invoke();
+
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
         if (collision.tag.Equals(GameController.NodeTag)) {
-            GameController.Instance.UpdateCurrentPlayerNode(null);
+            foreach (Action<Node> action in actionsOnChangeNode) {
+                action.Invoke(null);
+            }
         }
     }
 

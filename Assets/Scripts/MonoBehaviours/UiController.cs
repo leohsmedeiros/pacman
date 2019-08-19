@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UiController : MonoBehaviour /*, IObserverProperty<int>*/ {
+public class UiController : MonoBehaviour {
 
     public GameObject Ready;
     public Text TextScore;
@@ -21,8 +21,6 @@ public class UiController : MonoBehaviour /*, IObserverProperty<int>*/ {
         StartCoroutine(HideReadyWithSeconds(5));
 
         GameController controller = GameController.Instance;
-
-        //((IReactiveProperty<int>)controller).Subscribe(this);
     }
 
     public void OnUpdateProperty(int value) {

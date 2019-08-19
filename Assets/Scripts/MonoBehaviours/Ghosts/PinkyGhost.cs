@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PinkyGhostAi : GhostAi {
+public class PinkyGhost : Ghost {
     // four tiles ahead pacman
     private int tiles = 4;
 

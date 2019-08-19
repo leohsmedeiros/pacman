@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class InkyGhostAi : GhostAi {
+public class InkyGhost : Ghost {
     public Transform Blincky;
     private int tiles = 2;        
     

@@ -1,12 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class PacmanMover : MonoBehaviour, IReactiveProperty<Direction> {
-    private List<IObserverProperty<Direction>> observers;
+public class PacmanMover : MonoBehaviour {
+    private List<Action<Direction>> actionsForDirectionsChange;
 
     public float speed;
 
     private Direction _currentDirection = Direction.RIGHT;
+    private Direction currentDirection {
+        set {
+            _currentDirection = value;
+
+            foreach (Action<Direction> action in actionsForDirectionsChange) {
+                action.Invoke(_currentDirection);
+            }
+        }
+        get {
+            return _currentDirection;
+        }
+    }
 
     private Node _destinyNode = null;
 
@@ -14,31 +27,20 @@ public class PacmanMover : MonoBehaviour, IReactiveProperty<Direction> {
 
 
     private void Awake() {
-        observers = new List<IObserverProperty<Direction>>();
+        actionsForDirectionsChange = new List<Action<Direction>>();
     }
 
     public Direction GetCurrentDirection() {
-        return _currentDirection;
+        return currentDirection;
     }
 
-    void IReactiveProperty<Direction>.Subscribe(IObserverProperty<Direction> observer) {
-        observers.Add(observer);
+    public void SubscribeForDirectionsChange(Action<Direction> action) {
+        actionsForDirectionsChange.Add(action);
     }
-
-    void IReactiveProperty<Direction>.Unsubscribe(IObserverProperty<Direction> observer) {
-        observers.Remove(observer);
-    }
-
-    void IReactiveProperty<Direction>.NotifyObservers() {
-        foreach (IObserverProperty<Direction> observer in observers) {
-            observer.OnUpdateProperty(_currentDirection);
-        }
-    }
-
 
 
     private bool IsOpositeDirection(Direction desiredDirection) {
-        switch (_currentDirection) {
+        switch (currentDirection) {
             case Direction.RIGHT: return desiredDirection.Equals(Direction.LEFT);
             case Direction.LEFT: return desiredDirection.Equals(Direction.RIGHT);
             case Direction.UP: return desiredDirection.Equals(Direction.DOWN);
@@ -54,14 +56,12 @@ public class PacmanMover : MonoBehaviour, IReactiveProperty<Direction> {
 
         if (currentNode != null) {
             if(UpdateDestinyNode(GetNextNodeFromDirection(currentNode, direction))) {
-                _currentDirection = direction;
-                ((IReactiveProperty<Direction>) this).NotifyObservers();
+                currentDirection = direction;
             }
 
         } else if (IsOpositeDirection(direction) && _destinyNode != null) {
             if (UpdateDestinyNode(GetNextNodeFromDirection(_destinyNode, direction))) {
-                _currentDirection = direction;
-                ((IReactiveProperty<Direction>)this).NotifyObservers();
+                currentDirection = direction;
             }
 
         } else {
@@ -111,16 +111,14 @@ public class PacmanMover : MonoBehaviour, IReactiveProperty<Direction> {
             if (_bufferedDirectionToNextNode != null) {
 
                 if (UpdateDestinyNode(GetNextNodeFromDirection(currentNode, _bufferedDirectionToNextNode.Value))) {
-                    _currentDirection = _bufferedDirectionToNextNode.Value;
-                    ((IReactiveProperty<Direction>)this).NotifyObservers();
-
+                    currentDirection = _bufferedDirectionToNextNode.Value;
                 }
 
                 _bufferedDirectionToNextNode = null;
 
-            }else {
+            } else {
 
-                UpdateDestinyNode(GetNextNodeFromDirection(currentNode, _currentDirection));
+                UpdateDestinyNode(GetNextNodeFromDirection(currentNode, currentDirection));
             }
         }
 
