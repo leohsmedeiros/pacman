@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,10 +17,11 @@ public class GameController : MonoBehaviour {
     }
 
 
-    private GameMode _currentGameMode = GameMode.SCATTER;
+    private GameMode _currentGameMode = GameMode.WAITING;
     public GameMode CurrentGameMode {
         private set {
             _currentGameMode = value;
+            Debug.Log(_currentGameMode);
             foreach(Action<GameMode> action in actionsForGameModeChange) {
                 action.Invoke(_currentGameMode);
             }
@@ -42,18 +44,23 @@ public class GameController : MonoBehaviour {
     public Node CurrentPlayerNode { private set; get; } = null;
     public Direction CurrentPlayerDirection { private set; get; } = Direction.RIGHT;
 
-    public enum GameMode { WAITING, INIT, SCATTER, CHASE, FRIGHTENED }
+    public enum GameMode { WAITING, SCATTER, CHASE, FRIGHTENED }
 
     private Queue<GameModeSettings> _queueGameModes;
-    private bool _isFightened = false;
-    private int[] timeForFrightenedModeByLevel = new int[] { 6, 5, 4, 3, 2, 5, 2, 2, 1, 5, 2, 1, 1, 3, 1, 1, 0, 1, 0 };
+    private int[] _timeForFrightenedModeByLevel = new int[] { 6, 5, 4, 3, 2, 5, 2, 2, 1, 5, 2, 1, 1, 3, 1, 1, 0, 1, 0 };
 
+
+    private float _timerFrightened = 0;
 
 
     public GameMode GetCurrentGameMode() {
         return _currentGameMode;
     }
 
+    IEnumerator StartAfterSeconds() {
+        yield return new WaitForSeconds(5);
+        CurrentGameMode = GameMode.SCATTER;
+    }
 
     private void Awake() {
         Instance = this;
@@ -73,6 +80,32 @@ public class GameController : MonoBehaviour {
     }
 
 
+
+
+
+    private void Start() {
+        StartCoroutine(StartAfterSeconds());
+    }
+
+
+    private void Update() {
+        if(CurrentGameMode.Equals(GameMode.FRIGHTENED)) {
+            _timerFrightened += Time.deltaTime;
+
+            float maxTime = (CurrentLevel < _timeForFrightenedModeByLevel.Length - 1) ?
+                _timeForFrightenedModeByLevel[CurrentLevel] : 0;
+                
+            if (_timerFrightened > maxTime) {
+                _timerFrightened = 0;
+                CurrentGameMode = GameMode.SCATTER;
+            }
+        }
+    }
+
+    public void SubscribeForGameModeChanges(Action<GameMode> action) {
+        actionsForGameModeChange.Add(action);
+    }
+
     public void RegisterDot(Dot dot) {
         dot.SubscribeOnCaught(() => {
             _dots.Remove(dot);
@@ -80,6 +113,7 @@ public class GameController : MonoBehaviour {
             //Debug.Log("score: " + _score);
 
             if (dot.IsEnergizer) {
+                CurrentGameMode = GameMode.FRIGHTENED;
                 Debug.Log("Caught Energizer");
             }
 
@@ -93,7 +127,13 @@ public class GameController : MonoBehaviour {
 
     public void RegisterPlayer(Pacman pacman) {
         pacman.SubscribeOnChangeNode((Node node) => { CurrentPlayerNode = node; });
-        pacman.SubscribeOnGetCaughtByGhosts(() => Debug.Log("-1 life"));
+        pacman.SubscribeOnGetCaughtByGhosts((ghost) => {
+            if (CurrentGameMode.Equals(GameMode.FRIGHTENED)) {
+                ghost.Die();
+            }else {
+                Debug.Log("-1 life");
+            }
+        });
     }
 
 }

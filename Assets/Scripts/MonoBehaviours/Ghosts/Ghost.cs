@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Ghost : MonoBehaviour {
     private List<Action<Direction>> actionsForDirectionsChange;
+    private List<Action<bool>> actionsForLifeStatusChanges;
 
     public float speed;
     public float timeToBeReleased;
@@ -15,8 +16,11 @@ public abstract class Ghost : MonoBehaviour {
     public Direction CurrentDirection {
         private set {
             _currentDirection = value;
-            foreach (Action<Direction> action in actionsForDirectionsChange) {
-                action.Invoke(_currentDirection);
+
+            if (!IsDead) {
+                foreach (Action<Direction> action in actionsForDirectionsChange) {
+                    action.Invoke(_currentDirection);
+                }
             }
         }
         get {
@@ -26,18 +30,39 @@ public abstract class Ghost : MonoBehaviour {
 
     protected Node _currentNode, _targetNode, _previousNode;
     public Node scatterModeTarget;
+    public Node ghostHouseDoor;
+
+    private bool _isDead = false;
+    public bool IsDead { 
+        set {
+            _isDead = value;
+            foreach (Action<bool> action in actionsForLifeStatusChanges) {
+                action.Invoke(value);
+            }
+        }
+        get {
+            return _isDead;
+        }
+    }
+
 
 
     private void Awake() {
         actionsForDirectionsChange = new List<Action<Direction>>();
+        actionsForLifeStatusChanges = new List<Action<bool>>();
     }
 
     private void Start() {
         _pacman = GameObject.FindWithTag(GameController.PlayerTag).GetComponent<Pacman>();
+
+        GameController.Instance.SubscribeForGameModeChanges(ActionsByGameMode);
     }
 
 
     private void Update() {
+        if (GameController.Instance.CurrentGameMode.Equals(GameController.GameMode.WAITING))
+            return;
+
         if (_timer > timeToBeReleased) {
             if (_targetNode != null)
                 this.transform.position = Vector2.MoveTowards(transform.position, _targetNode.GetPosition2D(), 4.5f * Time.deltaTime);
@@ -46,53 +71,38 @@ public abstract class Ghost : MonoBehaviour {
         }
     }
 
-    private Node ChooseNextNodeOnScatterMode() {
-        List<Node> neighborNodes = _currentNode.GetNeighbors();
-        float distanceMin = float.MaxValue;
-        Node selectedNode = neighborNodes[0];
-
-        foreach (Node neighbor in neighborNodes) {
-            float distance = Vector2.Distance(neighbor.GetPosition2D(), scatterModeTarget.GetPosition2D());
-
-            if (distance < distanceMin && neighbor != _previousNode) {
-                distanceMin = distance;
-                selectedNode = neighbor;
-            }
-        }
-
-        return selectedNode;
+    public void Die() {
+        IsDead = true;
     }
 
-    private Node ChooseNextNodeOnFrightenedMode() {
-        List<Node> neighborNodes = _currentNode.GetNeighbors();
-        float distanceMax = float.MinValue;
-        Node selectedNode = neighborNodes[0];
-
-        foreach (Node neighbor in neighborNodes) {
-            float distance = Vector2.Distance(neighbor.GetPosition2D(), _pacman.transform.position);
-
-            if (distance > distanceMax && neighbor != _previousNode) {
-                distanceMax = distance;
-                selectedNode = neighbor;
-            }
-        }
-
-        return selectedNode;
+    public void Revive() {
+        IsDead = false;
     }
 
     protected abstract Vector2 EstimateTargetPoint();
 
-    private Node ChooseNextNode(Vector2 estimatedTargetPoint) {
+
+
+    private Node ChooseNextNode(Vector2 estimatedTargetPoint, bool isFrightened) {
         List<Node> neighborNodes = _currentNode.GetNeighbors();
-        float distanceMin = float.MaxValue;
+        float distanceMinMax = isFrightened ? float.MinValue : float.MaxValue;
         Node selectedNode = neighborNodes[0];
 
         foreach (Node neighbor in neighborNodes) {
             float distance = Vector2.Distance(neighbor.GetPosition2D(), estimatedTargetPoint);
 
-            if (distance < distanceMin && neighbor != _previousNode) {
-                distanceMin = distance;
-                selectedNode = neighbor;
+            if (isFrightened) {
+                if (distance > distanceMinMax && neighbor != _previousNode) {
+                    distanceMinMax = distance;
+                    selectedNode = neighbor;
+                    CurrentDirection = _currentNode.GetDirectionByNode(neighbor);
+                }
+            } else {
+                if (distance < distanceMinMax && neighbor != _previousNode) {
+                    distanceMinMax = distance;
+                    selectedNode = neighbor;
+                    CurrentDirection = _currentNode.GetDirectionByNode(neighbor);
+                }
             }
         }
 
@@ -100,35 +110,42 @@ public abstract class Ghost : MonoBehaviour {
     }
 
 
-    private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.tag.Equals(GameController.NodeTag)) {
-            _previousNode = _currentNode;
-            _currentNode = collision.GetComponent<Node>();
+    private void ActionsByGameMode(GameController.GameMode gameMode) {
+        if (IsDead) {
 
-            if (GameController.Instance.GetCurrentGameMode()
-                    .Equals(GameController.GameMode.SCATTER)) {
+            _targetNode = ChooseNextNode(ghostHouseDoor.GetPosition2D(), false);
 
-                _targetNode = ChooseNextNodeOnScatterMode();
+        } else if (gameMode.Equals(GameController.GameMode.SCATTER)) {
 
-            } else if (GameController.Instance.GetCurrentGameMode()
-                          .Equals(GameController.GameMode.CHASE)) {
+            _targetNode = ChooseNextNode(scatterModeTarget.GetPosition2D(), false);
 
-                Vector2 estimatedTargetPoint = EstimateTargetPoint();
-                _targetNode = ChooseNextNode(estimatedTargetPoint);
+        } else if (gameMode.Equals(GameController.GameMode.CHASE)) {
 
-            } else if (GameController.Instance.GetCurrentGameMode()
-                          .Equals(GameController.GameMode.FRIGHTENED)) {
+            Vector2 estimatedTargetPoint = EstimateTargetPoint();
+            _targetNode = ChooseNextNode(estimatedTargetPoint, false);
 
-                _targetNode = ChooseNextNodeOnFrightenedMode();
+        } else if (gameMode.Equals(GameController.GameMode.FRIGHTENED)) {
 
-            }
+            _targetNode = ChooseNextNode(_pacman.transform.position, true);
+
         }
     }
 
 
-
     public void SubscribeOnDirectionsChanges(Action<Direction> action) {
         actionsForDirectionsChange.Add(action);
+    }
+
+    public void SubscribeOnLifeStatusChange(Action<bool> action) {
+        actionsForLifeStatusChanges.Add(action);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.tag.Equals(GameController.NodeTag)) {
+            _previousNode = _currentNode;
+            _currentNode = collision.GetComponent<Node>();
+            ActionsByGameMode(GameController.Instance.CurrentGameMode);
+        }
     }
 
 

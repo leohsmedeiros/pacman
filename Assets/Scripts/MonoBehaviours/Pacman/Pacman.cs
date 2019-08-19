@@ -9,11 +9,11 @@ public class Pacman : MonoBehaviour {
     private PacmanMover _directionMover;
 
     private List<Action<Node>> actionsOnChangeNode;
-    private List<Action> actionsOnGetCaughtByGhosts;
+    private List<Action<Ghost>> actionsOnGetCaughtByGhosts;
 
     private void Start() {
         actionsOnChangeNode = new List<Action<Node>>();
-        actionsOnGetCaughtByGhosts = new List<Action>();
+        actionsOnGetCaughtByGhosts = new List<Action<Ghost>>();
 
         _pacmanAnimator = this.GetComponent<PacmanAnimator>();
         _directionMover = this.GetComponent<PacmanMover>();
@@ -42,6 +42,10 @@ public class Pacman : MonoBehaviour {
     }
 
     void Update() {
+        if (GameController.Instance.CurrentGameMode.Equals(GameController.GameMode.WAITING))
+            return;
+
+
         if (Input.GetKeyDown(KeyCode.RightArrow))
             _directionMover.ChangeDirection(Direction.RIGHT);
 
@@ -62,12 +66,12 @@ public class Pacman : MonoBehaviour {
 
 
 
-    public void SubscribeOnChangeNode(Action<Node> observer) {
-        actionsOnChangeNode.Add(observer);
+    public void SubscribeOnChangeNode(Action<Node> action) {
+        actionsOnChangeNode.Add(action);
     }
 
-    public void SubscribeOnGetCaughtByGhosts(Action observer) {
-        actionsOnGetCaughtByGhosts.Add(observer);
+    public void SubscribeOnGetCaughtByGhosts(Action<Ghost> action) {
+        actionsOnGetCaughtByGhosts.Add(action);
     }
 
 
@@ -81,8 +85,8 @@ public class Pacman : MonoBehaviour {
 
         } else if (collision.tag.Equals(GameController.GhostTag)) {
 
-            foreach (Action action in actionsOnGetCaughtByGhosts)
-                action.Invoke();
+            foreach (Action<Ghost> action in actionsOnGetCaughtByGhosts)
+                action.Invoke(collision.GetComponent<Ghost>());
 
         }
     }

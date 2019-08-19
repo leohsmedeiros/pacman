@@ -100,6 +100,8 @@ public class PacmanMover : MonoBehaviour {
     }
 
     public void Update() {
+        if (GameController.Instance.CurrentGameMode.Equals(GameController.GameMode.WAITING))
+            return;
 
         if (_destinyNode != null)
             this.transform.position = Vector2.MoveTowards(transform.position, _destinyNode.GetPosition2D(), speed * Time.deltaTime);

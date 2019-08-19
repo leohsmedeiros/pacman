@@ -6,6 +6,10 @@ using UnityEngine;
 [RequireComponent(typeof(Ghost))]
 public class GhostAnimator : MonoBehaviour {
 
+    public GameObject eyeParent;
+    public GameObject frightenedBody;
+    public GameObject body;
+
     public GameObject upEye;
     public GameObject rightEye;
     public GameObject leftEye;
@@ -47,8 +51,35 @@ public class GhostAnimator : MonoBehaviour {
                     downEye.SetActive(true);
                     break;
             }
+        });
 
+        _ghost.SubscribeOnLifeStatusChange(isDead => {
+            if (isDead) {
+                body.SetActive(false);
+                frightenedBody.SetActive(false);
+                eyeParent.SetActive(true);
+            }else {
+                body.SetActive(true);
+                frightenedBody.SetActive(false);
+                eyeParent.SetActive(true);
+            }
+        });
+
+        GameController.Instance.SubscribeForGameModeChanges(gameMode => {
+            if (_ghost.IsDead)
+                return;
+
+            if(gameMode.Equals(GameController.GameMode.FRIGHTENED)) {
+                body.SetActive(false);
+                eyeParent.SetActive(false);
+                frightenedBody.SetActive(true);
+            }else {
+                body.SetActive(true);
+                eyeParent.SetActive(true);
+                frightenedBody.SetActive(false);
+            }
         });
     }
+
 
 }
