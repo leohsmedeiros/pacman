@@ -6321,7 +6321,7 @@ MonoBehaviour:
   speed: 4.5
   timeToBeReleased: 2
   scatterModeTarget: {fileID: 598779808}
-  ghostHouseDoor: {fileID: 942918120}
+  ghostHouseDoor: {fileID: 1774965436}
 --- !u!58 &294559949
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -18038,6 +18038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 771e511cdfbfe41f780820ea4d1303ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StarterTime: 5
 --- !u!1 &876962914
 GameObject:
   m_ObjectHideFlags: 0
@@ -19538,7 +19539,7 @@ GameObject:
   - component: {fileID: 942918119}
   - component: {fileID: 942918118}
   m_Layer: 0
-  m_Name: Node_54
+  m_Name: RevivalNode_54
   m_TagString: Node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19820,7 +19821,7 @@ MonoBehaviour:
   speed: 4.5
   timeToBeReleased: 3
   scatterModeTarget: {fileID: 1248565311}
-  ghostHouseDoor: {fileID: 942918120}
+  ghostHouseDoor: {fileID: 1774965436}
   Blincky: {fileID: 1834045224}
 --- !u!58 &944388856
 CircleCollider2D:
@@ -28313,7 +28314,7 @@ MonoBehaviour:
   speed: 4.5
   timeToBeReleased: 4
   scatterModeTarget: {fileID: 1355586490}
-  ghostHouseDoor: {fileID: 942918120}
+  ghostHouseDoor: {fileID: 1774965436}
 --- !u!58 &1327859034
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -37130,7 +37131,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1774965435}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e907cb80ee54b4646970b2bcf62881ba, type: 3}
+  m_Script: {fileID: 11500000, guid: 7320875e011624052b5ee4ca5715da7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   node: {fileID: 942918120}
@@ -38658,7 +38659,7 @@ MonoBehaviour:
   speed: 4.5
   timeToBeReleased: 1
   scatterModeTarget: {fileID: 1338382451}
-  ghostHouseDoor: {fileID: 942918120}
+  ghostHouseDoor: {fileID: 1774965436}
 --- !u!1 &1849841033
 GameObject:
   m_ObjectHideFlags: 0
