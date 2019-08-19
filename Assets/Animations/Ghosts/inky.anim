@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: blinky_move_right
+  m_Name: inky
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,10 +20,10 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: -5444046033361985051, guid: 0c9d83dcbc5ac43f382972a61d3ebc78,
+      value: {fileID: -3441670517663871490, guid: 61bada223bbd6408a8f9aa42cf3fa623,
         type: 3}
     - time: 0.083333336
-      value: {fileID: -3050360323061173620, guid: 0c9d83dcbc5ac43f382972a61d3ebc78,
+      value: {fileID: 7174320697446596715, guid: 61bada223bbd6408a8f9aa42cf3fa623,
         type: 3}
     attribute: m_Sprite
     path: 
@@ -44,8 +44,8 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: -5444046033361985051, guid: 0c9d83dcbc5ac43f382972a61d3ebc78, type: 3}
-    - {fileID: -3050360323061173620, guid: 0c9d83dcbc5ac43f382972a61d3ebc78, type: 3}
+    - {fileID: -3441670517663871490, guid: 61bada223bbd6408a8f9aa42cf3fa623, type: 3}
+    - {fileID: 7174320697446596715, guid: 61bada223bbd6408a8f9aa42cf3fa623, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

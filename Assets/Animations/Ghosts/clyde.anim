@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: inky_move_up
+  m_Name: clyde
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,10 +20,10 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: -3441670517663871490, guid: 61bada223bbd6408a8f9aa42cf3fa623,
+      value: {fileID: 4082123663037807683, guid: 7e6d811a623334dea9eb3f82a607f7b1,
         type: 3}
     - time: 0.083333336
-      value: {fileID: 7174320697446596715, guid: 61bada223bbd6408a8f9aa42cf3fa623,
+      value: {fileID: 7525734713798459664, guid: 7e6d811a623334dea9eb3f82a607f7b1,
         type: 3}
     attribute: m_Sprite
     path: 
@@ -44,8 +44,8 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: -3441670517663871490, guid: 61bada223bbd6408a8f9aa42cf3fa623, type: 3}
-    - {fileID: 7174320697446596715, guid: 61bada223bbd6408a8f9aa42cf3fa623, type: 3}
+    - {fileID: 4082123663037807683, guid: 7e6d811a623334dea9eb3f82a607f7b1, type: 3}
+    - {fileID: 7525734713798459664, guid: 7e6d811a623334dea9eb3f82a607f7b1, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(PacmanAnimatorController))]
+[RequireComponent(typeof(PacmanAnimator))]
 [RequireComponent(typeof(PacmanMover))]
 public class Pacman : MonoBehaviour {
-    private PacmanAnimatorController _pacmanAnimator;
+    private PacmanAnimator _pacmanAnimator;
     private PacmanMover _directionMover;
 
     private List<Action<Node>> actionsOnChangeNode;
@@ -15,25 +15,25 @@ public class Pacman : MonoBehaviour {
         actionsOnChangeNode = new List<Action<Node>>();
         actionsOnGetCaughtByGhosts = new List<Action>();
 
-        _pacmanAnimator = this.GetComponent<PacmanAnimatorController>();
+        _pacmanAnimator = this.GetComponent<PacmanAnimator>();
         _directionMover = this.GetComponent<PacmanMover>();
 
         _directionMover.SubscribeForDirectionsChange(direction => {
             switch (direction) {
                 case Direction.RIGHT:
-                    _pacmanAnimator.SetAnimation(PacmanAnimatorController.PacmanAnimation.MOVE_RIGHT);
+                    _pacmanAnimator.SetAnimation(PacmanAnimator.PacmanAnimation.MOVE_RIGHT);
                     break;
 
                 case Direction.LEFT:
-                    _pacmanAnimator.SetAnimation(PacmanAnimatorController.PacmanAnimation.MOVE_LEFT);
+                    _pacmanAnimator.SetAnimation(PacmanAnimator.PacmanAnimation.MOVE_LEFT);
                     break;
 
                 case Direction.UP:
-                    _pacmanAnimator.SetAnimation(PacmanAnimatorController.PacmanAnimation.MOVE_UP);
+                    _pacmanAnimator.SetAnimation(PacmanAnimator.PacmanAnimation.MOVE_UP);
                     break;
 
                 case Direction.DOWN:
-                    _pacmanAnimator.SetAnimation(PacmanAnimatorController.PacmanAnimation.MOVE_DOWN);
+                    _pacmanAnimator.SetAnimation(PacmanAnimator.PacmanAnimation.MOVE_DOWN);
                     break;
             }
         });

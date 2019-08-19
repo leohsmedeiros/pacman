@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class PacmanAnimatorController : MonoBehaviour {
+public class PacmanAnimator : MonoBehaviour {
     public enum PacmanAnimation { MOVE_RIGHT, MOVE_LEFT, MOVE_UP, MOVE_DOWN, DIE }
 
     private Animator _animator;

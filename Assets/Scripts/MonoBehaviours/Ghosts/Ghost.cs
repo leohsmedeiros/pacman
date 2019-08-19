@@ -11,7 +11,19 @@ public abstract class Ghost : MonoBehaviour {
 
     protected Pacman _pacman;
 
-    protected Direction _currentDirection = Direction.RIGHT;
+    private Direction _currentDirection = Direction.RIGHT;
+    public Direction CurrentDirection {
+        private set {
+            _currentDirection = value;
+            foreach (Action<Direction> action in actionsForDirectionsChange) {
+                action.Invoke(_currentDirection);
+            }
+        }
+        get {
+            return _currentDirection;
+        }
+    }
+
     protected Node _currentNode, _targetNode, _previousNode;
     public Node scatterModeTarget;
 
@@ -115,14 +127,9 @@ public abstract class Ghost : MonoBehaviour {
 
 
 
-    public void Subscribe(Action<Direction> action) {
+    public void SubscribeOnDirectionsChanges(Action<Direction> action) {
         actionsForDirectionsChange.Add(action);
     }
 
-    public void NotifyObservers() {
-        foreach (Action<Direction> action in actionsForDirectionsChange) {
-            action.Invoke(_currentDirection);
-        }
-    }
 
 }
