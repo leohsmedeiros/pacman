@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
     public static readonly string PlayerTag = "Player";
@@ -12,8 +13,9 @@ public class GameController : MonoBehaviour {
     private static readonly int EnergizerScore = 10;
     private static readonly int GhostFrightenedBaseScore = 200;
     private static readonly int GhostScoreFactor = 2;
-    private static readonly float TimeToGhostsVanishOnPacmanDeath = 1.5f;
+    private static readonly float TimeToGhostsVanishOnPacmanDeath = 1f;
     private static readonly float TimeToStartAnimationOfPacmanDeath = 0.5f;
+    private static readonly float TimeToRestartSceneAfterPacmanDeath = 1f;
 
     private static readonly int[] _timeForFrightenedModeByLevel = { 6, 5, 4, 3, 2, 5, 2, 2, 1, 5, 2, 1, 1, 3, 1, 1, 0, 1, 0 };
     private static readonly GameModeSettings[] _gameGameModesSettingsArray = {
@@ -53,9 +55,12 @@ public class GameController : MonoBehaviour {
     public static GameController Instance { private set; get; }
     public static int CurrentLevel { private set; get; } = 0;
     public static int Score { private set; get; } = 0;
+    public static int Life { private set; get; } = 3;
 
     public float StarterTime = 5f;
-    public GameObject ScoreOnBoardText;
+    public UiManager uiManager;
+    public GameObject GameOverPrefab;
+    public GameObject ScoreOnBoardTextPrefab;
     public float SecondsShowingScoreOnBoard = 3f;
     public Node CurrentPlayerNode { private set; get; } = null;
     public Direction CurrentPlayerDirection { private set; get; } = Direction.RIGHT;
@@ -87,6 +92,18 @@ public class GameController : MonoBehaviour {
         yield return new WaitForSeconds(TimeToStartAnimationOfPacmanDeath);
 
         _pacman.GetComponent<PacmanAnimator>().SetAnimation(PacmanAnimator.PacmanAnimation.DIE);
+
+        yield return new WaitForSeconds(TimeToRestartSceneAfterPacmanDeath);
+
+        Life -= 1;
+        uiManager.UpdateLifesOnUi(Life);
+
+        if (Life > 0) {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        } else {
+            _pacman.gameObject.SetActive(false);
+            Instantiate(GameOverPrefab);
+        }
     }
 
 
@@ -99,6 +116,8 @@ public class GameController : MonoBehaviour {
     }
 
     private void Start() {
+        uiManager.UpdateLifesOnUi(Life);
+        uiManager.UpdateScoreOnUi(Score);
         StartCoroutine(StartAfterSeconds());
     }
 
@@ -149,7 +168,10 @@ public class GameController : MonoBehaviour {
         }
     }
 
-
+    private void NextLevel() {
+        CurrentLevel++;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 
     public GameMode GetCurrentGameMode() {
         return _currentGameMode;
@@ -166,13 +188,15 @@ public class GameController : MonoBehaviour {
             if (dot.IsEnergizer) {
                 CurrentGameMode = GameMode.FRIGHTENED;
                 Score += EnergizerScore;
+                uiManager.UpdateScoreOnUi(Score);
             } else {
                 Score += DotScore;
+                uiManager.UpdateScoreOnUi(Score);
             }
 
-
             if (_dots.Count == 0)
-                Debug.Log("Next Level");
+                NextLevel();
+
         });
 
         _dots.Add(dot);
@@ -190,10 +214,13 @@ public class GameController : MonoBehaviour {
             if (!ghost.IsDead) {
                 if (CurrentGameMode.Equals(GameMode.FRIGHTENED)) {
                     int scoreGained = (GhostFrightenedBaseScore * _factorToEatGhostsSequentially);
+
                     Score += scoreGained;
+                    uiManager.UpdateScoreOnUi(Score);
+
                     _factorToEatGhostsSequentially *= GhostScoreFactor;
 
-                    GameObject scoreOnBoardTextInstantiated = Instantiate(ScoreOnBoardText, ghost.transform.position, Quaternion.identity);
+                    GameObject scoreOnBoardTextInstantiated = Instantiate(ScoreOnBoardTextPrefab, ghost.transform.position, Quaternion.identity);
                     scoreOnBoardTextInstantiated.GetComponent<TextMesh>().text = scoreGained.ToString();
                     Destroy(scoreOnBoardTextInstantiated, SecondsShowingScoreOnBoard);
 

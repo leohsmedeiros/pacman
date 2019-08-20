@@ -5,26 +5,34 @@ using UnityEngine.UI;
 public class UiManager : MonoBehaviour {
 
     public GameObject Ready;
+    public Transform LifesParent;
     public Text TextScore;
     public Text TextHighScore;
+    public float TimeToHideReadyObject;
 
-
-    IEnumerator HideReadyWithSeconds(int seconds) {
-        yield return new WaitForSeconds(seconds);
-        Ready.SetActive(false);
-    }
+    private float _timer = 0;
 
     void Start() {
         TextHighScore.text = PlayerPrefs.GetInt("highscore", 0).ToString();
         TextScore.text = "0";
-
-        StartCoroutine(HideReadyWithSeconds(5));
-
-        GameController controller = GameController.Instance;
     }
 
-    public void OnUpdateProperty(int value) {
-        TextScore.text = value.ToString();    
+    private void Update() {
+        if (_timer >= TimeToHideReadyObject) {
+            Ready.SetActive(false);
+        } else {
+            _timer += Time.deltaTime;
+        }
+    }
+
+    public void UpdateScoreOnUi(int score) {
+        TextScore.text = score.ToString();
+    }
+
+    public void UpdateLifesOnUi(int lifes) {
+        for (int i = 0; i < LifesParent.childCount; i++) {
+            LifesParent.GetChild(i).GetComponent<Image>().enabled = (i < lifes);
+        }
     }
 
 }
