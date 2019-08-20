@@ -9,13 +9,29 @@ public class GameController : MonoBehaviour {
     public static readonly string NodeTag = "Node";
 
     private static readonly int DotScore = 10;
+    private static readonly int EnergizerScore = 10;
+    private static readonly int GhostFrightenedBaseScore = 200;
+    private static readonly int GhostScoreFactor = 2;
+    private static readonly float TimeToGhostsVanishOnPacmanDeath = 1.5f;
+    private static readonly float TimeToStartAnimationOfPacmanDeath = 0.5f;
 
+    private static readonly int[] _timeForFrightenedModeByLevel = { 6, 5, 4, 3, 2, 5, 2, 2, 1, 5, 2, 1, 1, 3, 1, 1, 0, 1, 0 };
+    private static readonly GameModeSettings[] _gameGameModesSettingsArray = {
+        new GameModeSettings { Mode = GameMode.SCATTER, Seconds = 7 },
+        new GameModeSettings { Mode = GameMode.CHASE, Seconds = 20 },
+        new GameModeSettings { Mode = GameMode.SCATTER, Seconds = 7 },
+        new GameModeSettings { Mode = GameMode.CHASE, Seconds = 20 },
+        new GameModeSettings { Mode = GameMode.SCATTER, Seconds = 5 },
+        new GameModeSettings { Mode = GameMode.CHASE, Seconds = 20 },
+        new GameModeSettings { Mode = GameMode.SCATTER, Seconds = 5 },
+        new GameModeSettings { Mode = GameMode.CHASE, Seconds = 0 } // this one is permanent
+    };
 
 
     public enum GameMode { WAITING, SCATTER, CHASE, FRIGHTENED, DEAD }
 
     private class GameModeSettings {
-        public GameMode ModeType;
+        public GameMode Mode;
         public int Seconds;
     }
 
@@ -25,7 +41,7 @@ public class GameController : MonoBehaviour {
         private set {
             _currentGameMode = value;
             Debug.Log(_currentGameMode);
-            foreach(Action<GameMode> action in actionsForGameModeChange) {
+            foreach(Action<GameMode> action in _actionsForGameModeChange) {
                 action.Invoke(_currentGameMode);
             }
         }
@@ -39,34 +55,36 @@ public class GameController : MonoBehaviour {
     public static int Score { private set; get; } = 0;
 
     public float StarterTime = 5f;
+    public GameObject ScoreOnBoardText;
+    public float SecondsShowingScoreOnBoard = 3f;
     public Node CurrentPlayerNode { private set; get; } = null;
     public Direction CurrentPlayerDirection { private set; get; } = Direction.RIGHT;
 
-    private List<Action<GameMode>> actionsForGameModeChange;
+    private List<Action<GameMode>> _actionsForGameModeChange;
     private List<Dot> _dots;
     private List<Ghost> _ghosts;
+
     private Pacman _pacman;
-    private Queue<GameModeSettings> _queueGameModes;
-    private int[] _timeForFrightenedModeByLevel = new int[] { 6, 5, 4, 3, 2, 5, 2, 2, 1, 5, 2, 1, 1, 3, 1, 1, 0, 1, 0 };
-
-
+    private int _lastIndexGameModeSettings = 0;
     private float _timerFrightened = 0;
+    private float _timerGameModes = 0;
+    private int _factorToEatGhostsSequentially = 1;
 
 
 
     IEnumerator StartAfterSeconds() {
         yield return new WaitForSeconds(StarterTime);
-        CurrentGameMode = GameMode.SCATTER;
+        CurrentGameMode = _gameGameModesSettingsArray[_lastIndexGameModeSettings].Mode;
     }
 
-    IEnumerator DieAnimation() {
-        yield return new WaitForSeconds(1.5f);
+    IEnumerator PacmanDieAnimation() {
+        yield return new WaitForSeconds(TimeToGhostsVanishOnPacmanDeath);
 
         foreach (Ghost ghost in _ghosts) {
             ghost.gameObject.SetActive(false);
         }
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(TimeToStartAnimationOfPacmanDeath);
 
         _pacman.GetComponent<PacmanAnimator>().SetAnimation(PacmanAnimator.PacmanAnimation.DIE);
     }
@@ -74,41 +92,62 @@ public class GameController : MonoBehaviour {
 
     private void Awake() {
         Instance = this;
+
         _dots = new List<Dot>();
         _ghosts = new List<Ghost>();
-
-        _queueGameModes = new Queue<GameModeSettings>();
-        _queueGameModes.Enqueue(new GameModeSettings { ModeType = GameMode.SCATTER, Seconds = 7 });
-        _queueGameModes.Enqueue(new GameModeSettings { ModeType = GameMode.CHASE, Seconds = 20 });
-        _queueGameModes.Enqueue(new GameModeSettings { ModeType = GameMode.SCATTER, Seconds = 7 });
-        _queueGameModes.Enqueue(new GameModeSettings { ModeType = GameMode.CHASE, Seconds = 20 });
-        _queueGameModes.Enqueue(new GameModeSettings { ModeType = GameMode.SCATTER, Seconds = 5 });
-        _queueGameModes.Enqueue(new GameModeSettings { ModeType = GameMode.CHASE, Seconds = 20 });
-        _queueGameModes.Enqueue(new GameModeSettings { ModeType = GameMode.SCATTER, Seconds = 5 });
-        _queueGameModes.Enqueue(new GameModeSettings { ModeType = GameMode.CHASE, Seconds = 0 }); // this one is permanent
-
-        actionsForGameModeChange = new List<Action<GameMode>>();
+        _actionsForGameModeChange = new List<Action<GameMode>>();
     }
 
     private void Start() {
         StartCoroutine(StartAfterSeconds());
     }
 
-
     private void Update() {
-        if(CurrentGameMode.Equals(GameMode.FRIGHTENED)) {
-            _timerFrightened += Time.deltaTime;
+        if (CurrentGameMode.Equals(GameMode.WAITING) ||
+            CurrentGameMode.Equals(GameMode.DEAD))
+            return;
 
-            float maxTime = (CurrentLevel < _timeForFrightenedModeByLevel.Length - 1) ?
-                _timeForFrightenedModeByLevel[CurrentLevel] : 0;
-                
-            if (_timerFrightened > maxTime) {
-                _timerFrightened = 0;
-                CurrentGameMode = GameMode.SCATTER;
-            }
+        if (Input.GetKey(KeyCode.Escape)) {
+            CurrentGameMode = GameMode.FRIGHTENED;
+            _timerFrightened = 0;
+            _factorToEatGhostsSequentially = 1;
+        }
+
+        if (CurrentGameMode.Equals(GameMode.FRIGHTENED)) {
+            FrightenedModeUpdate();
+        }else {
+            GameModeUpdate();
         }
     }
 
+
+    private void FrightenedModeUpdate() {
+        _timerFrightened += Time.deltaTime;
+
+        float maxTime = (CurrentLevel < _timeForFrightenedModeByLevel.Length - 1) ?
+            _timeForFrightenedModeByLevel[CurrentLevel] : 0;
+
+        if (_timerFrightened > maxTime) {
+            _timerFrightened = 0;
+            _factorToEatGhostsSequentially = 1;
+            CurrentGameMode = _gameGameModesSettingsArray[_lastIndexGameModeSettings].Mode;
+        }
+    }
+
+    private void GameModeUpdate() {
+        _timerGameModes += Time.deltaTime;
+
+        float maxTime = (_lastIndexGameModeSettings < _gameGameModesSettingsArray.Length - 1) ?
+            _gameGameModesSettingsArray[_lastIndexGameModeSettings].Seconds : float.MaxValue;
+
+        if (_timerGameModes > maxTime) {
+            _lastIndexGameModeSettings = (_lastIndexGameModeSettings + 1 < _gameGameModesSettingsArray.Length) ?
+                _lastIndexGameModeSettings + 1 : _gameGameModesSettingsArray.Length - 1;
+
+            _timerGameModes = 0;
+            CurrentGameMode = _gameGameModesSettingsArray[_lastIndexGameModeSettings].Mode;
+        }
+    }
 
 
 
@@ -117,18 +156,18 @@ public class GameController : MonoBehaviour {
     }
 
     public void SubscribeForGameModeChanges(Action<GameMode> action) {
-        actionsForGameModeChange.Add(action);
+        _actionsForGameModeChange.Add(action);
     }
 
     public void RegisterDot(Dot dot) {
         dot.SubscribeOnCaught(() => {
             _dots.Remove(dot);
-            Score += DotScore;
-            //Debug.Log("score: " + _score);
 
             if (dot.IsEnergizer) {
                 CurrentGameMode = GameMode.FRIGHTENED;
-                Debug.Log("Caught Energizer");
+                Score += EnergizerScore;
+            } else {
+                Score += DotScore;
             }
 
 
@@ -150,10 +189,17 @@ public class GameController : MonoBehaviour {
         _pacman.SubscribeOnGetCaughtByGhosts((ghost) => {
             if (!ghost.IsDead) {
                 if (CurrentGameMode.Equals(GameMode.FRIGHTENED)) {
-                    Score += 100;
+                    int scoreGained = (GhostFrightenedBaseScore * _factorToEatGhostsSequentially);
+                    Score += scoreGained;
+                    _factorToEatGhostsSequentially *= GhostScoreFactor;
+
+                    GameObject scoreOnBoardTextInstantiated = Instantiate(ScoreOnBoardText, ghost.transform.position, Quaternion.identity);
+                    scoreOnBoardTextInstantiated.GetComponent<TextMesh>().text = scoreGained.ToString();
+                    Destroy(scoreOnBoardTextInstantiated, SecondsShowingScoreOnBoard);
+
                 } else {
                     CurrentGameMode = GameMode.DEAD;
-                    StartCoroutine(DieAnimation());
+                    StartCoroutine(PacmanDieAnimation());
                 }
             }
         });

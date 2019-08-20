@@ -81,12 +81,12 @@ public abstract class Ghost : MonoBehaviour {
         actionsForLifeStatusChanges.Add(action);
     }
 
-    private void Die() {
-        IsDead = true;
-    }
-
     public void Revive() {
         IsDead = false;
+    }
+
+    private void Die() {
+        IsDead = true;
     }
 
     protected abstract Vector2 EstimateTargetPoint();

@@ -6318,7 +6318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f88250a1c07742c29e43e436d2725c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4.5
+  speed: 4
   timeToBeReleased: 2
   scatterModeTarget: {fileID: 598779808}
   ghostHouseDoor: {fileID: 1774965436}
@@ -6337,7 +6337,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.3
+  m_Radius: 0.2
 --- !u!50 &294559950
 Rigidbody2D:
   serializedVersion: 4
@@ -9592,7 +9592,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.3
+  m_Radius: 0.2
 --- !u!50 &481634750
 Rigidbody2D:
   serializedVersion: 4
@@ -15931,7 +15931,7 @@ GameObject:
   - component: {fileID: 770659934}
   - component: {fileID: 770659938}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Canvas - Ui Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16031,7 +16031,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 770659933}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24da510ff46494966a10240ec8921dfe, type: 3}
+  m_Script: {fileID: 11500000, guid: 628fc4958791a4eca84f0bacd0c19d8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Ready: {fileID: 1010915963}
@@ -18039,6 +18039,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StarterTime: 5
+  ScoreOnBoardText: {fileID: 4421792919378580846, guid: 3fb91b9b7c2a34824b530e4e497274d7,
+    type: 3}
+  SecondsShowingScoreOnBoard: 3
 --- !u!1 &876962914
 GameObject:
   m_ObjectHideFlags: 0
@@ -19818,7 +19821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 775a3dc6e02c54d9bb379b1de3b7ba93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4.5
+  speed: 4
   timeToBeReleased: 3
   scatterModeTarget: {fileID: 1248565311}
   ghostHouseDoor: {fileID: 1774965436}
@@ -19838,7 +19841,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.3
+  m_Radius: 0.2
 --- !u!50 &944388857
 Rigidbody2D:
   serializedVersion: 4
@@ -28311,7 +28314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 337755aab23a849898ce18ffd2be8384, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4.5
+  speed: 4
   timeToBeReleased: 4
   scatterModeTarget: {fileID: 1355586490}
   ghostHouseDoor: {fileID: 1774965436}
@@ -28330,7 +28333,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.3
+  m_Radius: 0.2
 --- !u!50 &1327859035
 Rigidbody2D:
   serializedVersion: 4
@@ -38622,7 +38625,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.3
+  m_Radius: 0.2
 --- !u!50 &1834045227
 Rigidbody2D:
   serializedVersion: 4
@@ -38656,7 +38659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76a00306eab0c45368c8db4df6f1fca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4.5
+  speed: 4
   timeToBeReleased: 1
   scatterModeTarget: {fileID: 1338382451}
   ghostHouseDoor: {fileID: 1774965436}

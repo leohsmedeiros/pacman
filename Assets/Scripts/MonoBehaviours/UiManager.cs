@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UiController : MonoBehaviour {
+public class UiManager : MonoBehaviour {
 
     public GameObject Ready;
     public Text TextScore;
