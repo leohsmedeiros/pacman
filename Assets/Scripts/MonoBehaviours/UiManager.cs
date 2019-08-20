@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class UiManager : MonoBehaviour {
 
     public GameObject Ready;
+    public Button RetryButton;
     public Transform LifesParent;
     public Text TextScore;
     public Text TextHighScore;
@@ -13,7 +14,6 @@ public class UiManager : MonoBehaviour {
     private float _timer = 0;
 
     void Start() {
-        TextHighScore.text = PlayerPrefs.GetInt("highscore", 0).ToString();
         TextScore.text = "0";
     }
 
@@ -25,6 +25,11 @@ public class UiManager : MonoBehaviour {
         }
     }
 
+
+    public void UpdateHighScoreOnUi(int score) {
+        TextHighScore.text = score.ToString();
+    }
+
     public void UpdateScoreOnUi(int score) {
         TextScore.text = score.ToString();
     }
@@ -33,6 +38,12 @@ public class UiManager : MonoBehaviour {
         for (int i = 0; i < LifesParent.childCount; i++) {
             LifesParent.GetChild(i).GetComponent<Image>().enabled = (i < lifes);
         }
+
+        if(lifes == 0) {
+            RetryButton.gameObject.SetActive(true);
+        }
     }
+
+
 
 }

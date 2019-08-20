@@ -8,14 +8,17 @@ public class GameController : MonoBehaviour {
     public static readonly string PlayerTag = "Player";
     public static readonly string GhostTag = "Ghost";
     public static readonly string NodeTag = "Node";
+    public static readonly string HighScoreKeyPlayerPrefs = "HighScore";
 
     private static readonly int DotScore = 10;
     private static readonly int EnergizerScore = 10;
     private static readonly int GhostFrightenedBaseScore = 200;
     private static readonly int GhostScoreFactor = 2;
+    private static readonly int PointsToGainExtraLife = 10000;
     private static readonly float TimeToGhostsVanishOnPacmanDeath = 1f;
     private static readonly float TimeToStartAnimationOfPacmanDeath = 0.5f;
     private static readonly float TimeToRestartSceneAfterPacmanDeath = 1f;
+
 
     private static readonly int[] _timeForFrightenedModeByLevel = { 6, 5, 4, 3, 2, 5, 2, 2, 1, 5, 2, 1, 1, 3, 1, 1, 0, 1, 0 };
     private static readonly GameModeSettings[] _gameGameModesSettingsArray = {
@@ -95,15 +98,7 @@ public class GameController : MonoBehaviour {
 
         yield return new WaitForSeconds(TimeToRestartSceneAfterPacmanDeath);
 
-        Life -= 1;
-        uiManager.UpdateLifesOnUi(Life);
-
-        if (Life > 0) {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        } else {
-            _pacman.gameObject.SetActive(false);
-            Instantiate(GameOverPrefab);
-        }
+        LoseOneLife();
     }
 
 
@@ -118,6 +113,7 @@ public class GameController : MonoBehaviour {
     private void Start() {
         uiManager.UpdateLifesOnUi(Life);
         uiManager.UpdateScoreOnUi(Score);
+        uiManager.UpdateHighScoreOnUi(PlayerPrefs.GetInt("highscore", 0));
         StartCoroutine(StartAfterSeconds());
     }
 
@@ -125,12 +121,6 @@ public class GameController : MonoBehaviour {
         if (CurrentGameMode.Equals(GameMode.WAITING) ||
             CurrentGameMode.Equals(GameMode.DEAD))
             return;
-
-        if (Input.GetKey(KeyCode.Escape)) {
-            CurrentGameMode = GameMode.FRIGHTENED;
-            _timerFrightened = 0;
-            _factorToEatGhostsSequentially = 1;
-        }
 
         if (CurrentGameMode.Equals(GameMode.FRIGHTENED)) {
             FrightenedModeUpdate();
@@ -173,6 +163,41 @@ public class GameController : MonoBehaviour {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    private void LoseOneLife() {
+        Life -= 1;
+        uiManager.UpdateLifesOnUi(Life);
+
+        if (Life > 0) {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        } else {
+            _pacman.gameObject.SetActive(false);
+            Instantiate(GameOverPrefab);
+
+            int highscore = PlayerPrefs.GetInt("highscore");
+            if (Score > highscore) {
+                PlayerPrefs.SetInt("highscore", Score);
+            }
+
+        }
+    }
+
+    private void AddScore(int amount) {
+        Score += amount;
+        uiManager.UpdateScoreOnUi(Score);
+
+        if (Score % PointsToGainExtraLife == 0) {
+            Life++;
+            uiManager.UpdateLifesOnUi(Life);
+        }
+    }
+
+    public void RestartGame() {
+        CurrentLevel = 0;
+        Life = 3;
+        Score = 0;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     public GameMode GetCurrentGameMode() {
         return _currentGameMode;
     }
@@ -187,11 +212,9 @@ public class GameController : MonoBehaviour {
 
             if (dot.IsEnergizer) {
                 CurrentGameMode = GameMode.FRIGHTENED;
-                Score += EnergizerScore;
-                uiManager.UpdateScoreOnUi(Score);
+                AddScore(EnergizerScore);
             } else {
-                Score += DotScore;
-                uiManager.UpdateScoreOnUi(Score);
+                AddScore(DotScore);
             }
 
             if (_dots.Count == 0)
@@ -215,8 +238,7 @@ public class GameController : MonoBehaviour {
                 if (CurrentGameMode.Equals(GameMode.FRIGHTENED)) {
                     int scoreGained = (GhostFrightenedBaseScore * _factorToEatGhostsSequentially);
 
-                    Score += scoreGained;
-                    uiManager.UpdateScoreOnUi(Score);
+                    AddScore(scoreGained);
 
                     _factorToEatGhostsSequentially *= GhostScoreFactor;
 
