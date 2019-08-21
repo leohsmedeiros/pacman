@@ -99,7 +99,7 @@ public class PacmanMover : MonoBehaviour {
     }
 
     public void Update() {
-        if (GameController.Instance.currentGameMode.Equals(GameMode.WAITING) ||
+        if (GameController.Instance.currentGameMode.Equals(GameMode.INTRO) ||
             GameController.Instance.currentGameMode.Equals(GameMode.DEAD))
             return;
 

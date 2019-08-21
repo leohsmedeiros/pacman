@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 
-    private GameMode _currentGameMode = GameMode.WAITING;
+    private GameMode _currentGameMode = GameMode.INTRO;
     public GameMode currentGameMode {
         private set {
             _currentGameMode = value;
@@ -26,11 +26,13 @@ public class GameController : MonoBehaviour {
     public static int Life { private set; get; } = 3;
     private static int _factorToGainExtraLife = 1;
 
-    public float starterTime = 5f;
+    public GameObject readyObject;
     public FruitManager fruitManager;
     public UiManager uiManager;
     public SoundManager soundManager;
     public GameObject gameOverPrefab;
+    public Node starterNode;
+    public Node ghostsHouse;
     public float secondsShowingScoreOnBoard = 3f;
     public Node playerNode { private set; get; } = null;
     public Direction playerDirection { private set; get; } = Direction.RIGHT;
@@ -49,7 +51,9 @@ public class GameController : MonoBehaviour {
 
 
     IEnumerator StartAfterSeconds() {
-        yield return new WaitForSeconds(starterTime);
+        readyObject.SetActive(true);
+        soundManager.PlayIntroSound();
+        yield return new WaitForSeconds(GlobalValues.TimeToHideReadyObject);
         currentGameMode = GlobalValues.SequenceOfGameModeSettings[_lastIndexGameModeSettings].Mode;
         soundManager.PlaySirenSound();
     }
@@ -97,7 +101,7 @@ public class GameController : MonoBehaviour {
     }
 
     private void Update() {
-        if (currentGameMode.Equals(GameMode.WAITING) ||
+        if (currentGameMode.Equals(GameMode.INTRO) ||
             currentGameMode.Equals(GameMode.DEAD))
             return;
 
@@ -160,7 +164,18 @@ public class GameController : MonoBehaviour {
         uiManager.UpdateLifesOnUi(Life);
 
         if (Life > 0) {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            foreach(Ghost ghost in _ghosts) {
+                ghost.transform.position = ghostsHouse.GetPosition2D();
+                ghost.gameObject.SetActive(true);
+                ghost.Revive();
+            }
+
+            _pacman.transform.position = starterNode.GetPosition2D();
+            _pacman.GetComponent<PacmanAnimator>().SetAnimation(PacmanAnimator.PacmanAnimation.MOVE_RIGHT);
+
+            _currentGameMode = GameMode.INTRO;
+            StartCoroutine(StartAfterSeconds());
+
         } else {
             _pacman.gameObject.SetActive(false);
             Instantiate(gameOverPrefab);

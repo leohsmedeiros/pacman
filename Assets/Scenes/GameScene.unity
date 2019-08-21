@@ -5458,7 +5458,7 @@ RectTransform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 770659937}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -5971,7 +5971,7 @@ RectTransform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 770659937}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -10082,7 +10082,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &294559944
 GameObject:
@@ -10237,7 +10237,7 @@ Transform:
   - {fileID: 718565214}
   - {fileID: 347884798}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &294559948
 MonoBehaviour:
@@ -15600,7 +15600,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &481634747
 MonoBehaviour:
@@ -25628,7 +25628,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 1010915965}
   - {fileID: 167459292}
   - {fileID: 155195875}
   - {fileID: 2037528372}
@@ -25636,7 +25635,7 @@ RectTransform:
   - {fileID: 1753878536}
   - {fileID: 1367538553}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -28719,12 +28718,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 771e511cdfbfe41f780820ea4d1303ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starterTime: 5
+  readyObject: {fileID: 1010915963}
   fruitManager: {fileID: 873244170}
   uiManager: {fileID: 873244169}
   soundManager: {fileID: 873244167}
   gameOverPrefab: {fileID: 1073028813212815757, guid: 0d1af68a11759484c82add144dbd4136,
     type: 3}
+  starterNode: {fileID: 217240464}
+  ghostsHouse: {fileID: 942918120}
   secondsShowingScoreOnBoard: 3
 --- !u!82 &873244166
 AudioSource:
@@ -28736,8 +28737,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: b17a9dba042b441aa8c3ed5391b4fad0, type: 3}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
@@ -28834,6 +28835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf4f6f39c2fd849cda2fa7cc6bb7ebd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  introSound: {fileID: 8300000, guid: b17a9dba042b441aa8c3ed5391b4fad0, type: 3}
   sirenSound: {fileID: 8300000, guid: da212b35e26ec4ddbae7f435268a0d0b, type: 3}
   frightenedSound: {fileID: 8300000, guid: d41108187ee784a779a036a40ccfd2da, type: 3}
   pacmanDeathSound: {fileID: 8300000, guid: b8074f0ba524745d6a2edb8ad8fc45f3, type: 3}
@@ -28947,12 +28949,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 628fc4958791a4eca84f0bacd0c19d8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Ready: {fileID: 1010915963}
   RetryButton: {fileID: 1367538554}
   LifesParent: {fileID: 1753878536}
   TextScore: {fileID: 155195876}
   TextHighScore: {fileID: 1949849210}
-  TimeToHideReadyObject: 5
 --- !u!114 &873244170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31913,7 +31913,7 @@ Transform:
   - {fileID: 1154730961}
   - {fileID: 811223652}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &944388855
 MonoBehaviour:
@@ -33180,11 +33180,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1010915963}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -48.785862, z: 0}
-  m_LocalScale: {x: 15, y: 15, z: 15}
+  m_LocalPosition: {x: 0, y: -3.2553802, z: 0}
+  m_LocalScale: {x: 1.0009191, y: 1.0009191, z: 1.0009191}
   m_Children: []
-  m_Father: {fileID: 770659937}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1021575385
 GameObject:
@@ -45335,7 +45335,7 @@ Transform:
   - {fileID: 1997779204}
   - {fileID: 1685391224}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1327859033
 MonoBehaviour:
@@ -46418,7 +46418,7 @@ RectTransform:
   m_Children:
   - {fileID: 656250139}
   m_Father: {fileID: 770659937}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -58045,7 +58045,7 @@ RectTransform:
   - {fileID: 147180167}
   - {fileID: 2145498654}
   m_Father: {fileID: 770659937}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -61393,7 +61393,7 @@ Transform:
   - {fileID: 1243745738}
   - {fileID: 2051948891}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &1834045226
 CircleCollider2D:
@@ -63200,7 +63200,7 @@ RectTransform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 770659937}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -65672,7 +65672,7 @@ RectTransform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 770659937}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}

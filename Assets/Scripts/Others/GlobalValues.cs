@@ -12,6 +12,7 @@
     public static readonly int DotsAmountToShowFruitFirstTime = 70;
     public static readonly int DotsAmountToShowFruitSecondTime = 170;
 
+    public static readonly float TimeToHideReadyObject = 5f;
     public static readonly float TimeToGhostsVanishOnPacmanDeath = 1f;
     public static readonly float TimeToStartAnimationOfPacmanDeath = 0.5f;
     public static readonly float TimeToRestartSceneAfterPacmanDeath = 1.5f;

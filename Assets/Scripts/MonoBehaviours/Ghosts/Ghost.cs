@@ -62,7 +62,7 @@ public abstract class Ghost : MonoBehaviour {
 
 
     private void Update() {
-        if (GameController.Instance.currentGameMode.Equals(GameMode.WAITING) ||
+        if (GameController.Instance.currentGameMode.Equals(GameMode.INTRO) ||
             GameController.Instance.currentGameMode.Equals(GameMode.DEAD))
             return;
 

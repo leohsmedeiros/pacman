@@ -42,7 +42,7 @@ public class Pacman : MonoBehaviour {
     }
 
     void Update() {
-        if (GameController.Instance.currentGameMode.Equals(GameMode.WAITING))
+        if (GameController.Instance.currentGameMode.Equals(GameMode.INTRO))
             return;
 
 

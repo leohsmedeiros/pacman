@@ -2,6 +2,7 @@
 
 public class SoundManager : MonoBehaviour {
 
+    public AudioClip introSound;
     public AudioClip sirenSound;
     public AudioClip frightenedSound;
     public AudioClip pacmanDeathSound;
@@ -12,6 +13,13 @@ public class SoundManager : MonoBehaviour {
 
     private void Start() {
         this.backgroundAudioSource = this.GetComponent<AudioSource>();
+    }
+
+    public void PlayIntroSound() {
+        backgroundAudioSource.loop = false;
+
+        backgroundAudioSource.clip = introSound;
+        backgroundAudioSource.Play();
     }
 
     public void PlaySirenSound() {
