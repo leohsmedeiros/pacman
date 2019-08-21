@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public abstract class Ghost : MonoBehaviour {
     private List<Action<Direction>> actionsForDirectionsChange;
     private List<Action<bool>> actionsForLifeStatusChanges;
@@ -9,6 +10,7 @@ public abstract class Ghost : MonoBehaviour {
     public float speed;
     public float timeToBeReleased;
     private float _timer = 0;
+    public AudioSource audioWhenEated;
 
     protected Pacman _pacman;
 
@@ -51,7 +53,7 @@ public abstract class Ghost : MonoBehaviour {
     }
 
     private void Start() {
-        _pacman = GameObject.FindWithTag(GameController.PlayerTag).GetComponent<Pacman>();
+        _pacman = GameObject.FindWithTag(GlobalValues.PlayerTag).GetComponent<Pacman>();
 
         GameController.Instance.SubscribeForGameModeChanges(ActionsByGameMode);
         GameController.Instance.RegisterGhosts(this);
@@ -59,13 +61,13 @@ public abstract class Ghost : MonoBehaviour {
 
 
     private void Update() {
-        if (GameController.Instance.CurrentGameMode.Equals(GameController.GameMode.WAITING) ||
-            GameController.Instance.CurrentGameMode.Equals(GameController.GameMode.DEAD))
+        if (GameController.Instance.CurrentGameMode.Equals(GameMode.WAITING) ||
+            GameController.Instance.CurrentGameMode.Equals(GameMode.DEAD))
             return;
 
         if (_timer > timeToBeReleased) {
             if (_targetNode != null)
-                this.transform.position = Vector2.MoveTowards(transform.position, _targetNode.GetPosition2D(), 4.5f * Time.deltaTime);
+                this.transform.position = Vector2.MoveTowards(transform.position, _targetNode.GetPosition2D(), speed * Time.deltaTime);
         }else {
             _timer += Time.deltaTime;
         }
@@ -87,6 +89,7 @@ public abstract class Ghost : MonoBehaviour {
 
     private void Die() {
         IsDead = true;
+        audioWhenEated.Play();
     }
 
     protected abstract Vector2 EstimateTargetPoint();
@@ -112,21 +115,21 @@ public abstract class Ghost : MonoBehaviour {
     }
 
 
-    private void ActionsByGameMode(GameController.GameMode gameMode) {
+    private void ActionsByGameMode(GameMode gameMode) {
         if (IsDead) {
 
             _targetNode = ChooseNextNode(ghostHouseDoor.GetPosition2D(), false);
 
-        } else if (gameMode.Equals(GameController.GameMode.SCATTER)) {
+        } else if (gameMode.Equals(GameMode.SCATTER)) {
 
             _targetNode = ChooseNextNode(scatterModeTarget.GetPosition2D(), false);
 
-        } else if (gameMode.Equals(GameController.GameMode.CHASE)) {
+        } else if (gameMode.Equals(GameMode.CHASE)) {
 
             Vector2 estimatedTargetPoint = EstimateTargetPoint();
             _targetNode = ChooseNextNode(estimatedTargetPoint, false);
 
-        } else if (gameMode.Equals(GameController.GameMode.FRIGHTENED)) {
+        } else if (gameMode.Equals(GameMode.FRIGHTENED)) {
 
             _targetNode = ChooseNextNode(_pacman.transform.position, true);
 
@@ -143,7 +146,7 @@ public abstract class Ghost : MonoBehaviour {
                 _currentNode = collision.GetComponent<Node>();
 
                 _targetNode = collision.GetComponent<BridgeToRevivalNode>().node;
-            } else if (collision.tag.Equals(GameController.NodeTag)) {
+            } else if (collision.tag.Equals(GlobalValues.NodeTag)) {
                 _previousNode = _currentNode;
                 _currentNode = collision.GetComponent<Node>();
                 ActionsByGameMode(GameController.Instance.CurrentGameMode);
@@ -151,14 +154,14 @@ public abstract class Ghost : MonoBehaviour {
 
         } else {
 
-            if (collision.tag.Equals(GameController.NodeTag)) {
+            if (collision.tag.Equals(GlobalValues.NodeTag)) {
 
                 _previousNode = _currentNode;
                 _currentNode = collision.GetComponent<Node>();
                 ActionsByGameMode(GameController.Instance.CurrentGameMode);
 
-            } else if (collision.tag.Equals(GameController.PlayerTag) &&
-                       GameController.Instance.CurrentGameMode.Equals(GameController.GameMode.FRIGHTENED)) {
+            } else if (collision.tag.Equals(GlobalValues.PlayerTag) &&
+                       GameController.Instance.CurrentGameMode.Equals(GameMode.FRIGHTENED)) {
 
                 Die();
 

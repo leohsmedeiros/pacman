@@ -42,7 +42,7 @@ public class Pacman : MonoBehaviour {
     }
 
     void Update() {
-        if (GameController.Instance.CurrentGameMode.Equals(GameController.GameMode.WAITING))
+        if (GameController.Instance.CurrentGameMode.Equals(GameMode.WAITING))
             return;
 
 
@@ -78,12 +78,12 @@ public class Pacman : MonoBehaviour {
 
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.tag.Equals(GameController.NodeTag)) {
+        if (collision.tag.Equals(GlobalValues.NodeTag)) {
  
            foreach (Action<Node> action in actionsOnChangeNode)
                 action.Invoke(collision.GetComponent<Node>());
 
-        } else if (collision.tag.Equals(GameController.GhostTag)) {
+        } else if (collision.tag.Equals(GlobalValues.GhostTag)) {
 
             foreach (Action<Ghost> action in actionsOnGetCaughtByGhosts)
                 action.Invoke(collision.GetComponent<Ghost>());
@@ -92,7 +92,7 @@ public class Pacman : MonoBehaviour {
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
-        if (collision.tag.Equals(GameController.NodeTag)) {
+        if (collision.tag.Equals(GlobalValues.NodeTag)) {
             foreach (Action<Node> action in actionsOnChangeNode) {
                 action.Invoke(null);
             }

@@ -100,8 +100,8 @@ public class PacmanMover : MonoBehaviour {
     }
 
     public void Update() {
-        if (GameController.Instance.CurrentGameMode.Equals(GameController.GameMode.WAITING) ||
-            GameController.Instance.CurrentGameMode.Equals(GameController.GameMode.DEAD))
+        if (GameController.Instance.CurrentGameMode.Equals(GameMode.WAITING) ||
+            GameController.Instance.CurrentGameMode.Equals(GameMode.DEAD))
             return;
 
         if (_destinyNode != null)

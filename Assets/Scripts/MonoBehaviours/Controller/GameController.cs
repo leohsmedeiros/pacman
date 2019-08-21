@@ -5,40 +5,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
-    public static readonly string PlayerTag = "Player";
-    public static readonly string GhostTag = "Ghost";
-    public static readonly string NodeTag = "Node";
-    public static readonly string HighScoreKeyPlayerPrefs = "HighScore";
-
-    private static readonly int DotScore = 10;
-    private static readonly int EnergizerScore = 10;
-    private static readonly int GhostFrightenedBaseScore = 200;
-    private static readonly int GhostScoreFactor = 2;
-    private static readonly int PointsToGainExtraLife = 10000;
-    private static readonly float TimeToGhostsVanishOnPacmanDeath = 1f;
-    private static readonly float TimeToStartAnimationOfPacmanDeath = 0.5f;
-    private static readonly float TimeToRestartSceneAfterPacmanDeath = 1f;
-
-
-    private static readonly int[] _timeForFrightenedModeByLevel = { 6, 5, 4, 3, 2, 5, 2, 2, 1, 5, 2, 1, 1, 3, 1, 1, 0, 1, 0 };
-    private static readonly GameModeSettings[] _gameGameModesSettingsArray = {
-        new GameModeSettings { Mode = GameMode.SCATTER, Seconds = 7 },
-        new GameModeSettings { Mode = GameMode.CHASE, Seconds = 20 },
-        new GameModeSettings { Mode = GameMode.SCATTER, Seconds = 7 },
-        new GameModeSettings { Mode = GameMode.CHASE, Seconds = 20 },
-        new GameModeSettings { Mode = GameMode.SCATTER, Seconds = 5 },
-        new GameModeSettings { Mode = GameMode.CHASE, Seconds = 20 },
-        new GameModeSettings { Mode = GameMode.SCATTER, Seconds = 5 },
-        new GameModeSettings { Mode = GameMode.CHASE, Seconds = 0 } // this one is permanent
-    };
-
-
-    public enum GameMode { WAITING, SCATTER, CHASE, FRIGHTENED, DEAD }
-
-    private class GameModeSettings {
-        public GameMode Mode;
-        public int Seconds;
-    }
 
 
     private GameMode _currentGameMode = GameMode.WAITING;
@@ -62,6 +28,7 @@ public class GameController : MonoBehaviour {
 
     public float StarterTime = 5f;
     public UiManager uiManager;
+    public SoundManager soundManager;
     public GameObject GameOverPrefab;
     public GameObject ScoreOnBoardTextPrefab;
     public float SecondsShowingScoreOnBoard = 3f;
@@ -82,21 +49,24 @@ public class GameController : MonoBehaviour {
 
     IEnumerator StartAfterSeconds() {
         yield return new WaitForSeconds(StarterTime);
-        CurrentGameMode = _gameGameModesSettingsArray[_lastIndexGameModeSettings].Mode;
+        CurrentGameMode = GlobalValues._gameGameModesSettingsArray[_lastIndexGameModeSettings].Mode;
+        soundManager.PlaySirenSound();
     }
 
     IEnumerator PacmanDieAnimation() {
-        yield return new WaitForSeconds(TimeToGhostsVanishOnPacmanDeath);
+        soundManager.PauseBackgroundSource();
+        yield return new WaitForSeconds(GlobalValues.TimeToGhostsVanishOnPacmanDeath);
 
         foreach (Ghost ghost in _ghosts) {
             ghost.gameObject.SetActive(false);
         }
 
-        yield return new WaitForSeconds(TimeToStartAnimationOfPacmanDeath);
+        yield return new WaitForSeconds(GlobalValues.TimeToStartAnimationOfPacmanDeath);
 
+        soundManager.PlayPacManDeathSound();
         _pacman.GetComponent<PacmanAnimator>().SetAnimation(PacmanAnimator.PacmanAnimation.DIE);
 
-        yield return new WaitForSeconds(TimeToRestartSceneAfterPacmanDeath);
+        yield return new WaitForSeconds(GlobalValues.TimeToRestartSceneAfterPacmanDeath);
 
         LoseOneLife();
     }
@@ -133,28 +103,29 @@ public class GameController : MonoBehaviour {
     private void FrightenedModeUpdate() {
         _timerFrightened += Time.deltaTime;
 
-        float maxTime = (CurrentLevel < _timeForFrightenedModeByLevel.Length - 1) ?
-            _timeForFrightenedModeByLevel[CurrentLevel] : 0;
+        float maxTime = (CurrentLevel < GlobalValues._timeForFrightenedModeByLevel.Length - 1) ?
+            GlobalValues._timeForFrightenedModeByLevel[CurrentLevel] : 0;
 
         if (_timerFrightened > maxTime) {
             _timerFrightened = 0;
             _factorToEatGhostsSequentially = 1;
-            CurrentGameMode = _gameGameModesSettingsArray[_lastIndexGameModeSettings].Mode;
+            CurrentGameMode = GlobalValues._gameGameModesSettingsArray[_lastIndexGameModeSettings].Mode;
+            soundManager.PlaySirenSound();
         }
     }
 
     private void GameModeUpdate() {
         _timerGameModes += Time.deltaTime;
 
-        float maxTime = (_lastIndexGameModeSettings < _gameGameModesSettingsArray.Length - 1) ?
-            _gameGameModesSettingsArray[_lastIndexGameModeSettings].Seconds : float.MaxValue;
+        float maxTime = (_lastIndexGameModeSettings < GlobalValues._gameGameModesSettingsArray.Length - 1) ?
+            GlobalValues._gameGameModesSettingsArray[_lastIndexGameModeSettings].Seconds : float.MaxValue;
 
         if (_timerGameModes > maxTime) {
-            _lastIndexGameModeSettings = (_lastIndexGameModeSettings + 1 < _gameGameModesSettingsArray.Length) ?
-                _lastIndexGameModeSettings + 1 : _gameGameModesSettingsArray.Length - 1;
+            _lastIndexGameModeSettings = (_lastIndexGameModeSettings + 1 < GlobalValues._gameGameModesSettingsArray.Length) ?
+                _lastIndexGameModeSettings + 1 : GlobalValues._gameGameModesSettingsArray.Length - 1;
 
             _timerGameModes = 0;
-            CurrentGameMode = _gameGameModesSettingsArray[_lastIndexGameModeSettings].Mode;
+            CurrentGameMode = GlobalValues._gameGameModesSettingsArray[_lastIndexGameModeSettings].Mode;
         }
     }
 
@@ -185,9 +156,10 @@ public class GameController : MonoBehaviour {
         Score += amount;
         uiManager.UpdateScoreOnUi(Score);
 
-        if (Score % PointsToGainExtraLife == 0) {
+        if (Score % GlobalValues.PointsToGainExtraLife == 0) {
             Life++;
             uiManager.UpdateLifesOnUi(Life);
+            soundManager.PlayExtraLifeSound();
         }
     }
 
@@ -212,9 +184,10 @@ public class GameController : MonoBehaviour {
 
             if (dot.IsEnergizer) {
                 CurrentGameMode = GameMode.FRIGHTENED;
-                AddScore(EnergizerScore);
+                soundManager.PlayFrightenedSound();
+                AddScore(GlobalValues.EnergizerScore);
             } else {
-                AddScore(DotScore);
+                AddScore(GlobalValues.DotScore);
             }
 
             if (_dots.Count == 0)
@@ -236,11 +209,11 @@ public class GameController : MonoBehaviour {
         _pacman.SubscribeOnGetCaughtByGhosts((ghost) => {
             if (!ghost.IsDead) {
                 if (CurrentGameMode.Equals(GameMode.FRIGHTENED)) {
-                    int scoreGained = (GhostFrightenedBaseScore * _factorToEatGhostsSequentially);
+                    int scoreGained = (GlobalValues.GhostFrightenedBaseScore * _factorToEatGhostsSequentially);
 
                     AddScore(scoreGained);
 
-                    _factorToEatGhostsSequentially *= GhostScoreFactor;
+                    _factorToEatGhostsSequentially *= GlobalValues.GhostScoreFactor;
 
                     GameObject scoreOnBoardTextInstantiated = Instantiate(ScoreOnBoardTextPrefab, ghost.transform.position, Quaternion.identity);
                     scoreOnBoardTextInstantiated.GetComponent<TextMesh>().text = scoreGained.ToString();

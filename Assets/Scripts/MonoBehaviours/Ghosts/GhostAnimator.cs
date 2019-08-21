@@ -18,7 +18,7 @@ public class GhostAnimator : MonoBehaviour {
     private List<GameObject> _eyes;
     private Ghost _ghost;
 
-    // Start is called before the first frame update
+
     void Start() {
         _ghost = this.GetComponent<Ghost>();
 
@@ -69,7 +69,7 @@ public class GhostAnimator : MonoBehaviour {
             if (_ghost.IsDead)
                 return;
 
-            if(gameMode.Equals(GameController.GameMode.FRIGHTENED)) {
+            if(gameMode.Equals(GameMode.FRIGHTENED)) {
                 body.SetActive(false);
                 eyeParent.SetActive(false);
                 frightenedBody.SetActive(true);
