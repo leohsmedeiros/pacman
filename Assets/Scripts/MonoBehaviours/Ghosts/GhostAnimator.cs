@@ -8,6 +8,7 @@ public class GhostAnimator : MonoBehaviour {
 
     public GameObject eyeParent;
     public GameObject frightenedBody;
+    public GameObject flashingBody;
     public GameObject body;
 
     public GameObject upEye;
@@ -21,13 +22,7 @@ public class GhostAnimator : MonoBehaviour {
 
     void Start() {
         _ghost = this.GetComponent<Ghost>();
-
-        _eyes = new List<GameObject>();
-
-        _eyes.Add(upEye);
-        _eyes.Add(rightEye);
-        _eyes.Add(leftEye);
-        _eyes.Add(downEye);
+        _eyes = new List<GameObject> { upEye, rightEye, leftEye, downEye };
 
         _ghost.SubscribeOnDirectionsChanges(direction => {
             foreach(GameObject eye in _eyes) {
@@ -57,10 +52,12 @@ public class GhostAnimator : MonoBehaviour {
             if (isDead) {
                 body.SetActive(false);
                 frightenedBody.SetActive(false);
+                flashingBody.SetActive(false);
                 eyeParent.SetActive(true);
             }else {
                 body.SetActive(true);
                 frightenedBody.SetActive(false);
+                flashingBody.SetActive(false);
                 eyeParent.SetActive(true);
             }
         });
@@ -73,10 +70,17 @@ public class GhostAnimator : MonoBehaviour {
                 body.SetActive(false);
                 eyeParent.SetActive(false);
                 frightenedBody.SetActive(true);
-            }else {
+                flashingBody.SetActive(false);
+            } else if (gameMode.Equals(GameMode.FRIGHTENED_FLASHING)) {
+                body.SetActive(false);
+                eyeParent.SetActive(false);
+                frightenedBody.SetActive(false);
+                flashingBody.SetActive(true);
+            } else {
                 body.SetActive(true);
                 eyeParent.SetActive(true);
                 frightenedBody.SetActive(false);
+                flashingBody.SetActive(false);
             }
         });
     }

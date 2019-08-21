@@ -1,7 +1,19 @@
 fileFormatVersion: 2
-guid: 344b5efd3b2ce4ca9bef0926953611ef
+guid: 7b218bc105cdb423085f96872d09f872
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -495600237645566204
+    second: flashing-ghosts_0
+  - first:
+      213: 3628117491383907155
+    second: flashing-ghosts_1
+  - first:
+      213: -7257279919684461764
+    second: flashing-ghosts_2
+  - first:
+      213: 1322345341052380251
+    second: flashing-ghosts_3
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -40,7 +52,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -115,11 +127,95 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: flashing-ghosts_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b66ee616c936a488e824c66632e9e892
+      internalID: -495600237645566204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flashing-ghosts_1
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 1
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6d8391ba45b147d0ab56f452167c532
+      internalID: 3628117491383907155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flashing-ghosts_2
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 1
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf13b74ff52244b14ab2032737ec4954
+      internalID: -7257279919684461764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flashing-ghosts_3
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 1
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d70ea86cbd4c49b9b02a15426830a1a
+      internalID: 1322345341052380251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 4a128981d613a4c1695fb64a06ca832b
+    spriteID: 012b98953c15242c9a231436a9dc1cce
     internalID: 0
     vertices: []
     indices: 

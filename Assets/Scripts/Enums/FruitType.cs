@@ -1,0 +1,3 @@
+﻿public enum FruitType {
+    CHERRY, STRAWBERRY, ORANGE, APPLE, MELON, GALAXIAN, BELL, KEY
+}

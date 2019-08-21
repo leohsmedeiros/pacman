@@ -21,15 +21,16 @@ public class GameController : MonoBehaviour {
     }
 
     public static GameController Instance { private set; get; }
-    public static int CurrentLevel { private set; get; } = 0;
+    public static int Level { private set; get; } = 0;
     public static int Score { private set; get; } = 0;
     public static int Life { private set; get; } = 3;
+    private static int _factorToGainExtraLife = 1;
 
     public float starterTime = 5f;
+    public FruitManager fruitManager;
     public UiManager uiManager;
     public SoundManager soundManager;
     public GameObject gameOverPrefab;
-    public GameObject scoreOnBoardTextPrefab;
     public float secondsShowingScoreOnBoard = 3f;
     public Node playerNode { private set; get; } = null;
     public Direction playerDirection { private set; get; } = Direction.RIGHT;
@@ -37,13 +38,14 @@ public class GameController : MonoBehaviour {
     private List<Action<GameMode>> _actionsForGameModeChange;
     private List<Dot> _dots;
     private List<Ghost> _ghosts;
+    private int _eatenDotsAmount = 0;
 
     private Pacman _pacman;
     private int _lastIndexGameModeSettings = 0;
     private float _timerFrightened = 0;
     private float _timerGameModes = 0;
     private int _factorToEatGhostsSequentially = 1;
-
+    private StageSettings _stageSettings;
 
 
     IEnumerator StartAfterSeconds() {
@@ -80,6 +82,14 @@ public class GameController : MonoBehaviour {
     }
 
     private void Start() {
+
+        if (Level < GlobalValues.SequenceOfStageSettings.Length) {
+            _stageSettings = GlobalValues.SequenceOfStageSettings[Level];
+        } else {
+            int lastIndex = GlobalValues.SequenceOfStageSettings.Length - 1;
+            _stageSettings = GlobalValues.SequenceOfStageSettings[lastIndex];
+        }
+
         uiManager.UpdateLifesOnUi(Life);
         uiManager.UpdateScoreOnUi(Score);
         uiManager.UpdateHighScoreOnUi(PlayerPrefs.GetInt("highscore", 0));
@@ -93,7 +103,9 @@ public class GameController : MonoBehaviour {
 
         if (currentGameMode.Equals(GameMode.FRIGHTENED)) {
             FrightenedModeUpdate();
-        }else {
+        } else if (currentGameMode.Equals(GameMode.FRIGHTENED_FLASHING)) {
+            FrightenedFlashingModeUpdate();
+        } else {
             GameModeUpdate();
         }
     }
@@ -102,8 +114,18 @@ public class GameController : MonoBehaviour {
     private void FrightenedModeUpdate() {
         _timerFrightened += Time.deltaTime;
 
-        float maxTime = (CurrentLevel < GlobalValues.TimeForFrightenedModeByLevel.Length - 1) ?
-            GlobalValues.TimeForFrightenedModeByLevel[CurrentLevel] : 0;
+        float maxTime = _stageSettings.ghostFrightenedTime;
+
+        if (_timerFrightened > maxTime) {
+            _timerFrightened = 0;
+            currentGameMode = GameMode.FRIGHTENED_FLASHING;
+        }
+    }
+
+    private void FrightenedFlashingModeUpdate() {
+        _timerFrightened += Time.deltaTime;
+
+        float maxTime = _stageSettings.ghostFlashingTime;
 
         if (_timerFrightened > maxTime) {
             _timerFrightened = 0;
@@ -129,7 +151,7 @@ public class GameController : MonoBehaviour {
     }
 
     private void NextLevel() {
-        CurrentLevel++;
+        Level++;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -155,8 +177,9 @@ public class GameController : MonoBehaviour {
         Score += amount;
         uiManager.UpdateScoreOnUi(Score);
 
-        if (Score % GlobalValues.PointsToGainExtraLife == 0) {
+        if (Score > _factorToGainExtraLife * GlobalValues.PointsToGainExtraLife) {
             Life++;
+            _factorToGainExtraLife++;
             uiManager.UpdateLifesOnUi(Life);
             soundManager.PlayExtraLifeSound();
         }
@@ -164,9 +187,10 @@ public class GameController : MonoBehaviour {
 
 
     public void RestartGame() {
-        CurrentLevel = 0;
+        Level = 0;
         Life = 3;
         Score = 0;
+        _factorToGainExtraLife = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -178,6 +202,10 @@ public class GameController : MonoBehaviour {
         _actionsForGameModeChange.Add(action);
     }
 
+    public void RegisterFruit(Fruit fruit) {
+        fruit.SubscribeOnGetCaught(() => AddScore(fruit.points));
+    }
+
     public void RegisterDot(Dot dot) {
         dot.SubscribeOnCaught(() => {
             _dots.Remove(dot);
@@ -187,7 +215,16 @@ public class GameController : MonoBehaviour {
                 soundManager.PlayFrightenedSound();
                 AddScore(GlobalValues.EnergizerScore);
             } else {
+                _eatenDotsAmount++;
                 AddScore(GlobalValues.DotScore);
+
+                if (_eatenDotsAmount.Equals(GlobalValues.DotsAmountToShowFruitFirstTime) ||
+                    _eatenDotsAmount.Equals(GlobalValues.DotsAmountToShowFruitSecondTime)) {
+
+                    fruitManager.ShowFruit(_stageSettings.fruitType);
+                } else {
+                    fruitManager.DestroyFruit();
+                }
             }
 
             if (_dots.Count == 0)
@@ -208,16 +245,13 @@ public class GameController : MonoBehaviour {
         _pacman.SubscribeOnChangeNode((Node node) => { playerNode = node; });
         _pacman.SubscribeOnGetCaughtByGhosts((ghost) => {
             if (!ghost.isDead) {
-                if (currentGameMode.Equals(GameMode.FRIGHTENED)) {
-                    int scoreGained = (GlobalValues.GhostFrightenedBaseScore * _factorToEatGhostsSequentially);
+                if (currentGameMode.Equals(GameMode.FRIGHTENED) || currentGameMode.Equals(GameMode.FRIGHTENED_FLASHING)) {
+                    int scoreGained = GlobalValues.GhostFrightenedBaseScore * _factorToEatGhostsSequentially;
 
                     AddScore(scoreGained);
+                    ghost.GotEaten(scoreGained.ToString());
 
                     _factorToEatGhostsSequentially *= GlobalValues.GhostScoreFactor;
-
-                    GameObject scoreOnBoardTextInstantiated = Instantiate(scoreOnBoardTextPrefab, ghost.transform.position, Quaternion.identity);
-                    scoreOnBoardTextInstantiated.GetComponent<TextMesh>().text = scoreGained.ToString();
-                    Destroy(scoreOnBoardTextInstantiated, secondsShowingScoreOnBoard);
 
                 } else {
                     currentGameMode = GameMode.DEAD;

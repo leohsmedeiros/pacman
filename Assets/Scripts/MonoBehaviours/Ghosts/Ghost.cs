@@ -11,6 +11,7 @@ public abstract class Ghost : MonoBehaviour {
     public float timeToBeReleased;
     private float _timer = 0;
     public AudioSource audioWhenEated;
+    public GameObject scoreOnBoardTextPrefab;
 
     protected Pacman _pacman;
 
@@ -87,9 +88,13 @@ public abstract class Ghost : MonoBehaviour {
         isDead = false;
     }
 
-    private void Die() {
+    public void GotEaten(string pointsToBeShown) {
         isDead = true;
         audioWhenEated.Play();
+
+        GameObject scoreObject = Instantiate(scoreOnBoardTextPrefab, this.transform.position, Quaternion.identity);
+        scoreObject.GetComponent<TextMesh>().text = pointsToBeShown;
+        Destroy(scoreObject, GlobalValues.TimeShowingScorePointsGained);
     }
 
     protected abstract Vector2 EstimateTargetPoint();
@@ -129,7 +134,7 @@ public abstract class Ghost : MonoBehaviour {
             Vector2 estimatedTargetPoint = EstimateTargetPoint();
             _targetNode = ChooseNextNode(estimatedTargetPoint, false);
 
-        } else if (gameMode.Equals(GameMode.FRIGHTENED)) {
+        } else if (gameMode.Equals(GameMode.FRIGHTENED) || gameMode.Equals(GameMode.FRIGHTENED_FLASHING)) {
 
             _targetNode = ChooseNextNode(_pacman.transform.position, true);
 
@@ -159,11 +164,6 @@ public abstract class Ghost : MonoBehaviour {
                 _previousNode = _currentNode;
                 _currentNode = collision.GetComponent<Node>();
                 ActionsByGameMode(GameController.Instance.currentGameMode);
-
-            } else if (collision.tag.Equals(GlobalValues.PlayerTag) &&
-                       GameController.Instance.currentGameMode.Equals(GameMode.FRIGHTENED)) {
-
-                Die();
 
             }
 
