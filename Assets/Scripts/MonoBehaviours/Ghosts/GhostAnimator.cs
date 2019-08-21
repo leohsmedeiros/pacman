@@ -66,7 +66,7 @@ public class GhostAnimator : MonoBehaviour {
         });
 
         GameController.Instance.SubscribeForGameModeChanges(gameMode => {
-            if (_ghost.IsDead)
+            if (_ghost.isDead)
                 return;
 
             if(gameMode.Equals(GameMode.FRIGHTENED)) {

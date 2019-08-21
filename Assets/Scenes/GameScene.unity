@@ -28532,14 +28532,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 771e511cdfbfe41f780820ea4d1303ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StarterTime: 5
+  starterTime: 5
   uiManager: {fileID: 770659938}
   soundManager: {fileID: 873244167}
-  GameOverPrefab: {fileID: 1073028813212815757, guid: 0d1af68a11759484c82add144dbd4136,
+  gameOverPrefab: {fileID: 1073028813212815757, guid: 0d1af68a11759484c82add144dbd4136,
     type: 3}
-  ScoreOnBoardTextPrefab: {fileID: 4421792919378580846, guid: 3fb91b9b7c2a34824b530e4e497274d7,
+  scoreOnBoardTextPrefab: {fileID: 4421792919378580846, guid: 3fb91b9b7c2a34824b530e4e497274d7,
     type: 3}
-  SecondsShowingScoreOnBoard: 3
+  secondsShowingScoreOnBoard: 3
 --- !u!82 &873244166
 AudioSource:
   m_ObjectHideFlags: 0
@@ -31697,7 +31697,7 @@ MonoBehaviour:
   audioWhenEated: {fileID: 944388853}
   scatterModeTarget: {fileID: 1248565311}
   ghostHouseDoor: {fileID: 1774965436}
-  Blincky: {fileID: 1834045224}
+  blincky: {fileID: 1834045224}
 --- !u!58 &944388856
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PacmanMover : MonoBehaviour {
-    private List<Action<Direction>> actionsForDirectionsChange;
+    private List<Action<Direction>> _actionsForDirectionsChange;
 
     public float speed;
 
@@ -12,7 +12,7 @@ public class PacmanMover : MonoBehaviour {
         set {
             _currentDirection = value;
 
-            foreach (Action<Direction> action in actionsForDirectionsChange) {
+            foreach (Action<Direction> action in _actionsForDirectionsChange) {
                 action.Invoke(_currentDirection);
             }
         }
@@ -22,20 +22,19 @@ public class PacmanMover : MonoBehaviour {
     }
 
     private Node _destinyNode = null;
-
     private Direction? _bufferedDirectionToNextNode = null;
 
 
     private void Awake() {
-        actionsForDirectionsChange = new List<Action<Direction>>();
+        _actionsForDirectionsChange = new List<Action<Direction>>();
     }
 
-    public Direction GetCurrentDirection() {
+    public Direction GetDirection() {
         return currentDirection;
     }
 
     public void SubscribeForDirectionsChange(Action<Direction> action) {
-        actionsForDirectionsChange.Add(action);
+        _actionsForDirectionsChange.Add(action);
     }
 
 
@@ -52,7 +51,7 @@ public class PacmanMover : MonoBehaviour {
     // rule #1: you just can go to another node if you are on some node
     // exception: you can interrupt coming back to previous node
     public void ChangeDirection(Direction direction) {
-        Node currentNode = GameController.Instance.CurrentPlayerNode;
+        Node currentNode = GameController.Instance.playerNode;
 
         if (currentNode != null) {
             if(UpdateDestinyNode(GetNextNodeFromDirection(currentNode, direction))) {
@@ -100,15 +99,15 @@ public class PacmanMover : MonoBehaviour {
     }
 
     public void Update() {
-        if (GameController.Instance.CurrentGameMode.Equals(GameMode.WAITING) ||
-            GameController.Instance.CurrentGameMode.Equals(GameMode.DEAD))
+        if (GameController.Instance.currentGameMode.Equals(GameMode.WAITING) ||
+            GameController.Instance.currentGameMode.Equals(GameMode.DEAD))
             return;
 
         if (_destinyNode != null)
             this.transform.position = Vector2.MoveTowards(transform.position, _destinyNode.GetPosition2D(), speed * Time.deltaTime);
 
 
-        Node currentNode = GameController.Instance.CurrentPlayerNode;
+        Node currentNode = GameController.Instance.playerNode;
 
         if (currentNode != null) {
             if (_bufferedDirectionToNextNode != null) {

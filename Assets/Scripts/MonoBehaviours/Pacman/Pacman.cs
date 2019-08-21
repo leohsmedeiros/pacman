@@ -8,12 +8,12 @@ public class Pacman : MonoBehaviour {
     private PacmanAnimator _pacmanAnimator;
     private PacmanMover _directionMover;
 
-    private List<Action<Node>> actionsOnChangeNode;
-    private List<Action<Ghost>> actionsOnGetCaughtByGhosts;
+    private List<Action<Node>> _actionsOnChangeNode;
+    private List<Action<Ghost>> _actionsOnGetCaughtByGhosts;
 
     private void Start() {
-        actionsOnChangeNode = new List<Action<Node>>();
-        actionsOnGetCaughtByGhosts = new List<Action<Ghost>>();
+        _actionsOnChangeNode = new List<Action<Node>>();
+        _actionsOnGetCaughtByGhosts = new List<Action<Ghost>>();
 
         _pacmanAnimator = this.GetComponent<PacmanAnimator>();
         _directionMover = this.GetComponent<PacmanMover>();
@@ -42,7 +42,7 @@ public class Pacman : MonoBehaviour {
     }
 
     void Update() {
-        if (GameController.Instance.CurrentGameMode.Equals(GameMode.WAITING))
+        if (GameController.Instance.currentGameMode.Equals(GameMode.WAITING))
             return;
 
 
@@ -61,17 +61,17 @@ public class Pacman : MonoBehaviour {
 
 
     public Direction GetDirection() {
-        return _directionMover.GetCurrentDirection();
+        return _directionMover.GetDirection();
     }
 
 
 
     public void SubscribeOnChangeNode(Action<Node> action) {
-        actionsOnChangeNode.Add(action);
+        _actionsOnChangeNode.Add(action);
     }
 
     public void SubscribeOnGetCaughtByGhosts(Action<Ghost> action) {
-        actionsOnGetCaughtByGhosts.Add(action);
+        _actionsOnGetCaughtByGhosts.Add(action);
     }
 
 
@@ -80,12 +80,12 @@ public class Pacman : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.tag.Equals(GlobalValues.NodeTag)) {
  
-           foreach (Action<Node> action in actionsOnChangeNode)
+           foreach (Action<Node> action in _actionsOnChangeNode)
                 action.Invoke(collision.GetComponent<Node>());
 
         } else if (collision.tag.Equals(GlobalValues.GhostTag)) {
 
-            foreach (Action<Ghost> action in actionsOnGetCaughtByGhosts)
+            foreach (Action<Ghost> action in _actionsOnGetCaughtByGhosts)
                 action.Invoke(collision.GetComponent<Ghost>());
 
         }
@@ -93,7 +93,7 @@ public class Pacman : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D collision) {
         if (collision.tag.Equals(GlobalValues.NodeTag)) {
-            foreach (Action<Node> action in actionsOnChangeNode) {
+            foreach (Action<Node> action in _actionsOnChangeNode) {
                 action.Invoke(null);
             }
         }

@@ -2,17 +2,17 @@
 
 public class PinkyGhost : Ghost {
     // four tiles ahead pacman
-    private int tiles = 4;
+    private int _tiles = 4;
 
     protected override Vector2 EstimateTargetPoint() {   
         Direction pacmanDirection = _pacman.GetDirection();
         Vector2 pacmanPosition = _pacman.transform.position;
 
         switch (pacmanDirection) {
-            case Direction.UP: return pacmanPosition + (Vector2.up * tiles);
-            case Direction.LEFT: return pacmanPosition + (Vector2.left * tiles);
-            case Direction.RIGHT: return pacmanPosition + (Vector2.right * tiles);
-            case Direction.DOWN: return pacmanPosition + (Vector2.down * tiles);
+            case Direction.UP: return pacmanPosition + (Vector2.up * _tiles);
+            case Direction.LEFT: return pacmanPosition + (Vector2.left * _tiles);
+            case Direction.RIGHT: return pacmanPosition + (Vector2.right * _tiles);
+            case Direction.DOWN: return pacmanPosition + (Vector2.down * _tiles);
             default: return pacmanPosition;
         }
     }

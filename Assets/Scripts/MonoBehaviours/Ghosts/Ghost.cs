@@ -4,8 +4,8 @@ using UnityEngine;
 
 
 public abstract class Ghost : MonoBehaviour {
-    private List<Action<Direction>> actionsForDirectionsChange;
-    private List<Action<bool>> actionsForLifeStatusChanges;
+    private List<Action<Direction>> _actionsForDirectionsChange;
+    private List<Action<bool>> _actionsForLifeStatusChanges;
 
     public float speed;
     public float timeToBeReleased;
@@ -14,17 +14,17 @@ public abstract class Ghost : MonoBehaviour {
 
     protected Pacman _pacman;
 
-    private Direction _currentDirection = Direction.RIGHT;
-    public Direction CurrentDirection {
+    private Direction _direction = Direction.RIGHT;
+    public Direction direction {
         private set {
-            _currentDirection = value;
+            _direction = value;
 
-            foreach (Action<Direction> action in actionsForDirectionsChange) {
-                action.Invoke(_currentDirection);
+            foreach (Action<Direction> action in _actionsForDirectionsChange) {
+                action.Invoke(_direction);
             }
         }
         get {
-            return _currentDirection;
+            return _direction;
         }
     }
 
@@ -33,10 +33,10 @@ public abstract class Ghost : MonoBehaviour {
     public Node ghostHouseDoor;
 
     private bool _isDead = false;
-    public bool IsDead { 
+    public bool isDead { 
         set {
             _isDead = value;
-            foreach (Action<bool> action in actionsForLifeStatusChanges) {
+            foreach (Action<bool> action in _actionsForLifeStatusChanges) {
                 action.Invoke(value);
             }
         }
@@ -48,8 +48,8 @@ public abstract class Ghost : MonoBehaviour {
 
 
     private void Awake() {
-        actionsForDirectionsChange = new List<Action<Direction>>();
-        actionsForLifeStatusChanges = new List<Action<bool>>();
+        _actionsForDirectionsChange = new List<Action<Direction>>();
+        _actionsForLifeStatusChanges = new List<Action<bool>>();
     }
 
     private void Start() {
@@ -61,8 +61,8 @@ public abstract class Ghost : MonoBehaviour {
 
 
     private void Update() {
-        if (GameController.Instance.CurrentGameMode.Equals(GameMode.WAITING) ||
-            GameController.Instance.CurrentGameMode.Equals(GameMode.DEAD))
+        if (GameController.Instance.currentGameMode.Equals(GameMode.WAITING) ||
+            GameController.Instance.currentGameMode.Equals(GameMode.DEAD))
             return;
 
         if (_timer > timeToBeReleased) {
@@ -76,19 +76,19 @@ public abstract class Ghost : MonoBehaviour {
 
 
     public void SubscribeOnDirectionsChanges(Action<Direction> action) {
-        actionsForDirectionsChange.Add(action);
+        _actionsForDirectionsChange.Add(action);
     }
 
     public void SubscribeOnLifeStatusChange(Action<bool> action) {
-        actionsForLifeStatusChanges.Add(action);
+        _actionsForLifeStatusChanges.Add(action);
     }
 
     public void Revive() {
-        IsDead = false;
+        isDead = false;
     }
 
     private void Die() {
-        IsDead = true;
+        isDead = true;
         audioWhenEated.Play();
     }
 
@@ -107,7 +107,7 @@ public abstract class Ghost : MonoBehaviour {
             if (distance < distanceMin && neighbor != _previousNode) {
                 distanceMin = distance;
                 selectedNode = neighbor;
-                CurrentDirection = _currentNode.GetDirectionByNode(neighbor);
+                direction = _currentNode.GetDirectionByNode(neighbor);
             }
         }
 
@@ -116,7 +116,7 @@ public abstract class Ghost : MonoBehaviour {
 
 
     private void ActionsByGameMode(GameMode gameMode) {
-        if (IsDead) {
+        if (isDead) {
 
             _targetNode = ChooseNextNode(ghostHouseDoor.GetPosition2D(), false);
 
@@ -139,7 +139,7 @@ public abstract class Ghost : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
 
-        if (IsDead) {
+        if (isDead) {
 
             if (collision.GetComponent<BridgeToRevivalNode>() != null) {
                 _previousNode = _currentNode;
@@ -149,7 +149,7 @@ public abstract class Ghost : MonoBehaviour {
             } else if (collision.tag.Equals(GlobalValues.NodeTag)) {
                 _previousNode = _currentNode;
                 _currentNode = collision.GetComponent<Node>();
-                ActionsByGameMode(GameController.Instance.CurrentGameMode);
+                ActionsByGameMode(GameController.Instance.currentGameMode);
             }
 
         } else {
@@ -158,10 +158,10 @@ public abstract class Ghost : MonoBehaviour {
 
                 _previousNode = _currentNode;
                 _currentNode = collision.GetComponent<Node>();
-                ActionsByGameMode(GameController.Instance.CurrentGameMode);
+                ActionsByGameMode(GameController.Instance.currentGameMode);
 
             } else if (collision.tag.Equals(GlobalValues.PlayerTag) &&
-                       GameController.Instance.CurrentGameMode.Equals(GameMode.FRIGHTENED)) {
+                       GameController.Instance.currentGameMode.Equals(GameMode.FRIGHTENED)) {
 
                 Die();
 
