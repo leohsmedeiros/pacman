@@ -26,6 +26,7 @@ public abstract class Ghost : MonoBehaviour {
         get => _direction;
     }
 
+    /* the ghosts only navigates between the nodes, in direction to target point */
     protected Node _currentNode, _nextNode, _previousNode;
 
     private Vector2? _targetPoint;
@@ -44,6 +45,7 @@ public abstract class Ghost : MonoBehaviour {
         get => _isDead;
     }
 
+    /* define if the ghost can be eaten */
     public bool isFrightened { private set; get; } = false;
 
 
@@ -84,6 +86,7 @@ public abstract class Ghost : MonoBehaviour {
     public void SubscribeOnLifeStatusChange(Action<bool> action) => _actionsForLifeStatusChanges.Add(action);
 
 
+    /* Reset the variables (usefull when player dies, and has enough lifes to continue) */
     public void Reset() {
         Revive();
         _timer = 0;
@@ -93,6 +96,7 @@ public abstract class Ghost : MonoBehaviour {
         _previousNode = null;
     }
 
+    /* When ghost was dead, but now is inside ghost house */
     public void Revive() {
         isDead = false;
         isFrightened = false;
@@ -107,8 +111,12 @@ public abstract class Ghost : MonoBehaviour {
         Destroy(scoreObject, GameController.Instance.settings.TimeShowingScorePointsGained);
     }
 
+
+    /* particular behaviour to each ghost, so must be specialized to each one */
     protected abstract Vector2 EstimateTargetPoint();
 
+    /* choose the next node based on lower distance of each neighbor node in direction on target point */
+    /* on frightened point, it has no target, so the ghost choose a random neighbor */
     private Node ChooseNextNode(Vector2? estimatedTargetPoint) {
         List<Node> neighborNodes = _currentNode.GetNeighbors();
         float distanceMin = float.MaxValue;
@@ -129,7 +137,7 @@ public abstract class Ghost : MonoBehaviour {
         return selectedNode;
     }
 
-
+    /* Will update the target point based on game state or the ghost state */
     private void UpdateTargetPoint() {
         if (isDead)
             _targetPoint = ghostHouseDoor.GetPosition2D();

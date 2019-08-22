@@ -20,6 +20,8 @@ public class GhostAnimator : MonoBehaviour {
     private Ghost _ghost;
     public bool isFrightened { private set; get; } = false;
 
+
+    /* will be observing the status changes (of game mode and of ghost) */
     void Start() {
         _ghost = this.GetComponent<Ghost>();
         _eyes = new List<GameObject> { upEye, rightEye, leftEye, downEye };

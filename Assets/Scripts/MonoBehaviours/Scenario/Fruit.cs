@@ -18,9 +18,7 @@ public class Fruit : MonoBehaviour {
         GameController.Instance.RegisterFruit(this);
     }
 
-    public void SubscribeOnGetCaught(Action action) {
-        _actionsForGetCaught.Add(action);
-    }
+    public void SubscribeOnGetCaught(Action action) => _actionsForGetCaught.Add(action);
 
     public Sprite GetSprite() => this.GetComponent<SpriteRenderer>().sprite;
 

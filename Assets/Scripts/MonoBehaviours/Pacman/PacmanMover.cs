@@ -23,6 +23,8 @@ public class PacmanMover : MonoBehaviour {
     private Node _destinyNode = null;
     private Node _currentNode = null;
 
+    /*  If player pressed some input, when pacman is not at a valid node to interact,
+        will buffer this input and try again when pacman come to next node */
     private Direction? _bufferedDirectionToNextNode = null;
 
 
@@ -54,8 +56,8 @@ public class PacmanMover : MonoBehaviour {
         }
     }
 
-    // rule #1: you just can go to another node if you are on some node
-    // exception: you can interrupt coming back to previous node
+    // you just can go to another node if you are on some node,
+    // but you can interrupt coming back to the previous node
     public void ChangeDirection(Direction direction) {
         Node currentNode = _currentNode;
 

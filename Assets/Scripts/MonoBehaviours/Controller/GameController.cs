@@ -204,6 +204,7 @@ public class GameController : MonoBehaviour {
     }
 
 
+    /* In case of game over, this method will reset the static variables and restart the scene */
     public void RestartGame() {
         Level = 0;
         Life = 3;

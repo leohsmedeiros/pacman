@@ -25,7 +25,4 @@ public class UiManager : MonoBehaviour {
             RetryButton.gameObject.SetActive(true);
         }
     }
-
-
-
 }

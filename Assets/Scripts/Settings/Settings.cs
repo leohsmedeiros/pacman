@@ -54,7 +54,7 @@ public class Settings : ScriptableObject {
         new StageSettings { fruitType = FruitType.KEY, ghostFrightenedTime = 1, ghostFlashingTime = 3 },
         new StageSettings { fruitType = FruitType.KEY, ghostFrightenedTime = 0, ghostFlashingTime = 0 },
         new StageSettings { fruitType = FruitType.KEY, ghostFrightenedTime = 1, ghostFlashingTime = 3 },
-        new StageSettings { fruitType = FruitType.KEY, ghostFrightenedTime = 0, ghostFlashingTime = 0 }
+        new StageSettings { fruitType = FruitType.KEY, ghostFrightenedTime = 0, ghostFlashingTime = 0 } // this one is permanent
     };
 
 
