@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Node))]
-public class BridgeToGhostHouse : MonoBehaviour {
+public class GhostHouseDoor : MonoBehaviour {
     public GhostHouse node;
 }

@@ -153,7 +153,7 @@ public abstract class Ghost : MonoBehaviour {
             UpdateTargetPoint();
 
             _nextNode = (isDead && _currentNode.Equals(ghostHouseDoor)) ?
-                ghostHouseDoor.GetComponent<BridgeToGhostHouse>().node : ChooseNextNode(_targetPoint);
+                ghostHouseDoor.GetComponent<GhostHouseDoor>().node : ChooseNextNode(_targetPoint);
         }
     }
 

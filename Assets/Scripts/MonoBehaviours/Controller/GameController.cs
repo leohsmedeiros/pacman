@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(SceneChanger))]
 public class GameController : MonoBehaviour {
 
     private GameMode _currentGameMode = GameMode.INTRO;
@@ -44,6 +45,7 @@ public class GameController : MonoBehaviour {
     private float _timerGameModes = 0;
     private int _factorToEatGhostsSequentially = 1;
     private StageSettings _stageSettings;
+    private SceneChanger _sceneChanger;
 
 
     IEnumerator StartLevel() {
@@ -76,6 +78,7 @@ public class GameController : MonoBehaviour {
 
     private void Awake() {
         Instance = this;
+        _sceneChanger = this.GetComponent<SceneChanger>();
 
         _dots = new List<Dot>();
         _ghosts = new List<Ghost>();
@@ -153,7 +156,7 @@ public class GameController : MonoBehaviour {
 
     private void NextLevel() {
         Level++;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        _sceneChanger.LoadLevel();
     }
 
     private void LoseOneLife() {
@@ -206,7 +209,7 @@ public class GameController : MonoBehaviour {
         Life = 3;
         Score = 0;
         _factorToGainExtraLife = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        _sceneChanger.LoadLevel();
     }
 
     public GameMode GetCurrentGameMode() => _currentGameMode;

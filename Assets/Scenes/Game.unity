@@ -10099,7 +10099,7 @@ GameObject:
   - component: {fileID: 294559949}
   - component: {fileID: 294559946}
   m_Layer: 0
-  m_Name: pinky
+  m_Name: Pinky
   m_TagString: Ghost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28760,6 +28760,7 @@ GameObject:
   - component: {fileID: 873244167}
   - component: {fileID: 873244166}
   - component: {fileID: 873244168}
+  - component: {fileID: 873244171}
   m_Layer: 0
   m_Name: GameController
   m_TagString: GameController
@@ -29058,6 +29059,19 @@ MonoBehaviour:
   keyPrefab: {fileID: 8237431979080823028, guid: 922f0e0ba4bfa43bb908c814b809b07c,
     type: 3}
   referenceNode: {fileID: 217240464}
+--- !u!114 &873244171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873244163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 207003d4f3f7c45c58d8be836fdc9a95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scene: {fileID: 102900000, guid: 2cda990e2423bbf4892e6590ba056729, type: 3}
 --- !u!1 &876962914
 GameObject:
   m_ObjectHideFlags: 0
@@ -31851,7 +31865,7 @@ GameObject:
   - component: {fileID: 944388856}
   - component: {fileID: 944388853}
   m_Layer: 0
-  m_Name: inky
+  m_Name: Inky
   m_TagString: Ghost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45273,7 +45287,7 @@ GameObject:
   - component: {fileID: 1327859034}
   - component: {fileID: 1327859031}
   m_Layer: 0
-  m_Name: clyde
+  m_Name: Clyde
   m_TagString: Ghost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59120,7 +59134,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1774965435}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27f41fa4dec36460ebb8dc111aef282b, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ceea4002bf694bf983671db2a1fa6c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   node: {fileID: 942918120}
@@ -61331,7 +61345,7 @@ GameObject:
   - component: {fileID: 1834045226}
   - component: {fileID: 1834045223}
   m_Layer: 0
-  m_Name: blinky
+  m_Name: Blinky
   m_TagString: Ghost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
