@@ -26,7 +26,10 @@ public abstract class Ghost : MonoBehaviour {
         get => _direction;
     }
 
-    protected Node _currentNode, _targetNode, _previousNode;
+    protected Node _currentNode, _nextNode, _previousNode;
+
+    private Vector2? _targetPoint;
+
     public Node scatterModeTarget;
     public Node ghostHouseDoor;
 
@@ -41,6 +44,7 @@ public abstract class Ghost : MonoBehaviour {
         get => _isDead;
     }
 
+    public bool isFrightened { private set; get; } = false;
 
 
     private void Awake() {
@@ -50,9 +54,11 @@ public abstract class Ghost : MonoBehaviour {
 
     private void Start() {
         _pacman = GameObject.FindWithTag(GameController.Instance.settings.PlayerTag).GetComponent<Pacman>();
-
-        GameController.Instance.SubscribeForGameModeChanges(ActionsByGameMode);
         GameController.Instance.RegisterGhosts(this);
+        GameController.Instance.SubscribeForGameModeChanges(gameMode => {
+            if(!gameMode.Equals(GameMode.FRIGHTENED_FLASHING))
+                isFrightened = gameMode.Equals(GameMode.FRIGHTENED);
+        });
     }
 
 
@@ -62,8 +68,11 @@ public abstract class Ghost : MonoBehaviour {
             return;
 
         if (_timer > timeToBeReleased) {
-            if (_targetNode != null)
-                this.transform.position = Vector2.MoveTowards(transform.position, _targetNode.GetPosition2D(), speed * Time.deltaTime);
+            if (_nextNode != null) {
+                this.transform.position = Vector2.MoveTowards(transform.position,
+                                                              _nextNode.GetPosition2D(),
+                                                              speed * Time.deltaTime);
+            }
         }else {
             _timer += Time.deltaTime;
         }
@@ -80,13 +89,16 @@ public abstract class Ghost : MonoBehaviour {
         _timer = 0;
         _direction = Direction.UP;
         _currentNode = null;
-        _targetNode = null;
+        _nextNode = null;
         _previousNode = null;
     }
 
-    public void Revive() => isDead = false;
+    public void Revive() {
+        isDead = false;
+        isFrightened = false;
+    }
 
-    public void GotEaten(string pointsToBeShown) {
+    public void GotEatenByPlayer(string pointsToBeShown) {
         isDead = true;
         audioWhenEated.Play();
 
@@ -97,15 +109,15 @@ public abstract class Ghost : MonoBehaviour {
 
     protected abstract Vector2 EstimateTargetPoint();
 
-    private Node ChooseNextNode(Vector2 estimatedTargetPoint, bool isFrightened) {
+    private Node ChooseNextNode(Vector2? estimatedTargetPoint) {
         List<Node> neighborNodes = _currentNode.GetNeighbors();
         float distanceMin = float.MaxValue;
         Node selectedNode = neighborNodes[0];
 
         foreach (Node neighbor in neighborNodes) {
 
-            float distance = (isFrightened) ?
-                UnityEngine.Random.Range(0f, 10f) : Vector2.Distance(neighbor.GetPosition2D(), estimatedTargetPoint);
+            float distance = (estimatedTargetPoint == null) ?
+                UnityEngine.Random.Range(0f, 10f) : Vector2.Distance(neighbor.GetPosition2D(), (Vector2) estimatedTargetPoint);
 
             if (distance < distanceMin && neighbor != _previousNode) {
                 distanceMin = distance;
@@ -118,51 +130,30 @@ public abstract class Ghost : MonoBehaviour {
     }
 
 
-    private void ActionsByGameMode(GameMode gameMode) {
-        if (isDead) {
+    private void UpdateTargetPoint() {
+        if (isDead)
+            _targetPoint = ghostHouseDoor.GetPosition2D();
 
-            _targetNode = ChooseNextNode(ghostHouseDoor.GetPosition2D(), false);
+        else if (isFrightened)
+            _targetPoint = null;
 
-        } else if (gameMode.Equals(GameMode.SCATTER)) {
+        else if (GameController.Instance.currentGameMode.Equals(GameMode.SCATTER))
+            _targetPoint = scatterModeTarget.GetPosition2D();
 
-            _targetNode = ChooseNextNode(scatterModeTarget.GetPosition2D(), false);
-
-        } else if (gameMode.Equals(GameMode.CHASE)) {
-
-            Vector2 estimatedTargetPoint = EstimateTargetPoint();
-            _targetNode = ChooseNextNode(estimatedTargetPoint, false);
-
-        } else if (gameMode.Equals(GameMode.FRIGHTENED) || gameMode.Equals(GameMode.FRIGHTENED_FLASHING)) {
-
-            _targetNode = ChooseNextNode(_pacman.transform.position, true);
-
-        }
+        else if (GameController.Instance.currentGameMode.Equals(GameMode.CHASE))
+            _targetPoint = EstimateTargetPoint();            
     }
 
 
     private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.tag.Equals(GameController.Instance.settings.NodeTag)) {
+            _previousNode = _currentNode;
+            _currentNode = collision.GetComponent<Node>();
 
-        if (isDead) {
+            UpdateTargetPoint();
 
-            if (collision.GetComponent<BridgeToGhostHouse>() != null) {
-                _previousNode = _currentNode;
-                _currentNode = collision.GetComponent<Node>();
-
-                _targetNode = collision.GetComponent<BridgeToGhostHouse>().node;
-            } else if (collision.tag.Equals(GameController.Instance.settings.NodeTag)) {
-                _previousNode = _currentNode;
-                _currentNode = collision.GetComponent<Node>();
-                ActionsByGameMode(GameController.Instance.currentGameMode);
-            }
-
-        } else {
-            if (collision.tag.Equals(GameController.Instance.settings.NodeTag)) {
-
-                _previousNode = _currentNode;
-                _currentNode = collision.GetComponent<Node>();
-                ActionsByGameMode(GameController.Instance.currentGameMode);
-
-            }
+            _nextNode = (isDead && _currentNode.Equals(ghostHouseDoor)) ?
+                ghostHouseDoor.GetComponent<BridgeToGhostHouse>().node : ChooseNextNode(_targetPoint);
         }
     }
 

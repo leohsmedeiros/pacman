@@ -80,9 +80,6 @@ public class GameController : MonoBehaviour {
         _dots = new List<Dot>();
         _ghosts = new List<Ghost>();
         _actionsForGameModeChange = new List<Action<GameMode>>();
-    }
-
-    private void Start() {
 
         if (Level < settings.SequenceOfStageSettings.Length) {
             _stageSettings = settings.SequenceOfStageSettings[Level];
@@ -97,6 +94,7 @@ public class GameController : MonoBehaviour {
         uiManager.UpdateScoreOnGUI(Score);
         uiManager.UpdateHighScoreOnGUI(PlayerPrefs.GetInt("highscore", 0));
         StartCoroutine(StartLevel());
+
     }
 
     private void Update() {
@@ -253,11 +251,11 @@ public class GameController : MonoBehaviour {
 
         _pacman.SubscribeOnGetCaughtByGhosts((ghost) => {
             if (!ghost.isDead) {
-                if (currentGameMode.Equals(GameMode.FRIGHTENED) || currentGameMode.Equals(GameMode.FRIGHTENED_FLASHING)) {
+                if (ghost.isFrightened) {
                     int scoreGained = settings.GhostFrightenedBaseScore * _factorToEatGhostsSequentially;
 
                     AddScore(scoreGained);
-                    ghost.GotEaten(scoreGained.ToString());
+                    ghost.GotEatenByPlayer(scoreGained.ToString());
 
                     _factorToEatGhostsSequentially *= settings.GhostScoreFactor;
 

@@ -18,7 +18,7 @@ public class GhostAnimator : MonoBehaviour {
 
     private List<GameObject> _eyes;
     private Ghost _ghost;
-
+    public bool isFrightened { private set; get; } = false;
 
     void Start() {
         _ghost = this.GetComponent<Ghost>();

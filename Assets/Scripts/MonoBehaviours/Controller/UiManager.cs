@@ -10,10 +10,6 @@ public class UiManager : MonoBehaviour {
     public Image fruitImage;
 
 
-    void Start() {
-        TextScore.text = "0";
-    }
-
     public void UpdateFruitOnGUI(Sprite fruitSprite) => fruitImage.sprite = fruitSprite;
 
     public void UpdateHighScoreOnGUI(int score) => TextHighScore.text = score.ToString();
