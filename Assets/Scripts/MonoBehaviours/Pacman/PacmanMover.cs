@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Pacman))]
 public class PacmanMover : MonoBehaviour {
     private List<Action<Direction>> _actionsForDirectionsChange;
 
@@ -16,12 +17,12 @@ public class PacmanMover : MonoBehaviour {
                 action.Invoke(_currentDirection);
             }
         }
-        get {
-            return _currentDirection;
-        }
+        get => _currentDirection;
     }
 
     private Node _destinyNode = null;
+    private Node _currentNode = null;
+
     private Direction? _bufferedDirectionToNextNode = null;
 
 
@@ -29,14 +30,19 @@ public class PacmanMover : MonoBehaviour {
         _actionsForDirectionsChange = new List<Action<Direction>>();
     }
 
-    public Direction GetDirection() {
-        return currentDirection;
+    private void Start() {
+        this.GetComponent<Pacman>().SubscribeOnChangeNode(node => _currentNode = node);
     }
 
-    public void SubscribeForDirectionsChange(Action<Direction> action) {
-        _actionsForDirectionsChange.Add(action);
+    public void Reset() {
+        _destinyNode = null;
+        _bufferedDirectionToNextNode = null;
+        _currentDirection = Direction.RIGHT;
     }
 
+    public Direction GetDirection() => currentDirection;
+
+    public void SubscribeForDirectionsChange(Action<Direction> action) => _actionsForDirectionsChange.Add(action);
 
     private bool IsOpositeDirection(Direction desiredDirection) {
         switch (currentDirection) {
@@ -51,7 +57,7 @@ public class PacmanMover : MonoBehaviour {
     // rule #1: you just can go to another node if you are on some node
     // exception: you can interrupt coming back to previous node
     public void ChangeDirection(Direction direction) {
-        Node currentNode = GameController.Instance.playerNode;
+        Node currentNode = _currentNode;
 
         if (currentNode != null) {
             if(UpdateDestinyNode(GetNextNodeFromDirection(currentNode, direction))) {
@@ -107,12 +113,10 @@ public class PacmanMover : MonoBehaviour {
             this.transform.position = Vector2.MoveTowards(transform.position, _destinyNode.GetPosition2D(), speed * Time.deltaTime);
 
 
-        Node currentNode = GameController.Instance.playerNode;
-
-        if (currentNode != null) {
+        if (_currentNode != null) {
             if (_bufferedDirectionToNextNode != null) {
 
-                if (UpdateDestinyNode(GetNextNodeFromDirection(currentNode, _bufferedDirectionToNextNode.Value))) {
+                if (UpdateDestinyNode(GetNextNodeFromDirection(_currentNode, _bufferedDirectionToNextNode.Value))) {
                     currentDirection = _bufferedDirectionToNextNode.Value;
                 }
 
@@ -120,7 +124,7 @@ public class PacmanMover : MonoBehaviour {
 
             } else {
 
-                UpdateDestinyNode(GetNextNodeFromDirection(currentNode, currentDirection));
+                UpdateDestinyNode(GetNextNodeFromDirection(_currentNode, currentDirection));
             }
         }
 

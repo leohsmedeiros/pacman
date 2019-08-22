@@ -352,7 +352,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_13
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -3626,7 +3626,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_57
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -8174,7 +8174,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_25
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -8367,7 +8367,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_84
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -9588,7 +9588,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_73
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -9702,7 +9702,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_27
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -10251,7 +10251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f88250a1c07742c29e43e436d2725c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 4.5
   timeToBeReleased: 2
   audioWhenEated: {fileID: 294559946}
   scoreOnBoardTextPrefab: {fileID: 4421792919378580846, guid: 3fb91b9b7c2a34824b530e4e497274d7,
@@ -11252,7 +11252,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_30
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -11366,7 +11366,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_53
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -12093,7 +12093,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_76
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -15107,7 +15107,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_83
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -15626,7 +15626,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd81a60a1543f4d90b6f989dd81c40d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
+  speed: 5
 --- !u!58 &481634749
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -16817,7 +16817,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_82
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -17448,7 +17448,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_60
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -17996,7 +17996,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_14
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -18327,7 +18327,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_15
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -19343,7 +19343,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_86
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -19457,7 +19457,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_26
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -20005,7 +20005,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_55
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -20553,7 +20553,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_12
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -20717,7 +20717,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_90
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -22167,7 +22167,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_35
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -23479,7 +23479,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_33
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -24061,7 +24061,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_41
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -25005,7 +25005,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_51
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -25634,6 +25634,7 @@ RectTransform:
   - {fileID: 1949849209}
   - {fileID: 1753878536}
   - {fileID: 1367538553}
+  - {fileID: 803142284}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -25657,7 +25658,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_70
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -25756,6 +25757,80 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &803142283
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 803142284}
+  - component: {fileID: 803142286}
+  - component: {fileID: 803142285}
+  m_Layer: 5
+  m_Name: Fruit Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &803142284
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803142283}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 770659937}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 165, y: 25}
+  m_SizeDelta: {x: 30, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &803142285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803142283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!222 &803142286
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803142283}
+  m_CullTransparentMesh: 0
 --- !u!1 &805575402
 GameObject:
   m_ObjectHideFlags: 0
@@ -26306,7 +26381,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_50
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -27158,7 +27233,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_24
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -28354,7 +28429,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_16
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -28718,6 +28793,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 771e511cdfbfe41f780820ea4d1303ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: ee85c4f274b5c4607b08411a59785f41, type: 2}
   readyObject: {fileID: 1010915963}
   fruitManager: {fileID: 873244170}
   uiManager: {fileID: 873244169}
@@ -28726,7 +28802,6 @@ MonoBehaviour:
     type: 3}
   starterNode: {fileID: 217240464}
   ghostsHouse: {fileID: 942918120}
-  secondsShowingScoreOnBoard: 3
 --- !u!82 &873244166
 AudioSource:
   m_ObjectHideFlags: 0
@@ -28953,6 +29028,7 @@ MonoBehaviour:
   LifesParent: {fileID: 1753878536}
   TextScore: {fileID: 155195876}
   TextHighScore: {fileID: 1949849210}
+  fruitImage: {fileID: 803142285}
 --- !u!114 &873244170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29490,7 +29566,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_61
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -31123,7 +31199,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_72
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -31452,9 +31528,9 @@ GameObject:
   - component: {fileID: 942918119}
   - component: {fileID: 942918118}
   m_Layer: 0
-  m_Name: RevivalNode_54
+  m_Name: GhostHouse_Node_54
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -31546,7 +31622,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 942918116}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e10fe9debc084259afcaeab63b7a960, type: 3}
+  m_Script: {fileID: 11500000, guid: 1c6efa04d6792437b902b82b62d8f8a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   upNode: {fileID: 1774965436}
@@ -31927,7 +32003,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 775a3dc6e02c54d9bb379b1de3b7ba93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 4.5
   timeToBeReleased: 3
   audioWhenEated: {fileID: 944388853}
   scoreOnBoardTextPrefab: {fileID: 4421792919378580846, guid: 3fb91b9b7c2a34824b530e4e497274d7,
@@ -37987,7 +38063,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_63
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -38101,7 +38177,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_10
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -38638,7 +38714,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_18
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -39871,7 +39947,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_87
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -39985,7 +40061,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_85
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -40099,7 +40175,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_17
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -40213,7 +40289,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_80
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -41213,7 +41289,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_03
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -42060,7 +42136,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_64
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -43376,7 +43452,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_77
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -44866,7 +44942,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_31
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -45349,7 +45425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 337755aab23a849898ce18ffd2be8384, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 4.5
   timeToBeReleased: 4
   audioWhenEated: {fileID: 1327859031}
   scoreOnBoardTextPrefab: {fileID: 4421792919378580846, guid: 3fb91b9b7c2a34824b530e4e497274d7,
@@ -45625,7 +45701,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_95
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -45739,7 +45815,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_37
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -46070,7 +46146,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_00
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -46816,7 +46892,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_29
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -47518,7 +47594,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_22
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -47882,7 +47958,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_58
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -48793,7 +48869,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_40
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -49124,7 +49200,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_01
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -49672,7 +49748,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_93
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -53241,7 +53317,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_36
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -53823,7 +53899,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_74
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -54588,7 +54664,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_19
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -54986,7 +55062,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_20
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -55317,7 +55393,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_52
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -55897,7 +55973,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_23
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -56190,7 +56266,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_92
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -56304,7 +56380,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_32
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -56635,7 +56711,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_94
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -57474,7 +57550,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_71
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -58936,7 +59012,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_62
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -59044,7 +59120,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1774965435}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7320875e011624052b5ee4ca5715da7d, type: 3}
+  m_Script: {fileID: 11500000, guid: 27f41fa4dec36460ebb8dc111aef282b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   node: {fileID: 942918120}
@@ -59063,7 +59139,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_56
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -59611,7 +59687,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_21
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -60159,7 +60235,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_75
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -60490,7 +60566,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_34
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -61444,7 +61520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76a00306eab0c45368c8db4df6f1fca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 4.5
   timeToBeReleased: 1
   audioWhenEated: {fileID: 1834045223}
   scoreOnBoardTextPrefab: {fileID: 4421792919378580846, guid: 3fb91b9b7c2a34824b530e4e497274d7,
@@ -61502,7 +61578,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_91
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -61986,7 +62062,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_28
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -64385,7 +64461,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_11
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -65543,7 +65619,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_210
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -67387,7 +67463,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_02
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -67718,7 +67794,7 @@ GameObject:
   m_Layer: 0
   m_Name: Node_81
   m_TagString: Node
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1

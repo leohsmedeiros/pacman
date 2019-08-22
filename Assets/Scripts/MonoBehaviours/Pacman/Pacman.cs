@@ -59,31 +59,25 @@ public class Pacman : MonoBehaviour {
             _directionMover.ChangeDirection(Direction.DOWN);
     }
 
-
-    public Direction GetDirection() {
-        return _directionMover.GetDirection();
+    public void Reset() {
+        _directionMover.Reset();
+        _pacmanAnimator.SetAnimation(PacmanAnimator.PacmanAnimation.MOVE_RIGHT);
     }
 
+    public Direction GetDirection() => _directionMover.GetDirection();
 
+    public void SubscribeOnChangeNode(Action<Node> action) => _actionsOnChangeNode.Add(action);
 
-    public void SubscribeOnChangeNode(Action<Node> action) {
-        _actionsOnChangeNode.Add(action);
-    }
-
-    public void SubscribeOnGetCaughtByGhosts(Action<Ghost> action) {
-        _actionsOnGetCaughtByGhosts.Add(action);
-    }
-
-
+    public void SubscribeOnGetCaughtByGhosts(Action<Ghost> action) => _actionsOnGetCaughtByGhosts.Add(action);
 
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.tag.Equals(GlobalValues.NodeTag)) {
+        if (collision.tag.Equals(GameController.Instance.settings.NodeTag)) {
  
            foreach (Action<Node> action in _actionsOnChangeNode)
                 action.Invoke(collision.GetComponent<Node>());
 
-        } else if (collision.tag.Equals(GlobalValues.GhostTag)) {
+        } else if (collision.tag.Equals(GameController.Instance.settings.GhostTag)) {
 
             foreach (Action<Ghost> action in _actionsOnGetCaughtByGhosts)
                 action.Invoke(collision.GetComponent<Ghost>());
@@ -92,7 +86,7 @@ public class Pacman : MonoBehaviour {
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
-        if (collision.tag.Equals(GlobalValues.NodeTag)) {
+        if (collision.tag.Equals(GameController.Instance.settings.NodeTag)) {
             foreach (Action<Node> action in _actionsOnChangeNode) {
                 action.Invoke(null);
             }

@@ -34,7 +34,7 @@ public class Dot : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.tag.Equals(GlobalValues.PlayerTag)) {
+        if (collision.tag.Equals(GameController.Instance.settings.PlayerTag)) {
             foreach(Action action in actionsOnGetCaught) {
                 action.Invoke();
             }

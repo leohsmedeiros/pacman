@@ -2,7 +2,5 @@
 using UnityEngine;
 
 public class BlinkyGhost : Ghost {
-    protected override Vector2 EstimateTargetPoint() {
-        return _pacman.transform.position;
-    }
+    protected override Vector2 EstimateTargetPoint() => _pacman.transform.position;
 }

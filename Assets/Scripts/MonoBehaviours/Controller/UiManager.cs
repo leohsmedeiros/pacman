@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class UiManager : MonoBehaviour {
@@ -8,20 +7,20 @@ public class UiManager : MonoBehaviour {
     public Transform LifesParent;
     public Text TextScore;
     public Text TextHighScore;
+    public Image fruitImage;
+
 
     void Start() {
         TextScore.text = "0";
     }
 
-    public void UpdateHighScoreOnUi(int score) {
-        TextHighScore.text = score.ToString();
-    }
+    public void UpdateFruitOnGUI(Sprite fruitSprite) => fruitImage.sprite = fruitSprite;
 
-    public void UpdateScoreOnUi(int score) {
-        TextScore.text = score.ToString();
-    }
+    public void UpdateHighScoreOnGUI(int score) => TextHighScore.text = score.ToString();
 
-    public void UpdateLifesOnUi(int lifes) {
+    public void UpdateScoreOnGUI(int score) => TextScore.text = score.ToString();
+
+    public void UpdateLifesOnGUI(int lifes) {
         for (int i = 0; i < LifesParent.childCount; i++) {
             LifesParent.GetChild(i).GetComponent<Image>().enabled = (i < lifes);
         }

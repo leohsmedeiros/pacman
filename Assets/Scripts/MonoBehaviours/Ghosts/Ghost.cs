@@ -15,18 +15,15 @@ public abstract class Ghost : MonoBehaviour {
 
     protected Pacman _pacman;
 
-    private Direction _direction = Direction.RIGHT;
+    private Direction _direction = Direction.UP;
     public Direction direction {
         private set {
             _direction = value;
-
             foreach (Action<Direction> action in _actionsForDirectionsChange) {
                 action.Invoke(_direction);
             }
         }
-        get {
-            return _direction;
-        }
+        get => _direction;
     }
 
     protected Node _currentNode, _targetNode, _previousNode;
@@ -41,9 +38,7 @@ public abstract class Ghost : MonoBehaviour {
                 action.Invoke(value);
             }
         }
-        get {
-            return _isDead;
-        }
+        get => _isDead;
     }
 
 
@@ -54,7 +49,7 @@ public abstract class Ghost : MonoBehaviour {
     }
 
     private void Start() {
-        _pacman = GameObject.FindWithTag(GlobalValues.PlayerTag).GetComponent<Pacman>();
+        _pacman = GameObject.FindWithTag(GameController.Instance.settings.PlayerTag).GetComponent<Pacman>();
 
         GameController.Instance.SubscribeForGameModeChanges(ActionsByGameMode);
         GameController.Instance.RegisterGhosts(this);
@@ -75,18 +70,21 @@ public abstract class Ghost : MonoBehaviour {
     }
 
 
+    public void SubscribeOnDirectionsChanges(Action<Direction> action) => _actionsForDirectionsChange.Add(action);
 
-    public void SubscribeOnDirectionsChanges(Action<Direction> action) {
-        _actionsForDirectionsChange.Add(action);
+    public void SubscribeOnLifeStatusChange(Action<bool> action) => _actionsForLifeStatusChanges.Add(action);
+
+
+    public void Reset() {
+        Revive();
+        _timer = 0;
+        _direction = Direction.UP;
+        _currentNode = null;
+        _targetNode = null;
+        _previousNode = null;
     }
 
-    public void SubscribeOnLifeStatusChange(Action<bool> action) {
-        _actionsForLifeStatusChanges.Add(action);
-    }
-
-    public void Revive() {
-        isDead = false;
-    }
+    public void Revive() => isDead = false;
 
     public void GotEaten(string pointsToBeShown) {
         isDead = true;
@@ -94,7 +92,7 @@ public abstract class Ghost : MonoBehaviour {
 
         GameObject scoreObject = Instantiate(scoreOnBoardTextPrefab, this.transform.position, Quaternion.identity);
         scoreObject.GetComponent<TextMesh>().text = pointsToBeShown;
-        Destroy(scoreObject, GlobalValues.TimeShowingScorePointsGained);
+        Destroy(scoreObject, GameController.Instance.settings.TimeShowingScorePointsGained);
     }
 
     protected abstract Vector2 EstimateTargetPoint();
@@ -146,27 +144,25 @@ public abstract class Ghost : MonoBehaviour {
 
         if (isDead) {
 
-            if (collision.GetComponent<BridgeToRevivalNode>() != null) {
+            if (collision.GetComponent<BridgeToGhostHouse>() != null) {
                 _previousNode = _currentNode;
                 _currentNode = collision.GetComponent<Node>();
 
-                _targetNode = collision.GetComponent<BridgeToRevivalNode>().node;
-            } else if (collision.tag.Equals(GlobalValues.NodeTag)) {
+                _targetNode = collision.GetComponent<BridgeToGhostHouse>().node;
+            } else if (collision.tag.Equals(GameController.Instance.settings.NodeTag)) {
                 _previousNode = _currentNode;
                 _currentNode = collision.GetComponent<Node>();
                 ActionsByGameMode(GameController.Instance.currentGameMode);
             }
 
         } else {
-
-            if (collision.tag.Equals(GlobalValues.NodeTag)) {
+            if (collision.tag.Equals(GameController.Instance.settings.NodeTag)) {
 
                 _previousNode = _currentNode;
                 _currentNode = collision.GetComponent<Node>();
                 ActionsByGameMode(GameController.Instance.currentGameMode);
 
             }
-
         }
     }
 

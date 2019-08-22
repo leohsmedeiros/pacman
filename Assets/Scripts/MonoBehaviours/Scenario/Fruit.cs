@@ -4,6 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(SpriteRenderer))]
 public class Fruit : MonoBehaviour {
     public int points;
     public GameObject scoreOnBoardTextPrefab;
@@ -21,8 +22,10 @@ public class Fruit : MonoBehaviour {
         _actionsForGetCaught.Add(action);
     }
 
+    public Sprite GetSprite() => this.GetComponent<SpriteRenderer>().sprite;
+
     private void OnTriggerEnter2D(Collider2D collision) {
-        if(collision.tag.Equals(GlobalValues.PlayerTag)) {
+        if(collision.tag.Equals(GameController.Instance.settings.PlayerTag)) {
             foreach(Action action in _actionsForGetCaught) {
                 action.Invoke();
             }

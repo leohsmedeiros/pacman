@@ -16,7 +16,7 @@ public class FruitManager : MonoBehaviour {
 
 
 
-    private Fruit SelectFruitByType(FruitType fruitType) {
+    public Fruit GetFruitByType(FruitType fruitType) {
         switch (fruitType) {
             default: return null;
             case FruitType.CHERRY: return cherryPrefab;
@@ -31,7 +31,7 @@ public class FruitManager : MonoBehaviour {
     }
 
     public void ShowFruit(FruitType fruitType) {
-        Fruit selectedFruit = SelectFruitByType(fruitType);
+        Fruit selectedFruit = GetFruitByType(fruitType);
 
         if (selectedFruit != null) {
             _fruitInstantiated = Instantiate(selectedFruit.gameObject,

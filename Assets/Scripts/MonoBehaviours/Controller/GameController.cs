@@ -10,14 +10,12 @@ public class GameController : MonoBehaviour {
     public GameMode currentGameMode {
         private set {
             _currentGameMode = value;
-            Debug.Log(_currentGameMode);
+            Debug.Log("GameMode: " + _currentGameMode);
             foreach(Action<GameMode> action in _actionsForGameModeChange) {
                 action.Invoke(_currentGameMode);
             }
         }
-        get {
-            return _currentGameMode;
-        }
+        get => _currentGameMode;
     }
 
     public static GameController Instance { private set; get; }
@@ -26,6 +24,7 @@ public class GameController : MonoBehaviour {
     public static int Life { private set; get; } = 3;
     private static int _factorToGainExtraLife = 1;
 
+    public Settings settings;
     public GameObject readyObject;
     public FruitManager fruitManager;
     public UiManager uiManager;
@@ -33,9 +32,6 @@ public class GameController : MonoBehaviour {
     public GameObject gameOverPrefab;
     public Node starterNode;
     public Node ghostsHouse;
-    public float secondsShowingScoreOnBoard = 3f;
-    public Node playerNode { private set; get; } = null;
-    public Direction playerDirection { private set; get; } = Direction.RIGHT;
 
     private List<Action<GameMode>> _actionsForGameModeChange;
     private List<Dot> _dots;
@@ -50,28 +46,29 @@ public class GameController : MonoBehaviour {
     private StageSettings _stageSettings;
 
 
-    IEnumerator StartAfterSeconds() {
+    IEnumerator StartLevel() {
         readyObject.SetActive(true);
         soundManager.PlayIntroSound();
-        yield return new WaitForSeconds(GlobalValues.TimeToHideReadyObject);
-        currentGameMode = GlobalValues.SequenceOfGameModeSettings[_lastIndexGameModeSettings].Mode;
+        yield return new WaitForSeconds(settings.TimeToHideReadyObject);
+        readyObject.SetActive(false);
+        currentGameMode = settings.SequenceOfGameModeSettings[_lastIndexGameModeSettings].Mode;
         soundManager.PlaySirenSound();
     }
 
     IEnumerator PacmanDieAnimation() {
         soundManager.PauseBackgroundSource();
-        yield return new WaitForSeconds(GlobalValues.TimeToGhostsVanishOnPacmanDeath);
+        yield return new WaitForSeconds(settings.TimeToGhostsVanishOnPacmanDeath);
 
         foreach (Ghost ghost in _ghosts) {
             ghost.gameObject.SetActive(false);
         }
 
-        yield return new WaitForSeconds(GlobalValues.TimeToStartAnimationOfPacmanDeath);
+        yield return new WaitForSeconds(settings.TimeToStartAnimationOfPacmanDeath);
 
         soundManager.PlayPacManDeathSound();
         _pacman.GetComponent<PacmanAnimator>().SetAnimation(PacmanAnimator.PacmanAnimation.DIE);
 
-        yield return new WaitForSeconds(GlobalValues.TimeToRestartSceneAfterPacmanDeath);
+        yield return new WaitForSeconds(settings.TimeToRestartSceneAfterPacmanDeath);
 
         LoseOneLife();
     }
@@ -87,17 +84,19 @@ public class GameController : MonoBehaviour {
 
     private void Start() {
 
-        if (Level < GlobalValues.SequenceOfStageSettings.Length) {
-            _stageSettings = GlobalValues.SequenceOfStageSettings[Level];
+        if (Level < settings.SequenceOfStageSettings.Length) {
+            _stageSettings = settings.SequenceOfStageSettings[Level];
         } else {
-            int lastIndex = GlobalValues.SequenceOfStageSettings.Length - 1;
-            _stageSettings = GlobalValues.SequenceOfStageSettings[lastIndex];
+            int lastIndex = settings.SequenceOfStageSettings.Length - 1;
+            _stageSettings = settings.SequenceOfStageSettings[lastIndex];
         }
 
-        uiManager.UpdateLifesOnUi(Life);
-        uiManager.UpdateScoreOnUi(Score);
-        uiManager.UpdateHighScoreOnUi(PlayerPrefs.GetInt("highscore", 0));
-        StartCoroutine(StartAfterSeconds());
+        Fruit fruit = fruitManager.GetFruitByType(_stageSettings.fruitType);
+        uiManager.UpdateFruitOnGUI(fruit.GetSprite());
+        uiManager.UpdateLifesOnGUI(Life);
+        uiManager.UpdateScoreOnGUI(Score);
+        uiManager.UpdateHighScoreOnGUI(PlayerPrefs.GetInt("highscore", 0));
+        StartCoroutine(StartLevel());
     }
 
     private void Update() {
@@ -134,7 +133,7 @@ public class GameController : MonoBehaviour {
         if (_timerFrightened > maxTime) {
             _timerFrightened = 0;
             _factorToEatGhostsSequentially = 1;
-            currentGameMode = GlobalValues.SequenceOfGameModeSettings[_lastIndexGameModeSettings].Mode;
+            currentGameMode = settings.SequenceOfGameModeSettings[_lastIndexGameModeSettings].Mode;
             soundManager.PlaySirenSound();
         }
     }
@@ -142,15 +141,15 @@ public class GameController : MonoBehaviour {
     private void GameModeUpdate() {
         _timerGameModes += Time.deltaTime;
 
-        float maxTime = (_lastIndexGameModeSettings < GlobalValues.SequenceOfGameModeSettings.Length - 1) ?
-            GlobalValues.SequenceOfGameModeSettings[_lastIndexGameModeSettings].Seconds : float.MaxValue;
+        float maxTime = (_lastIndexGameModeSettings < settings.SequenceOfGameModeSettings.Length - 1) ?
+            settings.SequenceOfGameModeSettings[_lastIndexGameModeSettings].Seconds : float.MaxValue;
 
         if (_timerGameModes > maxTime) {
-            _lastIndexGameModeSettings = (_lastIndexGameModeSettings + 1 < GlobalValues.SequenceOfGameModeSettings.Length) ?
-                _lastIndexGameModeSettings + 1 : GlobalValues.SequenceOfGameModeSettings.Length - 1;
+            _lastIndexGameModeSettings = (_lastIndexGameModeSettings + 1 < settings.SequenceOfGameModeSettings.Length) ?
+                _lastIndexGameModeSettings + 1 : settings.SequenceOfGameModeSettings.Length - 1;
 
             _timerGameModes = 0;
-            currentGameMode = GlobalValues.SequenceOfGameModeSettings[_lastIndexGameModeSettings].Mode;
+            currentGameMode = settings.SequenceOfGameModeSettings[_lastIndexGameModeSettings].Mode;
         }
     }
 
@@ -161,20 +160,23 @@ public class GameController : MonoBehaviour {
 
     private void LoseOneLife() {
         Life -= 1;
-        uiManager.UpdateLifesOnUi(Life);
+        uiManager.UpdateLifesOnGUI(Life);
 
         if (Life > 0) {
+            _timerFrightened = 0;
+            _timerGameModes = 0;
+
             foreach(Ghost ghost in _ghosts) {
                 ghost.transform.position = ghostsHouse.GetPosition2D();
                 ghost.gameObject.SetActive(true);
-                ghost.Revive();
+                ghost.Reset();
             }
 
             _pacman.transform.position = starterNode.GetPosition2D();
-            _pacman.GetComponent<PacmanAnimator>().SetAnimation(PacmanAnimator.PacmanAnimation.MOVE_RIGHT);
+            _pacman.Reset();
 
             _currentGameMode = GameMode.INTRO;
-            StartCoroutine(StartAfterSeconds());
+            StartCoroutine(StartLevel());
 
         } else {
             _pacman.gameObject.SetActive(false);
@@ -190,12 +192,12 @@ public class GameController : MonoBehaviour {
 
     private void AddScore(int amount) {
         Score += amount;
-        uiManager.UpdateScoreOnUi(Score);
+        uiManager.UpdateScoreOnGUI(Score);
 
-        if (Score > _factorToGainExtraLife * GlobalValues.PointsToGainExtraLife) {
+        if (Score > _factorToGainExtraLife * settings.PointsToGainExtraLife) {
             Life++;
             _factorToGainExtraLife++;
-            uiManager.UpdateLifesOnUi(Life);
+            uiManager.UpdateLifesOnGUI(Life);
             soundManager.PlayExtraLifeSound();
         }
     }
@@ -209,17 +211,11 @@ public class GameController : MonoBehaviour {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public GameMode GetCurrentGameMode() {
-        return _currentGameMode;
-    }
+    public GameMode GetCurrentGameMode() => _currentGameMode;
 
-    public void SubscribeForGameModeChanges(Action<GameMode> action) {
-        _actionsForGameModeChange.Add(action);
-    }
+    public void SubscribeForGameModeChanges(Action<GameMode> action) => _actionsForGameModeChange.Add(action);
 
-    public void RegisterFruit(Fruit fruit) {
-        fruit.SubscribeOnGetCaught(() => AddScore(fruit.points));
-    }
+    public void RegisterFruit(Fruit fruit) => fruit.SubscribeOnGetCaught(() => AddScore(fruit.points));
 
     public void RegisterDot(Dot dot) {
         dot.SubscribeOnCaught(() => {
@@ -228,13 +224,13 @@ public class GameController : MonoBehaviour {
             if (dot.IsEnergizer) {
                 currentGameMode = GameMode.FRIGHTENED;
                 soundManager.PlayFrightenedSound();
-                AddScore(GlobalValues.EnergizerScore);
+                AddScore(settings.EnergizerScore);
             } else {
                 _eatenDotsAmount++;
-                AddScore(GlobalValues.DotScore);
+                AddScore(settings.DotScore);
 
-                if (_eatenDotsAmount.Equals(GlobalValues.DotsAmountToShowFruitFirstTime) ||
-                    _eatenDotsAmount.Equals(GlobalValues.DotsAmountToShowFruitSecondTime)) {
+                if (_eatenDotsAmount.Equals(settings.DotsAmountToShowFruitFirstTime) ||
+                    _eatenDotsAmount.Equals(settings.DotsAmountToShowFruitSecondTime)) {
 
                     fruitManager.ShowFruit(_stageSettings.fruitType);
                 } else {
@@ -250,23 +246,20 @@ public class GameController : MonoBehaviour {
         _dots.Add(dot);
     }
 
-    public void RegisterGhosts(Ghost ghost) {
-        _ghosts.Add(ghost);
-    }
+    public void RegisterGhosts(Ghost ghost) => _ghosts.Add(ghost);
 
     public void RegisterPlayer(Pacman pacman) {
         _pacman = pacman;
 
-        _pacman.SubscribeOnChangeNode((Node node) => { playerNode = node; });
         _pacman.SubscribeOnGetCaughtByGhosts((ghost) => {
             if (!ghost.isDead) {
                 if (currentGameMode.Equals(GameMode.FRIGHTENED) || currentGameMode.Equals(GameMode.FRIGHTENED_FLASHING)) {
-                    int scoreGained = GlobalValues.GhostFrightenedBaseScore * _factorToEatGhostsSequentially;
+                    int scoreGained = settings.GhostFrightenedBaseScore * _factorToEatGhostsSequentially;
 
                     AddScore(scoreGained);
                     ghost.GotEaten(scoreGained.ToString());
 
-                    _factorToEatGhostsSequentially *= GlobalValues.GhostScoreFactor;
+                    _factorToEatGhostsSequentially *= settings.GhostScoreFactor;
 
                 } else {
                     currentGameMode = GameMode.DEAD;

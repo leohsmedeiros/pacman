@@ -15,42 +15,22 @@ public class SoundManager : MonoBehaviour {
         this.backgroundAudioSource = this.GetComponent<AudioSource>();
     }
 
-    public void PlayIntroSound() {
-        backgroundAudioSource.loop = false;
-
-        backgroundAudioSource.clip = introSound;
+    private void PlayOnBackgroundAudioSource(AudioClip clip, bool loop) {
+        backgroundAudioSource.clip = clip;
+        backgroundAudioSource.loop = loop;
         backgroundAudioSource.Play();
     }
 
-    public void PlaySirenSound() {
-        backgroundAudioSource.loop = true;
+    public void PlayIntroSound() => PlayOnBackgroundAudioSource(introSound, false);
 
-        backgroundAudioSource.clip = sirenSound;
-        backgroundAudioSource.Play();
-    }
+    public void PlaySirenSound() => PlayOnBackgroundAudioSource(sirenSound, true);
 
-    public void PlayFrightenedSound() {
-        backgroundAudioSource.loop = true;
+    public void PlayFrightenedSound() => PlayOnBackgroundAudioSource(frightenedSound, true);
 
-        backgroundAudioSource.clip = frightenedSound;
-        backgroundAudioSource.Play();
-    }
+    public void PlayPacManDeathSound() => PlayOnBackgroundAudioSource(pacmanDeathSound, false);
 
-    public void PlayPacManDeathSound() {
-        backgroundAudioSource.loop = false;
+    public void PlayExtraLifeSound() => extraLifeAudioSource.Play();
 
-        backgroundAudioSource.clip = pacmanDeathSound;
-        backgroundAudioSource.Play();
-    }
-
-    public void PlayExtraLifeSound() {
-        extraLifeAudioSource.Play();
-    }
-
-    public void PauseBackgroundSource() {
-        backgroundAudioSource.Pause();
-    }
-
-
+    public void PauseBackgroundSource() => backgroundAudioSource.Pause();
 
 }
