@@ -5490,7 +5490,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -39.99994, y: -52}
+  m_AnchoredPosition: {x: -40, y: -52}
   m_SizeDelta: {x: -500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &155195876
@@ -10144,9 +10144,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 294559947}
+  - component: {fileID: 294559948}
   - component: {fileID: 294559945}
   - component: {fileID: 294559951}
-  - component: {fileID: 294559948}
   - component: {fileID: 294559950}
   - component: {fileID: 294559949}
   - component: {fileID: 294559946}
@@ -10303,7 +10303,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f88250a1c07742c29e43e436d2725c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4.5
   timeToBeReleased: 2
   audioWhenEated: {fileID: 294559946}
   scoreOnBoardTextPrefab: {fileID: 4421792919378580846, guid: 3fb91b9b7c2a34824b530e4e497274d7,
@@ -10359,7 +10358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b232ebe5375094f2c82797ce33a97556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4.5
+  speed: 5
   pause: 1
 --- !u!1 &297001807
 GameObject:
@@ -15710,9 +15709,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4a992e7ff3684ddaad568d3982ea8ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentDirection: 0
-  _currentNode: {fileID: 0}
-  _previousNode: {fileID: 0}
 --- !u!114 &481634748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29241,7 +29237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 207003d4f3f7c45c58d8be836fdc9a95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: {fileID: 102900000, guid: 2cda990e2423bbf4892e6590ba056729, type: 3}
+  sceneName: Game
 --- !u!1 &876962914
 GameObject:
   m_ObjectHideFlags: 0
@@ -32043,9 +32039,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 944388854}
+  - component: {fileID: 944388855}
   - component: {fileID: 944388852}
   - component: {fileID: 944388858}
-  - component: {fileID: 944388855}
   - component: {fileID: 944388857}
   - component: {fileID: 944388856}
   - component: {fileID: 944388853}
@@ -32202,7 +32198,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 775a3dc6e02c54d9bb379b1de3b7ba93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4.5
   timeToBeReleased: 3
   audioWhenEated: {fileID: 944388853}
   scoreOnBoardTextPrefab: {fileID: 4421792919378580846, guid: 3fb91b9b7c2a34824b530e4e497274d7,
@@ -32259,7 +32254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b232ebe5375094f2c82797ce33a97556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4.5
+  speed: 5
   pause: 1
 --- !u!1 &944459226
 GameObject:
@@ -45550,9 +45545,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1327859032}
+  - component: {fileID: 1327859033}
   - component: {fileID: 1327859030}
   - component: {fileID: 1327859036}
-  - component: {fileID: 1327859033}
   - component: {fileID: 1327859035}
   - component: {fileID: 1327859034}
   - component: {fileID: 1327859031}
@@ -45709,7 +45704,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 337755aab23a849898ce18ffd2be8384, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4.5
   timeToBeReleased: 4
   audioWhenEated: {fileID: 1327859031}
   scoreOnBoardTextPrefab: {fileID: 4421792919378580846, guid: 3fb91b9b7c2a34824b530e4e497274d7,
@@ -45765,7 +45759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b232ebe5375094f2c82797ce33a97556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4.5
+  speed: 5
   pause: 1
 --- !u!1 &1337672092
 GameObject:
@@ -46803,7 +46797,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 25}
-  m_SizeDelta: {x: 170, y: 30}
+  m_SizeDelta: {x: 170, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1367538554
 MonoBehaviour:
@@ -61709,9 +61703,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1834045224}
+  - component: {fileID: 1834045228}
   - component: {fileID: 1834045222}
   - component: {fileID: 1834045225}
-  - component: {fileID: 1834045228}
   - component: {fileID: 1834045227}
   - component: {fileID: 1834045226}
   - component: {fileID: 1834045223}
@@ -61868,7 +61862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b232ebe5375094f2c82797ce33a97556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4.5
+  speed: 5
   pause: 1
 --- !u!58 &1834045226
 CircleCollider2D:
@@ -61919,7 +61913,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76a00306eab0c45368c8db4df6f1fca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4.5
   timeToBeReleased: 1
   audioWhenEated: {fileID: 1834045223}
   scoreOnBoardTextPrefab: {fileID: 4421792919378580846, guid: 3fb91b9b7c2a34824b530e4e497274d7,

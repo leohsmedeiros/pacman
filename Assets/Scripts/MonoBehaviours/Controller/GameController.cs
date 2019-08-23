@@ -83,12 +83,14 @@ public class GameController : MonoBehaviour {
         _ghosts = new List<Ghost>();
         _actionsForGameModeChange = new List<Action<GameMode>>();
 
+
         if (Level < settings.SequenceOfStageSettings.Length) {
             _stageSettings = settings.SequenceOfStageSettings[Level];
         } else {
             int lastIndex = settings.SequenceOfStageSettings.Length - 1;
             _stageSettings = settings.SequenceOfStageSettings[lastIndex];
         }
+
 
         Fruit fruit = fruitManager.GetFruitByType(_stageSettings.fruitType);
         uiManager.UpdateFruitOnGUI(fruit.GetSprite());

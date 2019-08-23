@@ -4,8 +4,10 @@ using UnityEngine.SceneManagement;
 
 
 public class SceneChanger : MonoBehaviour {
-    [SerializeField]
-    public SceneAsset scene;
 
-    public void LoadLevel() => SceneManager.LoadScene(scene.name);
+    [SerializeField]
+    public string sceneName;
+
+    public void LoadLevel() => SceneManager.LoadScene(sceneName);
+
 }
