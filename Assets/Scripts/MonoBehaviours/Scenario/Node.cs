@@ -23,17 +23,30 @@ public class Node : MonoBehaviour {
         return neighbors;
     }
 
-    public Direction GetDirectionByNode(Node node) {
-        if (node.Equals(upNode))
+    public Direction GetDirectionByNeighborNode(Node neighborNode) {
+        if (neighborNode.Equals(upNode))
             return Direction.UP;
-        if (node.Equals(leftNode))
+        if (neighborNode.Equals(leftNode))
             return Direction.LEFT;
-        if (node.Equals(rightNode))
+        if (neighborNode.Equals(rightNode))
             return Direction.RIGHT;
-        if (node.Equals(downNode))
+        if (neighborNode.Equals(downNode))
             return Direction.DOWN;
 
         return Direction.UP;
+    }
+
+    public Node GetNeighborByDirection(Direction direction) {
+        if (direction.Equals(Direction.UP))
+            return upNode;
+        if (direction.Equals(Direction.RIGHT))
+            return rightNode;
+        if (direction.Equals(Direction.LEFT))
+            return leftNode;
+        if (direction.Equals(Direction.DOWN))
+            return downNode;
+
+        return null;
     }
 
     public Vector2 GetPosition2D () {

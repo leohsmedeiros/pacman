@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+[RequireComponent(typeof(CharacterMovement))]
 public abstract class Ghost : MonoBehaviour {
     private List<Action<Direction>> _actionsForDirectionsChange;
     private List<Action<bool>> _actionsForLifeStatusChanges;
 
-    public float speed;
     public float timeToBeReleased;
     private float _timer = 0;
     public AudioSource audioWhenEated;
@@ -26,8 +26,10 @@ public abstract class Ghost : MonoBehaviour {
         get => _direction;
     }
 
-    /* the ghosts only navigates between the nodes, in direction to target point */
-    protected Node _currentNode, _nextNode, _previousNode;
+    /*
+     *  the ghosts only navigates between the nodes, in direction to target point
+     */
+    protected Node _currentNode, _previousNode;
 
     private Vector2? _targetPoint;
 
@@ -35,7 +37,7 @@ public abstract class Ghost : MonoBehaviour {
     public Node ghostHouseDoor;
 
     private bool _isDead = false;
-    public bool isDead { 
+    public bool isDead {
         set {
             _isDead = value;
             foreach (Action<bool> action in _actionsForLifeStatusChanges) {
@@ -47,18 +49,22 @@ public abstract class Ghost : MonoBehaviour {
 
     /* define if the ghost can be eaten */
     public bool isFrightened { private set; get; } = false;
+    private CharacterMovement _characterMovement;
+
+
 
 
     private void Awake() {
         _actionsForDirectionsChange = new List<Action<Direction>>();
         _actionsForLifeStatusChanges = new List<Action<bool>>();
+        _characterMovement = this.GetComponent<CharacterMovement>();
     }
 
     private void Start() {
         _pacman = GameObject.FindWithTag(GameController.Instance.settings.PlayerTag).GetComponent<Pacman>();
         GameController.Instance.RegisterGhosts(this);
         GameController.Instance.SubscribeForGameModeChanges(gameMode => {
-            if(!gameMode.Equals(GameMode.FRIGHTENED_FLASHING))
+            if (!gameMode.Equals(GameMode.FRIGHTENED_FLASHING))
                 isFrightened = gameMode.Equals(GameMode.FRIGHTENED);
         });
     }
@@ -70,12 +76,9 @@ public abstract class Ghost : MonoBehaviour {
             return;
 
         if (_timer > timeToBeReleased) {
-            if (_nextNode != null) {
-                this.transform.position = Vector2.MoveTowards(transform.position,
-                                                              _nextNode.GetPosition2D(),
-                                                              speed * Time.deltaTime);
-            }
-        }else {
+            _characterMovement.pause = false;
+        } else {
+            _characterMovement.pause = true;
             _timer += Time.deltaTime;
         }
     }
@@ -86,23 +89,27 @@ public abstract class Ghost : MonoBehaviour {
     public void SubscribeOnLifeStatusChange(Action<bool> action) => _actionsForLifeStatusChanges.Add(action);
 
 
-    /* Reset the variables (usefull when player dies, and has enough lifes to continue) */
+    /*
+     *  Reset the variables (usefull when player dies, and has enough lifes to continue)
+     */
     public void Reset() {
         Revive();
         _timer = 0;
         _direction = Direction.UP;
         _currentNode = null;
-        _nextNode = null;
+        _characterMovement.SetTargetNode(null);
         _previousNode = null;
     }
 
-    /* When ghost was dead, but now is inside ghost house */
+    /*
+     *  When ghost was dead, but now is inside ghost house
+     */
     public void Revive() {
         isDead = false;
         isFrightened = false;
     }
 
-    public void GotEatenByPlayer(string pointsToBeShown) {
+    public void GotEatenByPacman(string pointsToBeShown) {
         isDead = true;
         audioWhenEated.Play();
 
@@ -112,11 +119,15 @@ public abstract class Ghost : MonoBehaviour {
     }
 
 
-    /* particular behaviour to each ghost, so must be specialized to each one */
+    /*
+     *  particular behaviour to each ghost, so must be specialized to each one
+     */
     protected abstract Vector2 EstimateTargetPoint();
 
-    /* choose the next node based on lower distance of each neighbor node in direction on target point */
-    /* on frightened point, it has no target, so the ghost choose a random neighbor */
+    /*
+     *  choose the next node based on lower distance of each neighbor node in direction on target point
+     *  on frightened point, it has no target, so the ghost choose a random neighbor
+     */
     private Node ChooseNextNode(Vector2? estimatedTargetPoint) {
         List<Node> neighborNodes = _currentNode.GetNeighbors();
         float distanceMin = float.MaxValue;
@@ -125,19 +136,21 @@ public abstract class Ghost : MonoBehaviour {
         foreach (Node neighbor in neighborNodes) {
 
             float distance = (estimatedTargetPoint == null) ?
-                UnityEngine.Random.Range(0f, 10f) : Vector2.Distance(neighbor.GetPosition2D(), (Vector2) estimatedTargetPoint);
+                UnityEngine.Random.Range(0f, 10f) : Vector2.Distance(neighbor.GetPosition2D(), (Vector2)estimatedTargetPoint);
 
             if (distance < distanceMin && neighbor != _previousNode) {
                 distanceMin = distance;
                 selectedNode = neighbor;
-                direction = _currentNode.GetDirectionByNode(neighbor);
+                direction = _currentNode.GetDirectionByNeighborNode(neighbor);
             }
         }
 
         return selectedNode;
     }
 
-    /* Will update the target point based on game state or the ghost state */
+    /*
+     *  Will update the target point based on game state or the ghost state
+     */
     private void UpdateTargetPoint() {
         if (isDead)
             _targetPoint = ghostHouseDoor.GetPosition2D();
@@ -149,7 +162,7 @@ public abstract class Ghost : MonoBehaviour {
             _targetPoint = scatterModeTarget.GetPosition2D();
 
         else if (GameController.Instance.currentGameMode.Equals(GameMode.CHASE))
-            _targetPoint = EstimateTargetPoint();            
+            _targetPoint = EstimateTargetPoint();
     }
 
 
@@ -160,8 +173,10 @@ public abstract class Ghost : MonoBehaviour {
 
             UpdateTargetPoint();
 
-            _nextNode = (isDead && _currentNode.Equals(ghostHouseDoor)) ?
+            Node targetNode = (isDead && _currentNode.Equals(ghostHouseDoor)) ?
                 ghostHouseDoor.GetComponent<GhostHouseDoor>().node : ChooseNextNode(_targetPoint);
+
+            _characterMovement.SetTargetNode(targetNode);
         }
     }
 

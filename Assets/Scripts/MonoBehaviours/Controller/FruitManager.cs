@@ -15,7 +15,6 @@ public class FruitManager : MonoBehaviour {
     private GameObject _fruitInstantiated;
 
 
-
     public Fruit GetFruitByType(FruitType fruitType) {
         switch (fruitType) {
             default: return null;

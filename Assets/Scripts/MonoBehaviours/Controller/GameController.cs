@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(SceneChanger))]
 public class GameController : MonoBehaviour {
@@ -95,7 +94,7 @@ public class GameController : MonoBehaviour {
         uiManager.UpdateFruitOnGUI(fruit.GetSprite());
         uiManager.UpdateLifesOnGUI(Life);
         uiManager.UpdateScoreOnGUI(Score);
-        uiManager.UpdateHighScoreOnGUI(PlayerPrefs.GetInt("highscore", 0));
+        uiManager.UpdateHighScoreOnGUI(PlayerPrefs.GetInt(settings.HighScoreKeyPlayerPrefs, 0));
         StartCoroutine(StartLevel());
 
     }
@@ -183,9 +182,9 @@ public class GameController : MonoBehaviour {
             _pacman.gameObject.SetActive(false);
             Instantiate(gameOverPrefab);
 
-            int highscore = PlayerPrefs.GetInt("highscore");
+            int highscore = PlayerPrefs.GetInt(settings.HighScoreKeyPlayerPrefs);
             if (Score > highscore) {
-                PlayerPrefs.SetInt("highscore", Score);
+                PlayerPrefs.SetInt(settings.HighScoreKeyPlayerPrefs, Score);
             }
 
         }
@@ -203,8 +202,50 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    private void OnDotGetCaught(Dot dot) {
+        _dots.Remove(dot);
 
-    /* In case of game over, this method will reset the static variables and restart the scene */
+        if (dot.IsEnergizer) {
+            currentGameMode = GameMode.FRIGHTENED;
+            soundManager.PlayFrightenedSound();
+            AddScore(settings.EnergizerScore);
+        } else {
+            _eatenDotsAmount++;
+            AddScore(settings.DotScore);
+
+            if (_eatenDotsAmount.Equals(settings.DotsAmountToShowFruitFirstTime) ||
+                _eatenDotsAmount.Equals(settings.DotsAmountToShowFruitSecondTime)) {
+
+                fruitManager.ShowFruit(_stageSettings.fruitType);
+            } else {
+                fruitManager.DestroyFruit();
+            }
+        }
+
+        if (_dots.Count == 0)
+            NextLevel();
+    }
+
+    void OnPacmanGetCaughtByGhosts(Ghost ghost) {
+        if (!ghost.isDead) {
+            if (ghost.isFrightened) {
+                int scoreGained = settings.GhostFrightenedBaseScore * _factorToEatGhostsSequentially;
+
+                AddScore(scoreGained);
+                ghost.GotEatenByPacman(scoreGained.ToString());
+
+                _factorToEatGhostsSequentially *= settings.GhostScoreFactor;
+
+            } else {
+                currentGameMode = GameMode.DEAD;
+                StartCoroutine(PacmanDieAnimation());
+            }
+        }
+    }
+
+    /*
+     *  In case of game over, this method will reset the static variables and restart the scene
+     */
     public void RestartGame() {
         Level = 0;
         Life = 3;
@@ -220,31 +261,7 @@ public class GameController : MonoBehaviour {
     public void RegisterFruit(Fruit fruit) => fruit.SubscribeOnGetCaught(() => AddScore(fruit.points));
 
     public void RegisterDot(Dot dot) {
-        dot.SubscribeOnCaught(() => {
-            _dots.Remove(dot);
-
-            if (dot.IsEnergizer) {
-                currentGameMode = GameMode.FRIGHTENED;
-                soundManager.PlayFrightenedSound();
-                AddScore(settings.EnergizerScore);
-            } else {
-                _eatenDotsAmount++;
-                AddScore(settings.DotScore);
-
-                if (_eatenDotsAmount.Equals(settings.DotsAmountToShowFruitFirstTime) ||
-                    _eatenDotsAmount.Equals(settings.DotsAmountToShowFruitSecondTime)) {
-
-                    fruitManager.ShowFruit(_stageSettings.fruitType);
-                } else {
-                    fruitManager.DestroyFruit();
-                }
-            }
-
-            if (_dots.Count == 0)
-                NextLevel();
-
-        });
-
+        dot.SubscribeOnCaught(OnDotGetCaught);
         _dots.Add(dot);
     }
 
@@ -252,23 +269,7 @@ public class GameController : MonoBehaviour {
 
     public void RegisterPlayer(Pacman pacman) {
         _pacman = pacman;
-
-        _pacman.SubscribeOnGetCaughtByGhosts((ghost) => {
-            if (!ghost.isDead) {
-                if (ghost.isFrightened) {
-                    int scoreGained = settings.GhostFrightenedBaseScore * _factorToEatGhostsSequentially;
-
-                    AddScore(scoreGained);
-                    ghost.GotEatenByPlayer(scoreGained.ToString());
-
-                    _factorToEatGhostsSequentially *= settings.GhostScoreFactor;
-
-                } else {
-                    currentGameMode = GameMode.DEAD;
-                    StartCoroutine(PacmanDieAnimation());
-                }
-            }
-        });
+        _pacman.SubscribeOnGetCaughtByGhosts(OnPacmanGetCaughtByGhosts);
     }
 
 }

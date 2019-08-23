@@ -7,11 +7,11 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Collider2D))]
 public class Dot : MonoBehaviour {
-    private List<Action> actionsOnGetCaught;
+    private List<Action<Dot>> actionsOnGetCaught;
     public bool IsEnergizer = false;
 
     void Start() {
-        actionsOnGetCaught = new List<Action>();
+        actionsOnGetCaught = new List<Action<Dot>>();
 
         GameController
             .Instance
@@ -29,14 +29,14 @@ public class Dot : MonoBehaviour {
         this.gameObject.SetActive(false);
     }
 
-    public void SubscribeOnCaught (Action action) {
+    public void SubscribeOnCaught (Action<Dot> action) {
         actionsOnGetCaught.Add(action);
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.tag.Equals(GameController.Instance.settings.PlayerTag)) {
-            foreach(Action action in actionsOnGetCaught) {
-                action.Invoke();
+            foreach(Action<Dot> action in actionsOnGetCaught) {
+                action.Invoke(this);
             }
 
             StartCoroutine(DisableAfterSound());
