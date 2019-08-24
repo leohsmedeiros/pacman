@@ -18,7 +18,6 @@ public class GameModeManager : MonoBehaviour {
         get => _currentGameMode;
     }
 
-    public Settings settings;
     public GameObject readyObject;
     public GameObject gameOverPrefab;
 
@@ -30,6 +29,14 @@ public class GameModeManager : MonoBehaviour {
     private GameObject _gameoverOnScreen;
 
     public StageSettings stageSettings { set; private get; }
+    public Settings settings { set; private get; }
+
+    /*
+     * will becoming more valuable if the frightened ghosts were being eaten
+     * sequentially (2 times more valuable). And this factor is for calculate
+     * how many times more valuable would be when player eaten the ghost.
+     */
+     
     public int factorToEatGhostsSequentially { private set; get; } = 1;
 
 

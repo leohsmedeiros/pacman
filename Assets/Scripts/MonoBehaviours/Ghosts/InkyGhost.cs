@@ -1,5 +1,10 @@
 ﻿using UnityEngine;
 
+/*
+ *  In chase mode, select a position two tiles in front of pacman.
+ *  Drawing an vector from Blinky to the next position and then double
+ *  the length of the vector
+ */
 public class InkyGhost : Ghost {
     public Transform blincky;
     private int _tiles = 2;        

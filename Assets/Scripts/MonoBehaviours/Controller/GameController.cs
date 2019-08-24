@@ -89,6 +89,7 @@ public class GameController : MonoBehaviour {
             _stageSettings = settings.SequenceOfStageSettings[lastIndex];
         }
 
+        _gameModeManager.settings = settings;
         _gameModeManager.stageSettings = _stageSettings;  
 
         /* Will get the fruit to update on GUI */
