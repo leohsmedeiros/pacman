@@ -59,7 +59,7 @@ public abstract class Ghost : MonoBehaviour {
     private void Start() {
         _pacman = GameObject.FindWithTag(GameController.Instance.settings.PlayerTag).GetComponent<Pacman>();
         GameController.Instance.RegisterGhosts(this);
-        GameController.Instance.gameModeManager.SubscribeForGameModeChanges(gameMode => {
+        GameController.Instance.SubscribeForGameModeChanges(gameMode => {
             if (!gameMode.Equals(GameMode.FRIGHTENED_FLASHING))
                 isFrightened = gameMode.Equals(GameMode.FRIGHTENED);
         });
@@ -67,8 +67,8 @@ public abstract class Ghost : MonoBehaviour {
 
 
     private void Update() {
-        if (GameController.Instance.gameModeManager.currentGameMode.Equals(GameMode.INTRO) ||
-            GameController.Instance.gameModeManager.currentGameMode.Equals(GameMode.DEAD))
+        if (GameController.Instance.GetCurrentGameMode().Equals(GameMode.INTRO) ||
+            GameController.Instance.GetCurrentGameMode().Equals(GameMode.DEAD))
             return;
 
         if (_timer > timeToBeReleased) {
@@ -155,10 +155,10 @@ public abstract class Ghost : MonoBehaviour {
         else if (isFrightened)
             _targetPoint = null;
 
-        else if (GameController.Instance.gameModeManager.currentGameMode.Equals(GameMode.SCATTER))
+        else if (GameController.Instance.GetCurrentGameMode().Equals(GameMode.SCATTER))
             _targetPoint = scatterModeTarget.GetPosition2D();
 
-        else if (GameController.Instance.gameModeManager.currentGameMode.Equals(GameMode.CHASE))
+        else if (GameController.Instance.GetCurrentGameMode().Equals(GameMode.CHASE))
             _targetPoint = EstimateTargetPoint();
     }
 

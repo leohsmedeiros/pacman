@@ -62,7 +62,7 @@ public class GhostAnimator : MonoBehaviour {
             }
         });
 
-        GameController.Instance.gameModeManager.SubscribeForGameModeChanges(gameMode => {
+        GameController.Instance.SubscribeForGameModeChanges(gameMode => {
             if (_ghost.isDead)
                 return;
 

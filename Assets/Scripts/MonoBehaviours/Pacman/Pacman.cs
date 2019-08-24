@@ -87,7 +87,7 @@ public class Pacman : MonoBehaviour {
     }
 
     void Update() {
-        if (GameController.Instance.gameModeManager.currentGameMode.Equals(GameMode.INTRO))
+        if (GameController.Instance.GetCurrentGameMode().Equals(GameMode.INTRO))
             return;
 
 
