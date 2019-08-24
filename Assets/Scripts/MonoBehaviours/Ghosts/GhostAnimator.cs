@@ -1,7 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ *  The responsibility of this script is to adapt the ghost's animation according
+ *  to his state.
+ */
 
 [RequireComponent(typeof(Ghost))]
 public class GhostAnimator : MonoBehaviour {
@@ -26,6 +29,7 @@ public class GhostAnimator : MonoBehaviour {
         _ghost = this.GetComponent<Ghost>();
         _eyes = new List<GameObject> { upEye, rightEye, leftEye, downEye };
 
+        /* Will adapt the eyes change according to ghost's direction */
         _ghost.SubscribeOnDirectionsChanges(direction => {
             _eyes.ForEach(eye => eye.SetActive(false));
 
@@ -48,6 +52,7 @@ public class GhostAnimator : MonoBehaviour {
             }
         });
 
+        /* Will adapt the ghost's body according to his health condition */
         _ghost.SubscribeOnLifeStatusChange(isDead => {
             if (isDead) {
                 body.SetActive(false);
@@ -62,6 +67,7 @@ public class GhostAnimator : MonoBehaviour {
             }
         });
 
+        /* Will adapt the ghost's body according to GameMode */
         GameController.Instance.SubscribeForGameModeChanges(gameMode => {
             if (_ghost.isDead)
                 return;
@@ -71,7 +77,7 @@ public class GhostAnimator : MonoBehaviour {
                 eyeParent.SetActive(false);
                 frightenedBody.SetActive(true);
                 flashingBody.SetActive(false);
-            } else if (gameMode.Equals(GameMode.FRIGHTENED_FLASHING)) {
+            } else if (gameMode.Equals(GameMode.FRIGHTENED_FLASHING) && _ghost.isFrightened) {
                 body.SetActive(false);
                 eyeParent.SetActive(false);
                 frightenedBody.SetActive(false);

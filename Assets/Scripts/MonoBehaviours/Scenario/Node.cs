@@ -1,6 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ *  The responsibility of this script is to configure a node
+ *  and find it neighbors
+ */
+
 public class Node : MonoBehaviour {
     public Node upNode;
     public Node rightNode;
@@ -49,7 +54,6 @@ public class Node : MonoBehaviour {
         return null;
     }
 
-    public Vector2 GetPosition2D () {
-        return new Vector2(this.transform.position.x, this.transform.position.y);
-    }
+    public Vector2 GetPosition2D () => new Vector2(this.transform.position.x, this.transform.position.y);
+
 }

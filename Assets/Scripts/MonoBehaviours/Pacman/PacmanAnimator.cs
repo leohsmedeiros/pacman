@@ -1,5 +1,10 @@
 ﻿using UnityEngine;
 
+/*
+ *  The responsibility of this script is to adapt animator according to current
+ *  pacman's state.
+ */
+
 [RequireComponent(typeof(Animator))]
 public class PacmanAnimator : MonoBehaviour {
     public enum PacmanAnimation { MOVE_RIGHT, MOVE_LEFT, MOVE_UP, MOVE_DOWN, DIE }
@@ -7,9 +12,7 @@ public class PacmanAnimator : MonoBehaviour {
     private Animator _animator;
     private PacmanAnimation? _currentPacmanAnimation = null;
 
-    void Start() {
-        _animator = this.GetComponent<Animator>();
-    }
+    void Start() => _animator = this.GetComponent<Animator>();
 
     public void SetAnimation (PacmanAnimation pacmanAnimation) {
         if (pacmanAnimation.Equals(_currentPacmanAnimation))

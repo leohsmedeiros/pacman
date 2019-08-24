@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ *  The responsibility of this script is to manage the pacman's states,
+ *  behaviours and direction (according to player's inputs).
+ */
+
 [RequireComponent(typeof(PacmanAnimator))]
 [RequireComponent(typeof(CharacterMovement))]
 public class Pacman : MonoBehaviour {
@@ -13,9 +18,7 @@ public class Pacman : MonoBehaviour {
         set {
             _currentDirection = value;
 
-            /*
-             *  Adapt the pacman animation with currentDirection changes
-             */
+            /*  Adapt the pacman animation with currentDirection changes */
             switch (_currentDirection) {
                 case Direction.UP:
                     _pacmanAnimator.SetAnimation(PacmanAnimator.PacmanAnimation.MOVE_UP);
@@ -37,13 +40,17 @@ public class Pacman : MonoBehaviour {
 
     private List<Action<Ghost>> _actionsOnGetCaughtByGhosts;
 
-    /*
-     *  Pacman only navigates between the nodes, in direction to target point
-     */
-    private Node _currentNode, _previousNode;
-
+    /* Pacman only navigates between the nodes, in direction to target point */
+    private Node _currentNode;
 
     private Direction? _inputDirection;
+
+    private bool _isReady;
+
+    public KeyCode keyCodeToMoveUp = KeyCode.UpArrow;
+    public KeyCode keyCodeToMoveRight = KeyCode.RightArrow;
+    public KeyCode keyCodeToMoveDown = KeyCode.DownArrow;
+    public KeyCode keyCodeToMoveLeft = KeyCode.LeftArrow;
 
 
 
@@ -54,7 +61,20 @@ public class Pacman : MonoBehaviour {
         _characterMovement = this.GetComponent<CharacterMovement>();
 
         GameController.Instance.RegisterPlayer(this);
-        _characterMovement.pause = false;
+
+        GameController.Instance.SubscribeForGameModeChanges(gameMode => {
+
+            if (gameMode.Equals(GameMode.INTRO) || gameMode.Equals(GameMode.DEAD)) {
+                _characterMovement.Pause();
+                _isReady = false;
+            } else {
+                _characterMovement.Resume();
+                _isReady = true;
+            }
+
+        });
+
+
     }
 
     private Direction? OpositeDirection(Direction direction) {
@@ -73,50 +93,55 @@ public class Pacman : MonoBehaviour {
      *  loaded on '_inputDirection' to be used at the next node.
      *
      *  But if player pressed to go on the opposite way, will interrupt the movement
-     *  and change the destiny to the previous node
+     *  and change the target node to the previous one.
      */
-    void ChangeDirection(Direction direction) {
+    private void ChangeDirection(Direction direction) {
         Direction? opositeDirection = OpositeDirection(currentDirection);
 
         if (opositeDirection.HasValue && direction.Equals(opositeDirection.Value)) {
             currentDirection = OpositeDirection(currentDirection).Value;
-            _characterMovement.SetTargetNode(_previousNode);
-        } else
+            Node node = _characterMovement.GetTargetNode().GetNeighborByDirection(currentDirection);
+            _characterMovement.SetTargetNode(node);
+        } else {
             _inputDirection = direction;
-
-    }
-
-    void Update() {
-        if (GameController.Instance.GetCurrentGameMode().Equals(GameMode.INTRO))
-            return;
-
-
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-            ChangeDirection(Direction.RIGHT);
-
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-            ChangeDirection(Direction.LEFT);
-
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
-            ChangeDirection(Direction.UP);
-
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-            ChangeDirection(Direction.DOWN);
-
-
-        if (_currentNode != null) {
-            UpdateToNextNode();
         }
 
     }
 
+    void Update() {
+        if (_isReady) {
+            if (Input.GetKeyDown(keyCodeToMoveRight))
+                ChangeDirection(Direction.RIGHT);
+
+            else if (Input.GetKeyDown(keyCodeToMoveLeft))
+                ChangeDirection(Direction.LEFT);
+
+            else if (Input.GetKeyDown(keyCodeToMoveUp))
+                ChangeDirection(Direction.UP);
+
+            else if (Input.GetKeyDown(keyCodeToMoveDown))
+                ChangeDirection(Direction.DOWN);
+
+
+            /*
+             *  Will update the target node. If there are any player input, will check
+             *  if there is a neighbor in that direction and will try to move for their,
+             *  otherwise will move forward to pacman's current direction.
+             */
+
+            if (_currentNode != null) {
+                UpdateTargetNode();
+            }
+        }
+    }
+
     /*
-     *  Check if there is any input loaded and then check if there are a neighbor
-     *  of the current node on this direction.
+     *  Check if there is any input loaded and if there is a valid neighbor on
+     *  this direction.
      *
      *  If there is no input, pacman will move forward.
      */
-    private void UpdateToNextNode() {
+    private void UpdateTargetNode() {
         if (_inputDirection.HasValue) {
 
             Node nextNode = _currentNode.GetNeighborByDirection(_inputDirection.Value);
@@ -135,9 +160,7 @@ public class Pacman : MonoBehaviour {
         }
     }
 
-    /*
-     *  Reset the variables (usefull when player dies, and has enough lifes to continue)
-     */
+    /* Reset the variables (usefull when player dies, and has enough lifes to continue) */
     public void Reset() {
         ChangeDirection(Direction.RIGHT);
         _pacmanAnimator.SetAnimation(PacmanAnimator.PacmanAnimation.MOVE_RIGHT);
@@ -148,8 +171,12 @@ public class Pacman : MonoBehaviour {
 
     public void SubscribeOnGetCaughtByGhosts(Action<Ghost> action) => _actionsOnGetCaughtByGhosts.Add(action);
 
+
+
     /*
-     *  Will set the current node when pacman triggers with a node.
+     *  If pacman trigger with a node, will set the current node.
+     *  But, if he triggers with a ghost will trigger the event of
+     *  OnGetCaughtByGhosts.
      */
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.tag.Equals(GameController.Instance.settings.NodeTag)) {
@@ -161,12 +188,9 @@ public class Pacman : MonoBehaviour {
         }
     }
 
-    /*
-     *  Will set the previous node when pacman is out of node and will set null to the current one.
-     */
+    /* Will set null to the current node. */
     private void OnTriggerExit2D(Collider2D collision) {
         if (collision.tag.Equals(GameController.Instance.settings.NodeTag)) {
-            _previousNode = _currentNode;
             _currentNode = null;
         }
     }

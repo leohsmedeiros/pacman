@@ -1,28 +1,31 @@
 ﻿using UnityEngine;
 
+/*
+ *  The responsibility of this script is to interpolate the position
+ *  of any character towards a target node
+ */
+
 public class CharacterMovement : MonoBehaviour {
 
-    private Node _targetNode;
     public float speed = 5f;
-    [HideInInspector]
-    public bool pause = true;
+    private bool _pause = false;
+    private Node _targetNode = null;
 
-
-    private void Start() {
-        _targetNode = null;
-    }
 
     void Update() {
-        if (!GameController.Instance.GetCurrentGameMode().Equals(GameMode.INTRO) &&
-            !GameController.Instance.GetCurrentGameMode().Equals(GameMode.DEAD) &&
-            !pause && _targetNode != null) {
-
-            this.transform.position = Vector2.MoveTowards(transform.position,
-                                                          _targetNode.GetPosition2D(),
-                                                          speed * Time.deltaTime);
+        if (!_pause && _targetNode != null) {
+            this.transform.position = InterpolateToTarget(_targetNode);
         }
     }
 
+    private Vector2 InterpolateToTarget(Node node) =>
+        Vector2.MoveTowards(transform.position, node.GetPosition2D(), speed * Time.deltaTime);
+
     public void SetTargetNode(Node node) => _targetNode = node;
 
+    public Node GetTargetNode() => _targetNode;
+
+    public void Pause() => _pause = true;
+
+    public void Resume() => _pause = false;
 }

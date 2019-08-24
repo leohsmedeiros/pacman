@@ -3,6 +3,7 @@
 /*
  *  In chase mode, his target is 4 tiles ahead of pacman's direction.
  */
+
 public class PinkyGhost : Ghost {
     // four tiles ahead pacman
     private int _tiles = 4;

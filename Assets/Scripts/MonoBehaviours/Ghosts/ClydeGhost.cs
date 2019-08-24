@@ -6,6 +6,7 @@
  *  However, as soon as his distance to pacman becomes less than 8 tiles, he returns
  *  to the same target of scatter mode.
  */
+
 public class ClydeGhost : Ghost {
     private int _tiles = 8;
 

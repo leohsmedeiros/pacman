@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 
+/*
+ *  The responsibility of this script is to play the background audio
+ */
+
 public class SoundManager : MonoBehaviour {
 
     public AudioClip introSound;

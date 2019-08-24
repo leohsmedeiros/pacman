@@ -1,7 +1,13 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ *  The responsibility of this script is to manage the ghosts states and behaviours.
+ *  It has the generic behaviour of all ghosts and must be specialized to apply the
+ *  specific behaviours of each one in chase mode.
+ */
 
 [RequireComponent(typeof(CharacterMovement))]
 public abstract class Ghost : MonoBehaviour {
@@ -9,7 +15,6 @@ public abstract class Ghost : MonoBehaviour {
     private List<Action<bool>> _actionsForLifeStatusChanges;
 
     public float timeToBeReleased;
-    private float _timer = 0;
     public AudioSource audioWhenEated;
     public GameObject scoreOnBoardTextPrefab;
 
@@ -24,15 +29,13 @@ public abstract class Ghost : MonoBehaviour {
         get => _direction;
     }
 
-    /*
-     *  the ghosts only navigates between the nodes, in direction to target point
-     */
+    /* the ghosts only navigates between the nodes, in direction to target point */
     protected Node _currentNode, _previousNode;
 
     private Vector2? _targetPoint;
 
     public Node scatterModeTarget;
-    public Node ghostHouseDoor;
+    public GhostHouseDoor ghostHouseDoor;
 
     private bool _isDead = false;
     public bool isDead {
@@ -50,6 +53,12 @@ public abstract class Ghost : MonoBehaviour {
 
 
 
+    IEnumerator WaitTimeToBeReleased() {
+        yield return new WaitForSeconds(timeToBeReleased);
+        _characterMovement.Resume();
+    }
+
+
     private void Awake() {
         _actionsForDirectionsChange = new List<Action<Direction>>();
         _actionsForLifeStatusChanges = new List<Action<bool>>();
@@ -60,25 +69,23 @@ public abstract class Ghost : MonoBehaviour {
         _pacman = GameObject.FindWithTag(GameController.Instance.settings.PlayerTag).GetComponent<Pacman>();
         GameController.Instance.RegisterGhosts(this);
         GameController.Instance.SubscribeForGameModeChanges(gameMode => {
+
+            if (gameMode.Equals(GameMode.INTRO) || gameMode.Equals(GameMode.DEAD)) {
+                _characterMovement.Pause();
+            } else {
+                StartCoroutine(WaitTimeToBeReleased());
+            }
+
+
+            /*
+             * will become frightened on FRIGHTENED mode, and will return to normal
+             * on other modes. On FRIGHTENED_FLASHING mode will just ignore
+             */
+
             if (!gameMode.Equals(GameMode.FRIGHTENED_FLASHING))
                 isFrightened = gameMode.Equals(GameMode.FRIGHTENED);
         });
     }
-
-
-    private void Update() {
-        if (GameController.Instance.GetCurrentGameMode().Equals(GameMode.INTRO) ||
-            GameController.Instance.GetCurrentGameMode().Equals(GameMode.DEAD))
-            return;
-
-        if (_timer > timeToBeReleased) {
-            _characterMovement.pause = false;
-        } else {
-            _characterMovement.pause = true;
-            _timer += Time.deltaTime;
-        }
-    }
-
 
     public void SubscribeOnDirectionsChanges(Action<Direction> action) => _actionsForDirectionsChange.Add(action);
 
@@ -90,7 +97,6 @@ public abstract class Ghost : MonoBehaviour {
      */
     public void Reset() {
         Revive();
-        _timer = 0;
         _direction = Direction.UP;
         _currentNode = null;
         _characterMovement.SetTargetNode(null);
@@ -98,7 +104,7 @@ public abstract class Ghost : MonoBehaviour {
     }
 
     /*
-     *  When ghost was dead, but now is inside ghost house
+     *  When ghost was dead, but now is inside ghost house, he returns to life
      */
     public void Revive() {
         isDead = false;
@@ -116,13 +122,14 @@ public abstract class Ghost : MonoBehaviour {
 
 
     /*
-     *  particular behaviour to each ghost, so must be specialized to each one
+     *  Particular behaviour to each ghost. Must be specialized to each one
      */
     protected abstract Vector2 EstimateTargetPoint();
 
     /*
-     *  choose the next node based on lower distance of each neighbor node in direction on target point
-     *  on frightened point, it has no target, so the ghost choose a random neighbor
+     *  Choose the next node based on lower distance of each neighbor node in direction
+     *  on target point.
+     *  On frightened mode, it has no target, so the ghost choose a random neighbor.
      */
     private Node ChooseNextNode(Vector2? estimatedTargetPoint) {
         List<Node> neighborNodes = _currentNode.GetNeighbors();
@@ -134,7 +141,7 @@ public abstract class Ghost : MonoBehaviour {
                 Vector2.Distance(neighbor.GetPosition2D(), estimatedTargetPoint.Value) :
                 UnityEngine.Random.Range(0f, 10f);
 
-
+            /* Will choose with the min distance, but can not return to the previous node. */
             if (distance < distanceMin && neighbor != _previousNode) {
                 distanceMin = distance;
                 selectedNode = neighbor;
@@ -148,9 +155,9 @@ public abstract class Ghost : MonoBehaviour {
     /*
      *  Will update the target point based on game state or the ghost state
      */
-    private void UpdateTargetPoint() {
+            private void UpdateTargetPoint() {
         if (isDead)
-            _targetPoint = ghostHouseDoor.GetPosition2D();
+            _targetPoint = ghostHouseDoor.ghostHouse.GetPosition2D();
 
         else if (isFrightened)
             _targetPoint = null;
@@ -162,7 +169,9 @@ public abstract class Ghost : MonoBehaviour {
             _targetPoint = EstimateTargetPoint();
     }
 
-
+    /*
+     *  Will update the current node and target point, to choose the next node
+     */
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.tag.Equals(GameController.Instance.settings.NodeTag)) {
             _previousNode = _currentNode;
@@ -171,7 +180,7 @@ public abstract class Ghost : MonoBehaviour {
             UpdateTargetPoint();
 
             Node targetNode = (isDead && _currentNode.Equals(ghostHouseDoor)) ?
-                ghostHouseDoor.GetComponent<GhostHouseDoor>().node : ChooseNextNode(_targetPoint);
+                ghostHouseDoor.ghostHouse : ChooseNextNode(_targetPoint);
 
             _characterMovement.SetTargetNode(targetNode);
         }

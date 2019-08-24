@@ -386,7 +386,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1128443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3496,7 +3496,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &80808041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8038,7 +8038,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!4 &217240467
 Transform:
   m_ObjectHideFlags: 0
@@ -8101,7 +8101,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &234768275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9328,7 +9328,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &258294687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9443,7 +9443,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &274346173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10789,7 +10789,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &334583428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10904,7 +10904,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &338579485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11455,7 +11455,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &355642499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14404,7 +14404,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &451162501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14764,187 +14764,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &481634743
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 481634746}
-  - component: {fileID: 481634745}
-  - component: {fileID: 481634744}
-  - component: {fileID: 481634747}
-  - component: {fileID: 481634751}
-  - component: {fileID: 481634748}
-  - component: {fileID: 481634750}
-  - component: {fileID: 481634749}
-  m_Layer: 0
-  m_Name: Pacman
-  m_TagString: Player
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!95 &481634744
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 481634743}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 566d7b4176cd1447790cefa3e9ddccd9, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!212 &481634745
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 481634743}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: 6679698536114150705, guid: 2b53f0ca34dc64426a7f6ef316391ada,
-    type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1.875, y: 1.875}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!4 &481634746
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 481634743}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5, y: -9.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &481634747
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 481634743}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4a992e7ff3684ddaad568d3982ea8ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &481634748
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 481634743}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b232ebe5375094f2c82797ce33a97556, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
-  pause: 1
---- !u!58 &481634749
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 481634743}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.2
---- !u!50 &481634750
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 481634743}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &481634751
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 481634743}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82ffe07108c6040e58769e63aa642168, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &488445286
 GameObject:
   m_ObjectHideFlags: 0
@@ -16124,7 +15943,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &508388079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16758,7 +16577,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &519960211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17309,7 +17128,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &526867976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17642,7 +17461,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &544730167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18629,7 +18448,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &573754389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18744,7 +18563,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &580569838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19295,7 +19114,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &587691588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19846,7 +19665,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &594247316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20011,7 +19830,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &598779808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21468,7 +21287,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &646484981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22752,7 +22571,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &688860881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23337,7 +23156,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &715291642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24106,7 +23925,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &749030696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24762,7 +24581,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &777301103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25441,7 +25260,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &823558969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26246,7 +26065,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &842088341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27289,7 +27108,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &863898662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27626,7 +27445,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: ee85c4f274b5c4607b08411a59785f41, type: 2}
   pacmanStarterNode: {fileID: 217240464}
-  ghostsHouse: {fileID: 942918120}
 --- !u!82 &873244166
 AudioSource:
   m_ObjectHideFlags: 0
@@ -27908,7 +27726,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70f26a5e5af0c43f58fe4fd962510309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settings: {fileID: 11400000, guid: ee85c4f274b5c4607b08411a59785f41, type: 2}
   readyObject: {fileID: 1010915963}
   gameOverPrefab: {fileID: 1073028813212815757, guid: 0d1af68a11759484c82add144dbd4136,
     type: 3}
@@ -28455,7 +28272,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &891835828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28469,7 +28286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upNode: {fileID: 258294687}
-  rightNode: {fileID: 1774965436}
+  rightNode: {fileID: 1774965440}
   leftNode: {fileID: 519960211}
   downNode: {fileID: 0}
 --- !u!212 &891835829
@@ -30096,7 +29913,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &940237132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30479,7 +30296,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &942918120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30492,7 +30309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c6efa04d6792437b902b82b62d8f8a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upNode: {fileID: 1774965436}
+  upNode: {fileID: 1774965440}
   rightNode: {fileID: 0}
   leftNode: {fileID: 0}
   downNode: {fileID: 0}
@@ -36700,7 +36517,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1146148532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36715,7 +36532,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upNode: {fileID: 1604776533}
   rightNode: {fileID: 1256009228}
-  leftNode: {fileID: 1774965436}
+  leftNode: {fileID: 1774965440}
   downNode: {fileID: 0}
 --- !u!212 &1146148533
 SpriteRenderer:
@@ -36815,7 +36632,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1148626652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37254,7 +37071,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1185020619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38313,7 +38130,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1231478218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38428,7 +38245,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1232714803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38543,7 +38360,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1233142832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38658,7 +38475,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1234469284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39499,7 +39316,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!212 &1248565313
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -40335,7 +40152,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1256009228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41578,7 +41395,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1287942155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43076,7 +42893,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1324417858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43627,7 +43444,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1338382451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43742,7 +43559,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1343011412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44091,7 +43908,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!212 &1355586492
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -44791,7 +44608,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1381226654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45497,7 +45314,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1414006844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45915,7 +45732,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1426172148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46699,7 +46516,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1459730704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47048,7 +46865,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!212 &1462668049
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -47583,7 +47400,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1495187388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50968,7 +50785,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1585982783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51519,7 +51336,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1604776533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52288,7 +52105,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1621840011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52688,7 +52505,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1646538752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53021,7 +52838,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1660584950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53604,7 +53421,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1685051192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53719,7 +53536,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1693088006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53834,7 +53651,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1698534815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54167,7 +53984,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1703256447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55010,7 +54827,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1743736645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56439,33 +56256,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1774965439}
-  - component: {fileID: 1774965436}
   - component: {fileID: 1774965440}
   - component: {fileID: 1774965438}
   - component: {fileID: 1774965437}
   m_Layer: 0
-  m_Name: Node_62
+  m_Name: GhostHouseDoor_Node_62
   m_TagString: Node
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1774965436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1774965435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b17ae6e861444e0e9b9726cb2646d58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  upNode: {fileID: 0}
-  rightNode: {fileID: 1146148532}
-  leftNode: {fileID: 891835828}
-  downNode: {fileID: 0}
 --- !u!212 &1774965437
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -56531,7 +56331,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!4 &1774965439
 Transform:
   m_ObjectHideFlags: 0
@@ -56558,7 +56358,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ceea4002bf694bf983671db2a1fa6c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  node: {fileID: 942918120}
+  upNode: {fileID: 0}
+  rightNode: {fileID: 1146148532}
+  leftNode: {fileID: 891835828}
+  downNode: {fileID: 0}
+  ghostHouse: {fileID: 942918120}
 --- !u!1 &1778308390
 GameObject:
   m_ObjectHideFlags: 0
@@ -56607,7 +56411,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1778308393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57158,7 +56962,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1789135774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57709,7 +57513,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1801631499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58042,7 +57846,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1810580101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58853,7 +58657,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1853169143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59261,7 +59065,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1907948632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61671,7 +61475,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &1996169632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62734,7 +62538,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &2024612127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64502,7 +64306,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!212 &2124667314
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -64819,7 +64623,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.01
 --- !u!114 &2131649621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65445,6 +65249,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pinky
       objectReference: {fileID: 0}
+    - target: {fileID: 585401286827489039, guid: 4d0a14c37c12a4b44a0475874addfa04,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 585401286827489036, guid: 4d0a14c37c12a4b44a0475874addfa04,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -65509,7 +65318,12 @@ PrefabInstance:
         type: 3}
       propertyPath: ghostHouseDoor
       value: 
-      objectReference: {fileID: 1774965436}
+      objectReference: {fileID: 1774965440}
+    - target: {fileID: 585401286827489034, guid: 4d0a14c37c12a4b44a0475874addfa04,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d0a14c37c12a4b44a0475874addfa04, type: 3}
 --- !u!1001 &2138060666836121328
@@ -65523,6 +65337,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Blinky
+      objectReference: {fileID: 0}
+    - target: {fileID: 2138060667294398933, guid: dcdc7144db77246f2a83637f9ffef55b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2138060667294398936, guid: dcdc7144db77246f2a83637f9ffef55b,
         type: 3}
@@ -65588,7 +65407,12 @@ PrefabInstance:
         type: 3}
       propertyPath: ghostHouseDoor
       value: 
-      objectReference: {fileID: 1774965436}
+      objectReference: {fileID: 1774965440}
+    - target: {fileID: 2138060667294398938, guid: dcdc7144db77246f2a83637f9ffef55b,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dcdc7144db77246f2a83637f9ffef55b, type: 3}
 --- !u!1001 &2503143218339587622
@@ -65602,6 +65426,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Clyde
+      objectReference: {fileID: 0}
+    - target: {fileID: 2503143219163472755, guid: 40a573a59598f4bfea3ba190fadd00fc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2503143219163472766, guid: 40a573a59598f4bfea3ba190fadd00fc,
         type: 3}
@@ -65667,7 +65496,12 @@ PrefabInstance:
         type: 3}
       propertyPath: ghostHouseDoor
       value: 
-      objectReference: {fileID: 1774965436}
+      objectReference: {fileID: 1774965440}
+    - target: {fileID: 2503143219163472764, guid: 40a573a59598f4bfea3ba190fadd00fc,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40a573a59598f4bfea3ba190fadd00fc, type: 3}
 --- !u!1001 &4802496573940572631
@@ -65681,6 +65515,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Inky
+      objectReference: {fileID: 0}
+    - target: {fileID: 4802496573265681188, guid: 2837b7f390d4f43f3b70142df4fc9380,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4802496573265681185, guid: 2837b7f390d4f43f3b70142df4fc9380,
         type: 3}
@@ -65746,11 +65585,85 @@ PrefabInstance:
         type: 3}
       propertyPath: ghostHouseDoor
       value: 
-      objectReference: {fileID: 1774965436}
+      objectReference: {fileID: 1774965440}
     - target: {fileID: 4802496573265681184, guid: 2837b7f390d4f43f3b70142df4fc9380,
         type: 3}
       propertyPath: blincky
       value: 
       objectReference: {fileID: 1834045224}
+    - target: {fileID: 4802496573265681199, guid: 2837b7f390d4f43f3b70142df4fc9380,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2837b7f390d4f43f3b70142df4fc9380, type: 3}
+--- !u!1001 &8824385180483531689
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8824385180673514014, guid: 14da48694c773483392e27ba2d2c62aa,
+        type: 3}
+      propertyPath: m_Name
+      value: Pacman
+      objectReference: {fileID: 0}
+    - target: {fileID: 8824385180673514003, guid: 14da48694c773483392e27ba2d2c62aa,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8824385180673514003, guid: 14da48694c773483392e27ba2d2c62aa,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -9.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8824385180673514003, guid: 14da48694c773483392e27ba2d2c62aa,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8824385180673514003, guid: 14da48694c773483392e27ba2d2c62aa,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8824385180673514003, guid: 14da48694c773483392e27ba2d2c62aa,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8824385180673514003, guid: 14da48694c773483392e27ba2d2c62aa,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8824385180673514003, guid: 14da48694c773483392e27ba2d2c62aa,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8824385180673514003, guid: 14da48694c773483392e27ba2d2c62aa,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8824385180673514003, guid: 14da48694c773483392e27ba2d2c62aa,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8824385180673514003, guid: 14da48694c773483392e27ba2d2c62aa,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8824385180673514003, guid: 14da48694c773483392e27ba2d2c62aa,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 14da48694c773483392e27ba2d2c62aa, type: 3}

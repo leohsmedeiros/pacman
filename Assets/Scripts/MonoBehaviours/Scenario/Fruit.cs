@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ *  The responsibility of this script is to triggers an event
+ *  when the fruit get caught.
+ */
+
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(SpriteRenderer))]

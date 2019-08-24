@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/*
+ *  The responsibility of this script is to adapt the GUI about
+ *  changes on score, lifes and other game informations
+ */
+
 public class UiManager : MonoBehaviour {
 
     public Button RetryButton;

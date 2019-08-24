@@ -7,6 +7,7 @@ public class Settings : ScriptableObject {
     public string GhostTag = "Ghost";
     public string NodeTag = "Node";
     public string HighScoreKeyPlayerPrefs = "HighScore";
+    public string IntermissionSceneName = "Intermission";
 
     public int DotScore = 10;
     public int EnergizerScore = 50;
@@ -15,6 +16,7 @@ public class Settings : ScriptableObject {
     public int PointsToGainExtraLife = 10000;
     public int DotsAmountToShowFruitFirstTime = 70;
     public int DotsAmountToShowFruitSecondTime = 170;
+    public int IntermissionFactor = 3;
 
     public float TimeToHideReadyObject = 5f;
     public float TimeToGhostsVanishOnPacmanDeath = 1f;

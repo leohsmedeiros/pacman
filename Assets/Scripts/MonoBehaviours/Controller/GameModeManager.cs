@@ -1,11 +1,11 @@
-﻿/*
- *  The responsibility of this class is to control the current GameMode and
- *  when the next would be shown up.
- */
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+
+/*
+ *  The responsibility of this script is to control the current GameMode and
+ *  notify all the observers when it changes.
+ */
 
 public class GameModeManager : MonoBehaviour {
     private GameMode _currentGameMode = GameMode.INTRO;
@@ -13,7 +13,6 @@ public class GameModeManager : MonoBehaviour {
         set {
             _currentGameMode = value;
             _actionsForGameModeChange.ForEach(action => action.Invoke(_currentGameMode));
-            Debug.Log("GameMode: " + _currentGameMode);
         }
         get => _currentGameMode;
     }
@@ -30,14 +29,6 @@ public class GameModeManager : MonoBehaviour {
 
     public StageSettings stageSettings { set; private get; }
     public Settings settings { set; private get; }
-
-    /*
-     * will becoming more valuable if the frightened ghosts were being eaten
-     * sequentially (2 times more valuable). And this factor is for calculate
-     * how many times more valuable would be when player eaten the ghost.
-     */
-     
-    public int factorToEatGhostsSequentially { private set; get; } = 1;
 
 
     private void Awake() => _actionsForGameModeChange = new List<Action<GameMode>>();
@@ -90,11 +81,11 @@ public class GameModeManager : MonoBehaviour {
 
         if (_timerFrightened > maxTime) {
             _timerFrightened = 0;
-            factorToEatGhostsSequentially = 1;
             currentGameMode = settings.SequenceOfGameModeSettings[_lastIndexGameModeSettings].Mode;
         }
     }
 
+    /* Will use a timer and the settings to update from scatter to chase mode and vice-versa */
     private void GameModeUpdate() {
         _timerGameModes += Time.deltaTime;
 
@@ -111,8 +102,6 @@ public class GameModeManager : MonoBehaviour {
     }
 
     public void SubscribeForGameModeChanges(Action<GameMode> action) => _actionsForGameModeChange.Add(action);
-
-    public void UpgradeFactorToEatGhostsSequentially() => factorToEatGhostsSequentially *= settings.GhostScoreFactor;
 
     public void GameOver() => Instantiate(gameOverPrefab);
 

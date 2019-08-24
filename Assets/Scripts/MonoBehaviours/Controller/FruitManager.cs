@@ -1,8 +1,10 @@
-﻿/*
- *  The responsibility of this class is to control fruits on GUI and on Scene,
- *  when they would be shown up.
+﻿using UnityEngine;
+
+/*
+ *  The responsibility of this script is to manage the fruits on
+ *  GUI and on Scene. When and where they would be shown up and
+ *  destroyed
  */
-using UnityEngine;
 
 public class FruitManager : MonoBehaviour {
     public Fruit cherryPrefab;

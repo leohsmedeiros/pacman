@@ -1,15 +1,15 @@
-﻿/*
- *  The responsibility of this class is to control elements of the game
- *  and its states.
- *
- *  Will use the 'Managers' to share this responsability and help it to
- *  control these elements.
- */
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+/*
+ *  The responsibility of this script is to control all the elements of
+ *  the game and its states and apply the rules relative to each event.
+ *
+ *  Will use the 'Managers' to share this responsibility and help it to
+ *  control these elements.
+ */
 
 [RequireComponent(typeof(FruitManager))]
 [RequireComponent(typeof(UiManager))]
@@ -20,32 +20,45 @@ public class GameController : MonoBehaviour {
 
     public static GameController Instance { private set; get; }
 
-    public static int Level { private set; get; } = 0;
+    public static int Stage { private set; get; } = 0;
     public static int Score { private set; get; } = 0;
     public static int Life { private set; get; } = 3;
 
     /*
      * The player will receive one extra life bonus after obtaining 10,000 points,
-     * and this factor is to calculate the next goal to obtaining a new life.
+     * and this factor is used to calculate the next goal to obtaining a new life.
      */
     private static int _factorToGainExtraLife = 1;
 
     public Settings settings;
+
     public Node pacmanStarterNode;
-    public Node ghostsHouse;
+
+    private Node _ghostsHouse;
 
     private List<Dot> _dots;
     private List<Ghost> _ghosts;
 
     /*
-     * it is used to control when the fruits will show up (70 dots on the
-     * first time and then 170 dots)
+     * it is used to control when the fruits must be shown up (70 dots on the
+     * first time and then on 170 dots eaten)
      */
     private int _eatenDotsAmount = 0;
 
+    /*
+     * As long as ghosts were being eaten sequentially the value of score for
+     * that will become higher (2 times more valuable). And this factor is used
+     * for that. When the game returns from frightened mode, than this factor
+     * restarts to 1
+     */
+    private int _factorToEatGhostsSequentially = 1;
+
     private Pacman _pacman;
+
     private StageSettings _stageSettings;
+
     private SceneChanger _sceneChanger;
+
     private FruitManager _fruitManager;
     private UiManager _uiManager;
     private SoundManager _soundManager;
@@ -82,8 +95,9 @@ public class GameController : MonoBehaviour {
         _dots = new List<Dot>();
         _ghosts = new List<Ghost>();
 
-        if (Level < settings.SequenceOfStageSettings.Length) {
-            _stageSettings = settings.SequenceOfStageSettings[Level];
+        /* Will select the stage settings relative to current Stage */
+        if (Stage < settings.SequenceOfStageSettings.Length) {
+            _stageSettings = settings.SequenceOfStageSettings[Stage];
         } else {
             int lastIndex = settings.SequenceOfStageSettings.Length - 1;
             _stageSettings = settings.SequenceOfStageSettings[lastIndex];
@@ -102,7 +116,7 @@ public class GameController : MonoBehaviour {
     }
 
     private void Start() {
-        /* Subscribe to get when GameMode was updated and the adapt the background sound */
+        /* adapt the background sound when GameMode was updated */
         _gameModeManager.SubscribeForGameModeChanges(gameMode => {
             switch (gameMode) {
                 case GameMode.INTRO:
@@ -115,6 +129,7 @@ public class GameController : MonoBehaviour {
 
                 case GameMode.SCATTER:
                 case GameMode.CHASE:
+                    _factorToEatGhostsSequentially = 1;
                     _soundManager.PlaySirenSound();
                     break;
             }
@@ -124,9 +139,14 @@ public class GameController : MonoBehaviour {
     }
 
 
-    private void NextLevel() {
-        Level++;
-        _sceneChanger.LoadLevel();
+    private void NextStage() {
+        Stage++;
+
+        /* if it fits the intermission factor, will redirect to intermission scene */
+        if (Stage % settings.IntermissionFactor == 0)
+            _sceneChanger.LoadLevel(settings.IntermissionSceneName);
+        else
+            _sceneChanger.LoadLevel();
     }
 
     /*
@@ -142,7 +162,7 @@ public class GameController : MonoBehaviour {
 
         if (Life > 0) {
             _ghosts.ForEach(ghost => {
-                ghost.transform.position = ghostsHouse.GetPosition2D();
+                ghost.transform.position = _ghostsHouse.GetPosition2D();
                 ghost.gameObject.SetActive(true);
                 ghost.Reset();
             });
@@ -186,7 +206,7 @@ public class GameController : MonoBehaviour {
      *  Dots can be energizer or not. If it is an energizer, then on get caught
      *  the ghosts will enter on frightened mode. If it's not, then will check
      *  if the fruit must be shown up or destoyed.
-     *  If there are no more dots on level, will go to the next level.
+     *  If there are no more dots on stage, go to the next one.
      */
     private void OnDotGetCaught(Dot dot) {
         _dots.Remove(dot);
@@ -208,19 +228,26 @@ public class GameController : MonoBehaviour {
         }
 
         if (_dots.Count == 0)
-            NextLevel();
+            NextStage();
     }
 
+    /*
+     *  If the ghost is on frightened mode, the the ghost will be eaten and
+     *  pacman will gain a relative score of that.
+     *
+     *  If not, then will run the pacman death animation, and pacman will
+     *  loses a life
+     */
     private void OnPacmanGetCaughtByGhosts(Ghost ghost) {
-        if (!ghost.isDead) {
+        if (!ghost.isDead && !_gameModeManager.currentGameMode.Equals(GameMode.DEAD)) {
             if (ghost.isFrightened) {
                 int scoreGained =
-                    settings.GhostFrightenedBaseScore * _gameModeManager.factorToEatGhostsSequentially;
+                    settings.GhostFrightenedBaseScore * _factorToEatGhostsSequentially;
 
                 AddScore(scoreGained);
                 ghost.GotEatenByPacman(scoreGained.ToString());
 
-                _gameModeManager.UpgradeFactorToEatGhostsSequentially();
+                _factorToEatGhostsSequentially *= settings.GhostScoreFactor;
 
             } else {
                 _gameModeManager.currentGameMode = GameMode.DEAD;
@@ -232,17 +259,21 @@ public class GameController : MonoBehaviour {
 
     /*  In case of game over, this method will reset the static variables and restart the scene */
     public void RestartGame() {
-        Level = 0;
+        Stage = 0;
         Life = 3;
         Score = 0;
         _factorToGainExtraLife = 1;
         _sceneChanger.LoadLevel();
     }
 
+
     public GameMode GetCurrentGameMode() => _gameModeManager.currentGameMode;
 
+    public void SubscribeForGameModeChanges(Action<GameMode> action) =>
+        _gameModeManager.SubscribeForGameModeChanges(action);
 
-    /* On start all these element must be registered to GameController */
+
+    /*  At the beginning of the game start all these elements must be registered to GameController */
 
     public void RegisterFruit(Fruit fruit) => fruit.SubscribeOnGetCaught(() => AddScore(fruit.points));
 
@@ -258,8 +289,9 @@ public class GameController : MonoBehaviour {
         _pacman.SubscribeOnGetCaughtByGhosts(OnPacmanGetCaughtByGhosts);
     }
 
-
-    public void SubscribeForGameModeChanges(Action<GameMode> action) =>
-        _gameModeManager.SubscribeForGameModeChanges(action);
+    public void RegisterGhostHouse(GhostHouse ghostHouse) {
+        ghostHouse.SubscribeOnGhostIsInsideGhostHouse(ghost => ghost.Revive());
+        _ghostsHouse = ghostHouse;
+    }
 
 }
