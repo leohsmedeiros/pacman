@@ -24,9 +24,7 @@ public class Fruit : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.tag.Equals(GameController.Instance.settings.PlayerTag)) {
-            foreach(Action action in _actionsForGetCaught) {
-                action.Invoke();
-            }
+            _actionsForGetCaught.ForEach(action => action.Invoke());
 
             GameObject scoreObject = Instantiate(scoreOnBoardTextPrefab, this.transform.position, Quaternion.identity);
             scoreObject.GetComponent<TextMesh>().text = points.ToString();

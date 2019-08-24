@@ -29,7 +29,7 @@ public class FruitManager : MonoBehaviour {
         }
     }
 
-    public void ShowFruit(FruitType fruitType) {
+    public void InstantiateFruit(FruitType fruitType) {
         Fruit selectedFruit = GetFruitByType(fruitType);
 
         if (selectedFruit != null) {

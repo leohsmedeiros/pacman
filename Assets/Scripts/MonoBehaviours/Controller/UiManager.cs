@@ -10,13 +10,13 @@ public class UiManager : MonoBehaviour {
     public Image fruitImage;
 
 
-    public void UpdateFruitOnGUI(Sprite fruitSprite) => fruitImage.sprite = fruitSprite;
+    public void FruitOnGUI(Sprite fruitSprite) => fruitImage.sprite = fruitSprite;
 
-    public void UpdateHighScoreOnGUI(int score) => TextHighScore.text = score.ToString();
+    public void HighScoreOnGUI(int score) => TextHighScore.text = score.ToString();
 
-    public void UpdateScoreOnGUI(int score) => TextScore.text = score.ToString();
+    public void ScoreOnGUI(int score) => TextScore.text = score.ToString();
 
-    public void UpdateLifesOnGUI(int lifes) {
+    public void LifesOnGUI(int lifes) {
         for (int i = 0; i < LifesParent.childCount; i++) {
             LifesParent.GetChild(i).GetComponent<Image>().enabled = (i < lifes);
         }

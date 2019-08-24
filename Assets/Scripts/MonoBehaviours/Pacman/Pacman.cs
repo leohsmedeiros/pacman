@@ -87,7 +87,7 @@ public class Pacman : MonoBehaviour {
     }
 
     void Update() {
-        if (GameController.Instance.currentGameMode.Equals(GameMode.INTRO))
+        if (GameController.Instance.gameModeManager.currentGameMode.Equals(GameMode.INTRO))
             return;
 
 
@@ -117,7 +117,7 @@ public class Pacman : MonoBehaviour {
      *  If there is no input, pacman will move forward.
      */
     private void UpdateToNextNode() {
-        if (_inputDirection != null) {
+        if (_inputDirection.HasValue) {
 
             Node nextNode = _currentNode.GetNeighborByDirection(_inputDirection.Value);
 
@@ -157,9 +157,7 @@ public class Pacman : MonoBehaviour {
 
         } else if (collision.tag.Equals(GameController.Instance.settings.GhostTag)) {
 
-            foreach (Action<Ghost> action in _actionsOnGetCaughtByGhosts)
-                action.Invoke(collision.GetComponent<Ghost>());
-
+            _actionsOnGetCaughtByGhosts.ForEach(action => action.Invoke(collision.GetComponent<Ghost>()));
         }
     }
 

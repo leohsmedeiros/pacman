@@ -35,10 +35,7 @@ public class Dot : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.tag.Equals(GameController.Instance.settings.PlayerTag)) {
-            foreach(Action<Dot> action in actionsOnGetCaught) {
-                action.Invoke(this);
-            }
-
+            actionsOnGetCaught.ForEach(action => action.Invoke(this));
             StartCoroutine(DisableAfterSound());
         }
     }

@@ -27,9 +27,7 @@ public class GhostAnimator : MonoBehaviour {
         _eyes = new List<GameObject> { upEye, rightEye, leftEye, downEye };
 
         _ghost.SubscribeOnDirectionsChanges(direction => {
-            foreach(GameObject eye in _eyes) {
-                eye.SetActive(false);
-            }
+            _eyes.ForEach(eye => eye.SetActive(false));
 
             switch(direction) {
                 case Direction.UP:
@@ -64,7 +62,7 @@ public class GhostAnimator : MonoBehaviour {
             }
         });
 
-        GameController.Instance.SubscribeForGameModeChanges(gameMode => {
+        GameController.Instance.gameModeManager.SubscribeForGameModeChanges(gameMode => {
             if (_ghost.isDead)
                 return;
 

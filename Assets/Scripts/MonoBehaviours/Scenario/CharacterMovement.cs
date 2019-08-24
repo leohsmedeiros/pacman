@@ -13,8 +13,8 @@ public class CharacterMovement : MonoBehaviour {
     }
 
     void Update() {
-        if (!GameController.Instance.currentGameMode.Equals(GameMode.INTRO) &&
-            !GameController.Instance.currentGameMode.Equals(GameMode.DEAD) &&
+        if (!GameController.Instance.gameModeManager.currentGameMode.Equals(GameMode.INTRO) &&
+            !GameController.Instance.gameModeManager.currentGameMode.Equals(GameMode.DEAD) &&
             !pause && _targetNode != null) {
 
             this.transform.position = Vector2.MoveTowards(transform.position,

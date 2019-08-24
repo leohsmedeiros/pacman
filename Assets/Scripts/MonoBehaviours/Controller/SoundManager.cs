@@ -11,9 +11,7 @@ public class SoundManager : MonoBehaviour {
     public AudioSource extraLifeAudioSource;
 
 
-    private void Start() {
-        this.backgroundAudioSource = this.GetComponent<AudioSource>();
-    }
+    private void Start() => this.backgroundAudioSource = this.GetComponent<AudioSource>();
 
     private void PlayOnBackgroundAudioSource(AudioClip clip, bool loop) {
         backgroundAudioSource.clip = clip;
@@ -23,7 +21,10 @@ public class SoundManager : MonoBehaviour {
 
     public void PlayIntroSound() => PlayOnBackgroundAudioSource(introSound, false);
 
-    public void PlaySirenSound() => PlayOnBackgroundAudioSource(sirenSound, true);
+    public void PlaySirenSound() {
+        if(!backgroundAudioSource.isPlaying || !backgroundAudioSource.clip.Equals(sirenSound))
+            PlayOnBackgroundAudioSource(sirenSound, true);
+    }
 
     public void PlayFrightenedSound() => PlayOnBackgroundAudioSource(frightenedSound, true);
 

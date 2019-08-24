@@ -19,9 +19,7 @@ public abstract class Ghost : MonoBehaviour {
     public Direction direction {
         private set {
             _direction = value;
-            foreach (Action<Direction> action in _actionsForDirectionsChange) {
-                action.Invoke(_direction);
-            }
+            _actionsForDirectionsChange.ForEach(action => action.Invoke(_direction));
         }
         get => _direction;
     }
@@ -40,9 +38,7 @@ public abstract class Ghost : MonoBehaviour {
     public bool isDead {
         set {
             _isDead = value;
-            foreach (Action<bool> action in _actionsForLifeStatusChanges) {
-                action.Invoke(value);
-            }
+            _actionsForLifeStatusChanges.ForEach(action => action.Invoke(value));
         }
         get => _isDead;
     }
@@ -63,7 +59,7 @@ public abstract class Ghost : MonoBehaviour {
     private void Start() {
         _pacman = GameObject.FindWithTag(GameController.Instance.settings.PlayerTag).GetComponent<Pacman>();
         GameController.Instance.RegisterGhosts(this);
-        GameController.Instance.SubscribeForGameModeChanges(gameMode => {
+        GameController.Instance.gameModeManager.SubscribeForGameModeChanges(gameMode => {
             if (!gameMode.Equals(GameMode.FRIGHTENED_FLASHING))
                 isFrightened = gameMode.Equals(GameMode.FRIGHTENED);
         });
@@ -71,8 +67,8 @@ public abstract class Ghost : MonoBehaviour {
 
 
     private void Update() {
-        if (GameController.Instance.currentGameMode.Equals(GameMode.INTRO) ||
-            GameController.Instance.currentGameMode.Equals(GameMode.DEAD))
+        if (GameController.Instance.gameModeManager.currentGameMode.Equals(GameMode.INTRO) ||
+            GameController.Instance.gameModeManager.currentGameMode.Equals(GameMode.DEAD))
             return;
 
         if (_timer > timeToBeReleased) {
@@ -133,17 +129,18 @@ public abstract class Ghost : MonoBehaviour {
         float distanceMin = float.MaxValue;
         Node selectedNode = neighborNodes[0];
 
-        foreach (Node neighbor in neighborNodes) {
+        neighborNodes.ForEach(neighbor => {
+            float distance = estimatedTargetPoint.HasValue ?
+                Vector2.Distance(neighbor.GetPosition2D(), estimatedTargetPoint.Value) :
+                UnityEngine.Random.Range(0f, 10f);
 
-            float distance = (estimatedTargetPoint == null) ?
-                UnityEngine.Random.Range(0f, 10f) : Vector2.Distance(neighbor.GetPosition2D(), (Vector2)estimatedTargetPoint);
 
             if (distance < distanceMin && neighbor != _previousNode) {
                 distanceMin = distance;
                 selectedNode = neighbor;
                 direction = _currentNode.GetDirectionByNeighborNode(neighbor);
             }
-        }
+        });
 
         return selectedNode;
     }
@@ -158,10 +155,10 @@ public abstract class Ghost : MonoBehaviour {
         else if (isFrightened)
             _targetPoint = null;
 
-        else if (GameController.Instance.currentGameMode.Equals(GameMode.SCATTER))
+        else if (GameController.Instance.gameModeManager.currentGameMode.Equals(GameMode.SCATTER))
             _targetPoint = scatterModeTarget.GetPosition2D();
 
-        else if (GameController.Instance.currentGameMode.Equals(GameMode.CHASE))
+        else if (GameController.Instance.gameModeManager.currentGameMode.Equals(GameMode.CHASE))
             _targetPoint = EstimateTargetPoint();
     }
 
