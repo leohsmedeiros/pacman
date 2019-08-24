@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+ *  The responsibility of this class is to control elements of the game
+ *  and its states.
+ *
+ *  Will use the 'Managers' to share this responsability and help it to
+ *  control these elements.
+ */
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,30 +19,42 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
 
     public static GameController Instance { private set; get; }
+
     public static int Level { private set; get; } = 0;
     public static int Score { private set; get; } = 0;
     public static int Life { private set; get; } = 3;
+
+    /*
+     * The player will receive one extra life bonus after obtaining 10,000 points,
+     * and this factor is to calculate the next goal to obtaining a new life.
+     */
     private static int _factorToGainExtraLife = 1;
 
     public Settings settings;
-    public Node starterNode;
+    public Node pacmanStarterNode;
     public Node ghostsHouse;
 
     private List<Dot> _dots;
     private List<Ghost> _ghosts;
+
+    /*
+     * it is used to control when the fruits will show up (70 dots on the
+     * first time and then 170 dots)
+     */
     private int _eatenDotsAmount = 0;
 
     private Pacman _pacman;
-    private SceneChanger _sceneChanger;
     private StageSettings _stageSettings;
+    private SceneChanger _sceneChanger;
     private FruitManager _fruitManager;
     private UiManager _uiManager;
     private SoundManager _soundManager;
     private GameModeManager _gameModeManager;
 
 
-    IEnumerator PacmanDieAnimation() {
+    IEnumerator PacmanDeathAnimation() {
         _soundManager.PauseBackgroundSource();
+
         yield return new WaitForSeconds(settings.TimeToGhostsVanishOnPacmanDeath);
 
         _ghosts.ForEach(ghost => ghost.gameObject.SetActive(false));
@@ -46,7 +66,7 @@ public class GameController : MonoBehaviour {
 
         yield return new WaitForSeconds(settings.TimeToRestartSceneAfterPacmanDeath);
 
-        LoseOneLife();
+        LoseLife();
     }
 
 
@@ -72,6 +92,7 @@ public class GameController : MonoBehaviour {
         _gameModeManager.stageSettings = _stageSettings;  
 
         Fruit fruit = _fruitManager.GetFruitByType(_stageSettings.fruitType);
+
         _uiManager.FruitOnGUI(fruit.GetSprite());
         _uiManager.LifesOnGUI(Life);
         _uiManager.ScoreOnGUI(Score);
@@ -105,7 +126,14 @@ public class GameController : MonoBehaviour {
         _sceneChanger.LoadLevel();
     }
 
-    private void LoseOneLife() {
+    /*
+     *  Pacman will lose one life.
+     *  If there are more lives to continue, then will update the GUI and
+     *  reset all the elements, but the eaten dots and score.
+     *  If there are no more lives, then will check if it is a highscore and
+     *  then will show the GameOver object and the button to Restart the game.
+     */
+    private void LoseLife() {
         Life -= 1;
         _uiManager.LifesOnGUI(Life);
 
@@ -116,7 +144,7 @@ public class GameController : MonoBehaviour {
                 ghost.Reset();
             });
 
-            _pacman.transform.position = starterNode.GetPosition2D();
+            _pacman.transform.position = pacmanStarterNode.GetPosition2D();
             _pacman.Reset();
 
             _gameModeManager.Reset();
@@ -182,14 +210,13 @@ public class GameController : MonoBehaviour {
 
             } else {
                 _gameModeManager.currentGameMode = GameMode.DEAD;
-                StartCoroutine(PacmanDieAnimation());
+                StartCoroutine(PacmanDeathAnimation());
             }
         }
     }
 
-    /*
-     *  In case of game over, this method will reset the static variables and restart the scene
-     */
+
+    /*  In case of game over, this method will reset the static variables and restart the scene */
     public void RestartGame() {
         Level = 0;
         Life = 3;
@@ -199,6 +226,7 @@ public class GameController : MonoBehaviour {
     }
 
     public GameMode GetCurrentGameMode() => _gameModeManager.currentGameMode;
+
 
     public void RegisterFruit(Fruit fruit) => fruit.SubscribeOnGetCaught(() => AddScore(fruit.points));
 
@@ -213,6 +241,7 @@ public class GameController : MonoBehaviour {
         _pacman = pacman;
         _pacman.SubscribeOnGetCaughtByGhosts(OnPacmanGetCaughtByGhosts);
     }
+
 
     public void SubscribeForGameModeChanges(Action<GameMode> action) =>
         _gameModeManager.SubscribeForGameModeChanges(action);

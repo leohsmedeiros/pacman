@@ -27625,11 +27625,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: ee85c4f274b5c4607b08411a59785f41, type: 2}
-  fruitManager: {fileID: 873244170}
-  uiManager: {fileID: 873244169}
-  soundManager: {fileID: 873244167}
-  gameModeManager: {fileID: 873244172}
-  starterNode: {fileID: 217240464}
+  pacmanStarterNode: {fileID: 217240464}
   ghostsHouse: {fileID: 942918120}
 --- !u!82 &873244166
 AudioSource:
