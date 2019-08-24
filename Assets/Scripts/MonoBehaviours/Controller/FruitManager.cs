@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿/*
+ *  The responsibility of this class is to control fruits on GUI and on Scene,
+ *  when they would be shown up.
+ */
+using UnityEngine;
 
 public class FruitManager : MonoBehaviour {
     public Fruit cherryPrefab;

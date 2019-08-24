@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ *  The responsibility of this class is to control the current GameMode and
+ *  when the next would be shown up.
+ */
+
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -100,6 +105,11 @@ public class GameModeManager : MonoBehaviour {
 
     public void SubscribeForGameModeChanges(Action<GameMode> action) => _actionsForGameModeChange.Add(action);
 
+    public void UpgradeFactorToEatGhostsSequentially() => factorToEatGhostsSequentially *= settings.GhostScoreFactor;
+
+    public void GameOver() => Instantiate(gameOverPrefab);
+
+
     public void Reset() {
         _timerIntro = 0;
         _timerFrightened = 0;
@@ -107,7 +117,4 @@ public class GameModeManager : MonoBehaviour {
         currentGameMode = GameMode.INTRO;
     }
 
-    public void UpgradeFactorToEatGhostsSequentially() => factorToEatGhostsSequentially *= settings.GhostScoreFactor;
-
-    public void GameOver() => Instantiate(gameOverPrefab);
 }

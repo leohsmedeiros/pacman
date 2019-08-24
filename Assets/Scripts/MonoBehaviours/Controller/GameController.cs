@@ -91,6 +91,7 @@ public class GameController : MonoBehaviour {
 
         _gameModeManager.stageSettings = _stageSettings;  
 
+        /* Will get the fruit to update on GUI */
         Fruit fruit = _fruitManager.GetFruitByType(_stageSettings.fruitType);
 
         _uiManager.FruitOnGUI(fruit.GetSprite());
@@ -100,6 +101,7 @@ public class GameController : MonoBehaviour {
     }
 
     private void Start() {
+        /* Subscribe to get when GameMode was updated and the adapt the background sound */
         _gameModeManager.SubscribeForGameModeChanges(gameMode => {
             switch (gameMode) {
                 case GameMode.INTRO:
@@ -162,6 +164,11 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    /*
+     *  Will add an amount of score. If the current score is higher than the
+     *  _factorToGainExtraLife * PointsToGainExtraLife, then pacman will obtain
+     *  a new life.
+     */
     private void AddScore(int amount) {
         Score += amount;
         _uiManager.ScoreOnGUI(Score);
@@ -174,6 +181,12 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    /*
+     *  Dots can be energizer or not. If it is an energizer, then on get caught
+     *  the ghosts will enter on frightened mode. If it's not, then will check
+     *  if the fruit must be shown up or destoyed.
+     *  If there are no more dots on level, will go to the next level.
+     */
     private void OnDotGetCaught(Dot dot) {
         _dots.Remove(dot);
 
@@ -227,6 +240,8 @@ public class GameController : MonoBehaviour {
 
     public GameMode GetCurrentGameMode() => _gameModeManager.currentGameMode;
 
+
+    /* On start all these element must be registered to GameController */
 
     public void RegisterFruit(Fruit fruit) => fruit.SubscribeOnGetCaught(() => AddScore(fruit.points));
 
